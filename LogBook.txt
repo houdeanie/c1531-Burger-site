@@ -1,0 +1,25 @@
+Victor, Dean, Stephen (Siyang)
+Meeting Wednesday Week 3 (6/3) 
+- Agreed on 6 major epic stories for assignment 1: 
+
+          EPIC STORIES
+
+            Customer
+
+          (Victor) As a customer, I would like to be able create a main so that I can order exactly what I want. 
+
+          (Victor) As a customer, I would like to be able add sides so that I can order additional items to complement my meal. 
+
+          (Stephen) As a customer, I would like to be able to place my order so that my food can be prepared before I arrive. 
+
+          (Stephen) As a customer, I would like to be able to view the status my order so that I will know when my order is ready. 
+
+            Staff
+
+          (Dean) As staff, I would like to be able to view and update a customer's order so that I can notify the customer that their order is ready for pickup.
+
+          (Dean) As staff, I would like to be able to view current stock levels so that I can refill inventory when it gets low. 
+
+- Agreed that Victor will do the first two customer related epic stories, Stephen the 3rd and 4th and Dean the staff epic stories.
+- Agreed that the next meeting will be Sunday afternoon 5PM to discuss epic stories and combine for submission. 
+
