@@ -1,0 +1,36 @@
+Possible classes
+
+Burger
++patty_Type
++num_Patties
++bun_Type
++num_Buns
++ingredients
+
+Wrap
++meat_Type 
++wrap_Type
++ingredients
+
+Menu
++<All items available> + price + serving quantity
+
+Nuggets
+
+Fries
+
+Pepsi
+
+OrangeJuice
+
+Order
++orderID
+
+Cart
+
+CurrentOrders
+
+Inventory 
+
+
+
