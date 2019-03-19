@@ -1,2 +1,2 @@
 Date	Assumptions						Reason for making assumption
-
+12/3    Payment is made with cash       Bare minimum specifications
