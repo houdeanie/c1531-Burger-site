@@ -12,9 +12,11 @@ DoubleBurger (inherits from MenuItem)
 TripleBurger (inherits from MenuItem)
 
 Wrap (inherits from MenuItem)
-    +meat_Type 
+    +filling_Type
     +wrap_Type
     +ingredients
+
+Ingredients (inherits from MenuItem)
 
 OrangeJuice (inherits from MenuItem)
 
@@ -24,16 +26,31 @@ Nuggets (inherits from MenuItem)
 
 Fries (inherits from MenuItem)
 
-Menu
-
 Order
-+orderID
+    +orderID
 
 Cart
+    +cart_items: MenuItem
 
 CurrentOrders
 
-Inventory 
+InventoryItem (inherits from MenuItem)
+    +stock_quantity: Int
+    +stock_servings: Float
+
+Inventory
+
+Menu
+    +mains: undecided
+    +buns: undecided
+    +patties: undecided
+    +ingredients: undecided
+
+    +wraps: undecided
+    +fillings: undecided
+
+    +sides: undecided
+    +drinks: undecided
 
 
 
