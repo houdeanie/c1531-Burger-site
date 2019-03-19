@@ -1,27 +1,30 @@
-Possible classes
+Classes (first draft)
 
-Burger
-+patty_Type
-+num_Patties
-+bun_Type
-+num_Buns
-+ingredients
+MenuItem
+    +name: String
+    +price: Float
+    +serving_size: Int
 
-Wrap
-+meat_Type 
-+wrap_Type
-+ingredients
+SingleBurger (inherits from MenuItem)
+
+DoubleBurger (inherits from MenuItem)
+
+TripleBurger (inherits from MenuItem)
+
+Wrap (inherits from MenuItem)
+    +meat_Type 
+    +wrap_Type
+    +ingredients
+
+OrangeJuice (inherits from MenuItem)
+
+Pepsi (inherits from MenuItem)
+
+Nuggets (inherits from MenuItem)
+
+Fries (inherits from MenuItem)
 
 Menu
-+<All items available> + price + serving quantity
-
-Nuggets
-
-Fries
-
-Pepsi
-
-OrangeJuice
 
 Order
 +orderID
