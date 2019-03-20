@@ -5,26 +5,53 @@ MenuItem
     +price: Float
     +serving_size: Int
 
-SingleBurger (inherits from MenuItem)
+Burger (inherits from MenuItem)
 
-DoubleBurger (inherits from MenuItem)
+SesameBun (inherits from MenuItem)
 
-TripleBurger (inherits from MenuItem)
+MuffinBun (inherits from MenuItem)
+
+ChickenPatty (inherits from MenuItem)
+
+BeefPatty (inherits from MenuItem)
 
 Wrap (inherits from MenuItem)
-    +filling_Type
-    +wrap_Type
-    +ingredients
 
-Ingredients (inherits from MenuItem)
+WrapChicken (inherits from MenuItem)
 
-OrangeJuice (inherits from MenuItem)
+WrapVeg (inherits from MenuItem)
 
-Pepsi (inherits from MenuItem)
+Tomato (inherits from MenuItem)
 
-Nuggets (inherits from MenuItem)
+Lettuce (inherits from MenuItem)
 
-Fries (inherits from MenuItem)
+TomatoSauce (inherits from MenuItem)
+
+CheddarCheese (inherits from MenuItem)
+
+SwissCheese (inherits from MenuItem)
+
+SmallOrangeJuice (inherits from MenuItem)
+
+MediumOrangeJuice (inherits from MenuItem)
+
+LargeOrangeJuice (inherits from MenuItem)
+
+CanPepsi (inherits from MenuItem)
+
+BottlePepsi (inherits from MenuItem)
+
+BottleWater (inherits from MenuItem)
+
+3Nuggets (inherits from MenuItem)
+
+6Nuggets (inherits from MenuItem)
+
+SmallFries (inherits from MenuItem)
+
+MediumFries (inherits from MenuItem)
+
+LargeFries (inherits from MenuItem)
 
 Order
     +orderID
@@ -40,6 +67,17 @@ InventoryItem (inherits from MenuItem)
 
 Inventory
 
+
+
+#### Unsure if needed
+
+BurgerCopy(inherits from MenuItem)
+-bun_Type: String
+-num_Buns: Int
+-patty_Type: String
+-num_Patty: Int
+-ingredients
+
 Menu
     +mains: undecided
     +buns: undecided
@@ -51,6 +89,3 @@ Menu
 
     +sides: undecided
     +drinks: undecided
-
-
-
