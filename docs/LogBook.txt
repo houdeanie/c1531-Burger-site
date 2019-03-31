@@ -13,3 +13,9 @@ Meeting Monday Week 5 (18/3)
 - Decided that the first step is to design the program via analysis of possible classes.
 - Team members tasked with reading the assignment specification and producing a list of possible classes.
 
+Meeting Sunday Week 6 (31/3)
+- Agreed on class diagram. 
+- Decided the next step was to start coding. Stephen to start implementing the class Menu and Dean to implement the class Order.
+
+
+
