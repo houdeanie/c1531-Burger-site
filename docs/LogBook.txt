@@ -10,12 +10,16 @@ Meeting Sunday Week 3 (10/3)
 - No additional tasks given for assignment.
 
 Meeting Monday Week 5 (18/3)
+- All assigned team user stories were completed. User stories were combined and submitted. 
 - Decided that the first step is to design the program via analysis of possible classes.
 - Team members tasked with reading the assignment specification and producing a list of possible classes.
 
 Meeting Sunday Week 6 (31/3)
-- Agreed on class diagram. 
+- A list of possible classes was produced which helped the drawing of a draft of the class diagram. 
+- Stephen and Dean elicited advise from tutor about our class diagram. 
+- Class diagram implemented with mid term advise from Ian Park and from lab advice. 
 - Decided the next step was to start coding. Stephen to start implementing the class Menu and Dean to implement the class Order.
+- Decided that although a Dictionary data structure could be used for class MenuItems, we will stick to Lists as we are all more confident with Lists than Dictionary. 
 
 
 
