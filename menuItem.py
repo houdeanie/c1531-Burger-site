@@ -1,3 +1,4 @@
+#parent class for all food and drink items
 class MenuItem:
 	def __init__(self, name, price, quantity, type):
 		self._name = name
@@ -5,6 +6,7 @@ class MenuItem:
 		self._quantity = quantity
 		self._type = type
 
+	#getter and setter functions
 	def get_name(self):
 		return self._name
 		
@@ -29,11 +31,13 @@ class MenuItem:
 	def set_type(self, type):
 		self._type = type
 		
+#subclass to represent mains		
 class Main(MenuItem):
 	def __init__(self, name, price, quantity, type):
 		super().__init__(name, price, quantity, type)
 		self._ingredients = []
 		
+	#function to calculate the total price of a main	
 	def calc_price(self):
 		total = 0.00
 		for x in self._ingredients:
@@ -42,25 +46,67 @@ class Main(MenuItem):
 		
 	def get_ingredients(self):
 		return self._ingredients
-		
+	
+	#function to add ingredients 	
 	def add_ingredient(self, ingredient):
 		self._ingredients.insert(0, ingredient)
+	
+	#function to show ingredients
+	def show_ingredients(self):
+		if (len(self._ingredients) == 0):
+			return "none"
+		else:
+			ingredients = []
+			for x in self._ingredients:
+				ingredients.append(x.get_name())
+		return ingredients
 		
+	#modified print output	
+	def __str__(self):
+		return "name: {0}, price: {1}, quantity: {2}, type: {3}, ingredients: {4}".format(self._name, self._price, self._quantity, self._type, self.show_ingredients())
+		
+		
+#subclass to represent ingredients that can be added to mains		
 class Ingredient(MenuItem):
 	def __init__(self, name, price, quantity, type):
 		super().__init__(name, price, quantity, type)
 		
+	#modified print output	
+	def __str__(self):
+		return "name: {0}, price: {1}, quantity: {2}, type: {3}".format(self._name, self._price, self._quantity, self._type)
+		
+#subclass of items that come in quantities more than 1 - e.g. drinks, nuggets 
 class MeasuredItem(MenuItem):
 	def __init__(self, name, price, quantity, type, serving_size):
 		super().__init__(name, price, quantity, type)
 		self._serving_size = serving_size
 		
+	#getter and setter functions
 	def get_serving_size(self):
 		return self._serving_size
 		
 	def set_serving_size(self, size):
 		self._serving_size = size
-	
-	
+		
+	#modified print output	
+	def __str__(self):
+		return "name: {0}, price: {1}, quantity: {2}, type: {3}, serving_size: {4}".format(self._name, self._price, self._quantity, self._type, self._serving_size)
+		
+		
+tomato = Ingredient("tomato", 0.5, 1000, "ingredient")
+print(tomato)
+beef_patty = Ingredient("beef_patty", 2, 2000, "patty")
+tomato = Ingredient("tomato", 0.5, 1000, "ingredient")
+lettuce = Ingredient("lettuce", 0.5, 1000, "ingredient")
+cheese = Ingredient("cheese", 0.5, 1000, "ingredient")
+
+burger = Main("burger", 3.0, 1, "main")
+print(burger)	
+burger.add_ingredient(tomato)
+print(burger)	
+burger.add_ingredient(beef_patty)
+print(burger)	
+burger.add_ingredient(lettuce)
+print(burger)	
 	
 		
