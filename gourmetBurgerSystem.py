@@ -11,7 +11,7 @@ class GourmetBurgerSystem:
 		self._last_order_id = 0
 		self._menu_inventory = Menu()
 	
-	#class to place order and decrement inventory
+	#function to place order and decrement inventory
 	def new_order(self, order):
 		order.set_id(self._last_order_id + 1)
 		self._last_order_id += 1
@@ -20,6 +20,7 @@ class GourmetBurgerSystem:
 		self._current_orders_id.insert(order.get_id())
 		self._menu_inventory.dec_inventory(order.get_items())	
 		
+	#function to update order from preparing to ready for pickup
 	def update_current_order(self, order_id):
 		if(self._current_orders_id.count(order_id) == 1):
 			index = self._current_orders_id.index(order_id)
@@ -29,11 +30,12 @@ class GourmetBurgerSystem:
 			self._ready_orders_id.append(self._current_orders_id.pop([index])
 		else:
 			print("order does not exist") 
-			
+	
+	#function to update order from ready to picked up		
 	def update_ready_order(self, order_id):
 		pass
 		
-		
+	#function to get order status	
 	def check_order_status(self, order_id):
 		if(self._current_orders_id.count(order_id) == 1):
 			index = self._current_orders_id.index(order_id)
