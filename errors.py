@@ -1,16 +1,21 @@
 # exception handling for Gourmet burger systems
 
-class OrderErrors(Exception):
-    def __ init__(self,errors, msg=None):
+class OrderError(Exception):
+    def __init__(self, errors, msg=None):
         if msg is None:
-            msg = "Order validation error occurred"
+            msg = "Order validation error occurred with fields: %s"%(', '.join(errors.keys()))
         super().__init__(msg)
         self.errors = errors
 
-def check_order_error():
+def check_order_error(order):
     errors = {}
-
-    if 
+    
+    # empty order
+    try:
+        
+    except:
+        
+    # invalid order due to inventory
 
 
 
