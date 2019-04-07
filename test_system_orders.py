@@ -28,7 +28,7 @@ class TestCreateOrder():
         try:
             new_order = sys.new_order(order)
         except OrderError as err:
-            assert(err.msg = "Must have at least one item in the order")
+            assert(err.msg == "Must have at least one item in the order")
         assert len(sys._current_orders) == 0
         assert sys._current_order == []
 
@@ -36,13 +36,13 @@ class TestCreateOrder():
     def test_full_order(self, sys):
         order = Order()
         # create a burger
-        burger = system.get_copy("burger", 1)
-        burger.add_ingredient(system.get_copy("sesame_bun", 2)) # add ingredients, quantity
-        burger.add_ingredient(system.get_copy("tomato", 1))
-        burger.add_ingredient(system.get_copy("swiss_cheese", 1))
-        burger.add_ingredient(system.get_copy("beef_patty", 1))
-        burger.add_ingredient(system.get_copy("lettuce", 1))
-        burger.add_ingredient(system.get_copy("ians_special_sauce", 1))
+        burger = sys.get_copy("burger", 1)
+        burger.add_ingredient(sys.get_copy("sesame_bun", 2)) # add ingredients, quantity
+        burger.add_ingredient(sys.get_copy("tomato", 1))
+        burger.add_ingredient(sys.get_copy("swiss_cheese", 1))
+        burger.add_ingredient(sys.get_copy("beef_patty", 1))
+        burger.add_ingredient(sys.get_copy("lettuce", 1))
+        burger.add_ingredient(sys.get_copy("ians_special_sauce", 1))
 
         # create drinks
 

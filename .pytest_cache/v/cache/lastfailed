@@ -1,3 +1,5 @@
 {
-  "test_system_orders.py::TestCreateOrder::()": true
+  "test_menuItem.py": true,
+  "test_system_orders.py::TestCreateOrder::()::test_empty_order": true,
+  "test_system_orders.py::TestCreateOrder::()::test_full_order": true
 }

@@ -1,4 +1,7 @@
 [
-  "test_menuItem.py::test_menuItemSubClasses",
-  "test_system_orders.py::TestCreateOrder::()::test_empty_order"
+  "test_system_orders.py::TestCreateOrder::()::test_empty_order",
+  "test_system_orders.py::TestCreateOrder::()::test_full_order",
+  "test_system_orders.py::TestCreateOrder::()::test_main_order",
+  "test_system_orders.py::TestCreateOrder::()::test_sides_order",
+  "test_system_orders.py::TestCreateOrder::()::test_drinks_order"
 ]
