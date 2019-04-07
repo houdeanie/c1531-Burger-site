@@ -7,27 +7,31 @@ class MenuItem:
 		self._type = type
 
 	#getter and setter functions
+	@property
 	def get_name(self):
 		return self._name
-		
+	@name.setter
 	def set_name(self, name):
 		self._name = name
-		
+	
+	@property	
 	def get_price(self):
 		return self._price
-	
+	@price.setter
 	def set_price(self, price):
 		self._price = price
-		
+	
+	@property
 	def get_quantity(self):
 		return self._quantity
-		
+	@quantity.setter
 	def set_quantity(self, quantity):
 		self._quantity = quantity
-		
+
+	@property	
 	def get_type(self):
 		return self._type
-		
+	@type.setter
 	def set_type(self, type):
 		self._type = type
 		
@@ -41,9 +45,9 @@ class Main(MenuItem):
 	def calc_price(self):
 		total = 0.00
 		for x in self._ingredients:
-			total = total + x.get_price()
+			total = total + x.get_price
 		self._price = total
-		return 
+		return total
 		
 	def get_ingredients(self):
 		return self._ingredients
@@ -59,8 +63,8 @@ class Main(MenuItem):
 		else:
 			ingredients = []
 			for x in self._ingredients:
-				ingredients.append(x.get_quantity())
-				ingredients.append(x.get_name())
+				ingredients.append(x.get_quantity)
+				ingredients.append(x.get_name)
 
 		return ingredients
 		

@@ -11,10 +11,9 @@ def check_order_error(order):
     errors = {}
     
     # empty order
-    try:
-        
-    except:
-        
+    if len(order.items) == 0:
+        errors['empty_order'] = "Must have at least one item in the order"
+    
     # invalid order due to inventory
 
 

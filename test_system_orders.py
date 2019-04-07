@@ -26,9 +26,10 @@ class TestCreateOrder():
     def test_empty_order(self, sys):
         order = Order()
         new_order = sys.new_order(order)
-        assert len(sys._current_orders) == 1
+        assert len(sys._current_orders) == 0
         assert sys._current_order[0] == order
         assert sys._current_order_id == 0
+
     # check for valid order (mains, sides, drinks)
     def test_full_order(self, sys):
         order = Order()
@@ -45,7 +46,7 @@ class TestCreateOrder():
 
         new_order = sys.new_order(order)
 
-
+        
         assert sys._current_order[0] == order
     # check for valid order (mains)
     def test_main_order(self, sys):
