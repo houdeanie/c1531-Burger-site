@@ -51,13 +51,12 @@ class Menu:
 					previous_quantity = self._items[ingredient.get_name()].get_quantity()
 					order_quantity = ingredient.get_quantity()
 					new_quantity = previous_quantity - order_quantity
-					if(new_quantity < 1):
+					if(new_quantity < 0):
+						new_quantity = 0
 						self._unavailable.append(ingredient.get_name())
 					self._items[ingredient.get_name()].set_quantity(new_quantity)
 			#decrement side and drink (measured) items
 			elif(name == "small_nuggets" or name == "medium_nuggets" or name == "small_fries" or name == "medium_fries" or name == "small_orange_juice" or name == "medium_orange_juice"):
-				new_quantity = 0
-				#case for nuggets	
 				if(name == "small_nuggets" or name == "medium_nuggets"):
 					previous_quantity = item.get_total_nuggets()
 					order_quantity = item.get_quantity() * item.get_serving_size()
@@ -65,7 +64,7 @@ class Menu:
 					item.set_total_nuggets(new_quantity)
 					self._items["small_nuggets"].set_quantity(new_quantity/3)
 					self._items["medium_nuggets"].set_quantity(new_quantity/6)
-				#case for fries
+					
 				elif(name == "small_fries" or name == "medium_fries"): 
 					previous_quantity = item.get_total_fries()
 					order_quantity = item.get_quantity() * item.get_serving_size()
@@ -73,7 +72,7 @@ class Menu:
 					item.set_total_fries(new_quantity)
 					self._items["small_fries"].set_quantity(new_quantity/75)
 					self._items["medium_fries"].set_quantity(new_quantity/150)
-				#case for orange juice
+					
 				else: 
 					previous_quantity = item.get_total_orange_juice()
 					order_quantity = item.get_quantity() * item.get_serving_size()
@@ -83,34 +82,16 @@ class Menu:
 					self._items["medium_orange_juice"].set_quantity(new_quantity/450)
 					
 				if(new_quantity < 1):
+					new_quantity = 0
 					self._unavailable.append(name)
-			#whatever menu items that is not a main or side or drink
+			# "water": MenuItem("water", 3.0, 1000, "drink")
 			else: 
-				previous_quantity = self._items[name].get_quantity()
+				previous_quantity = self._items["water"].get_quantity()
 				order_quantity = item.get_quantity()
 				new_quantity = previous_quantity - order_quantity
-				self._item[name].set_quantity(new_quantity)
-				if(new_quantity < 1):
-					self._unavailable.append(name)
+				self._items["water"].set_quantity(new_quantity)
 		return		 
-	
-	#function to check whether we have enough stock to fulfil an order	
-	def check_enough_inventory(self, items):
-		not_enough = {}
-		for item in items:
-			if(item.get_type() == "main"):
-				ingredients = item.get_ingredients()
-				for ingredient in ingredients:
-					name = ingredient.get_name()
-					if(ingredient.get_quantity() > self._items[name].get_quantity()):
-						not_enough[name] = self._items[name].get_quantity()
-			else:
-				name = item.get_name()
-				if(item.get_quantity() > self._items[name].get_quantity()):
-					not_enough[name] = self._items[name].get_quantity()
-		return not_enough
 		
-			
 	def add_unavailable():
 		pass
 	
