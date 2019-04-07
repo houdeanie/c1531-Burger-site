@@ -1,7 +1,8 @@
 from menuItem import *
 import copy
 
-#class to represent the Menu and Inventory
+#class to represent the Menu and Inventory List
+
 class Menu:
 	def __init__(self):
 		self._items = {
