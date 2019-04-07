@@ -25,10 +25,12 @@ class TestCreateOrder():
     # check for empty order
     def test_empty_order(self, sys):
         order = Order()
-        new_order = sys.new_order(order)
+        try:
+            new_order = sys.new_order(order)
+        except OrderError as err:
+            assert(err.msg = "Must have at least one item in the order")
         assert len(sys._current_orders) == 0
-        assert sys._current_order[0] == order
-        assert sys._current_order_id == 0
+        assert sys._current_order == []
 
     # check for valid order (mains, sides, drinks)
     def test_full_order(self, sys):
