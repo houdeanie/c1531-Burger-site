@@ -1,3 +1,6 @@
 {
-  "test_menuItem.py": true
+  "test_menuItem.py": true,
+  "test_system_order_update.py::TestCheckStatus::()::test_check_order_status": true,
+  "test_system_order_update.py::TestGetOrderStatus::()::test_get_order_status": true,
+  "test_system_order_update.py::TestUpdateStatus::()::test_update_order_status": true
 }

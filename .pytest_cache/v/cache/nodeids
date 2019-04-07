@@ -1,4 +1,8 @@
 [
+  "test_system_order_update.py::TestGetOrderStatus::()::test_get_order_status",
+  "test_system_order_update.py::TestCheckStatus::()::test_check_order_status",
+  "test_system_order_update.py::TestUpdateStatus::()::test_update_order_status",
+  "test_system_order_update.py::TestDecInv::()::test_dec_inventory",
   "test_system_orders.py::TestCreateOrder::()::test_empty_order",
   "test_system_orders.py::TestCreateOrder::()::test_full_order",
   "test_system_orders.py::TestCreateOrder::()::test_main_order",
