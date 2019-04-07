@@ -11,6 +11,7 @@ class Order:
 		self._items.insert(0, item)
 	
 	def remove_item(self, item):
+		for item in self._item
 		pass
 	
 	#class to calculate total price of order
