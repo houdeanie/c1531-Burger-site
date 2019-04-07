@@ -13,8 +13,8 @@ class GourmetBurgerSystem:
 	
 	#function to place order and decrement inventory
 	def new_order(self, order):
-		not_enough = self._menu_inventory.check_enough_inventory(order.get_items())
-		if(len(not_enough) == 0):
+		insufficient = self._menu_inventory.check_enough_inventory(order.get_items())
+		if(len(insufficient) == 0):
 			order.set_id(self._last_order_id + 1)
 			self._last_order_id += 1
 			order.set_status("preparing") 
@@ -22,7 +22,9 @@ class GourmetBurgerSystem:
 			self._current_orders_id.insert(0, order.get_id())
 			self._menu_inventory.dec_inventory(order.get_items())
 		else:
-			print("Not enough of these items to fulfill order: {0}".format(not_enough))
+			print("Not enough of these items to fulfill order:") 
+			for item in insufficient:
+				print("{0} {1}".format(item, insufficient[item]))
 		return	
 		
 	#function to update order from preparing to ready for pickup
@@ -55,10 +57,10 @@ class GourmetBurgerSystem:
 	def check_order_status(self, order_id):
 		if(self._current_orders_id.count(order_id) == 1):
 			index = self._current_orders_id.index(order_id)
-			return self._current_orders[index].get_status
+			return self._current_orders[index].get_status()
 		elif(self._ready_orders_id.count(order_id) == 1):
 			index = self._ready_orders_id.index(order_id)
-			return self._ready_orders[index].get_status
+			return self._ready_orders[index].get_status()
 		else:
 			print("order not current nor ready")
 		return

@@ -9,9 +9,14 @@ class Order:
 	#classes to items in the order
 	def add_item(self, item):
 		self._items.insert(0, item)
+		self.calc_price()
+		return
 	
 	def remove_item(self, item):
-		pass
+		self.calc_price()
+		index = self._items.index(item)
+		self._items.pop(index)
+		return
 	
 	#class to calculate total price of order
 	def calc_price(self):

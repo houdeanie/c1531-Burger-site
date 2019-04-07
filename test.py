@@ -37,8 +37,13 @@ order2 = Order()
 wrap1 = system.get_copy("wrap", 10000)
 wrap1.add_ingredient(system.get_copy("swiss_cheese", 1500))
 order2.add_item(wrap1)
+drink2 = system.get_copy("small_orange_juice", 150000)
+order2.add_item(drink2)
+side2 = system.get_copy("small_fries", 150000)
+order2.add_item(side2)
 system.new_order(order2)
-print(system.show_inventory())
-
+print(order2.get_id())
+print(order1.get_id())
+print(system.check_order_status(2))
 
 
