@@ -3,5 +3,9 @@
   "test_system_orders.py::TestCreateOrder::()::test_full_order",
   "test_system_orders.py::TestCreateOrder::()::test_main_order",
   "test_system_orders.py::TestCreateOrder::()::test_sides_order",
-  "test_system_orders.py::TestCreateOrder::()::test_drinks_order"
+  "test_system_orders.py::TestCreateOrder::()::test_drinks_order",
+  "test_system_orders.py::TestCreateOrder::()::test_order_side",
+  "test_system_orders.py::TestCreateOrder::()::test_order_drink",
+  "test_system_orders.py::TestCreateOrder::()::test_not_enough_ingredients",
+  "test_system_orders.py::TestCreateOrder::()::test_not_enough_drink"
 ]

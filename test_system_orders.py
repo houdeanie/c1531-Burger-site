@@ -71,14 +71,16 @@ class TestCreateOrder():
         burger.calc_price()
         
         order1.add_item(wrap)
+        order1.calc_price()
         order2.add_item(burger)
+        order2.calc_price()
         new_order1 = sys.new_order(order1)
         new_order2 = sys.new_order(order2)
         assert len(sys._current_orders) == 2
         assert sys._current_orders[0] == order2
         assert sys._current_orders[1] == order1
-        assert order1.get_net_price() == sys._current_orders[1].get_net_price()
-        assert order2.get_net_price() == sys._current_orders[0].get_net_price()
+        assert order1.get_net_price() == 6.5
+        assert order2.get_net_price() == 5.5
         assert order2.show_items == sys._current_orders[0].show_items
         assert order1.show_items == sys._current_orders[1].show_items
     # check for valid order (sides)
@@ -88,10 +90,13 @@ class TestCreateOrder():
         side2 = sys.get_copy("medium_fries", 1)
         order.add_item(side1)
         order.add_item(side2)
+        order.calc_price()
         new_order = sys.new_order(order)
-
+        assert len(sys._current_orders) == 1
+        assert sys._current_orders[0] == order
+        assert order.get_net_price() == 6.5
     # check for valid order (drinks)
-    def test_drinks_order(self,sys):
+    def test_drinks_order(self, sys):
         order = Order()
         drink1 = sys.get_copy("small_orange_juice", 1)
         drink2 = sys.get_copy("medium_orange_juice", 1)
@@ -99,12 +104,59 @@ class TestCreateOrder():
         order.add_item(drink1)
         order.add_item(drink2)
         order.add_item(drink3)
+        order.calc_price()
         new_order = sys.new_order(order)
-        
+        assert len(sys._current_orders) == 1
+        assert sys._current_orders[0] == order
+        assert order.get_net_price() == 8.5
+    
+    def test_order_side(self, sys):
+        burger = sys.get_copy("burger", 1)
+        burger.add_ingredient(sys.get_copy("sesame_bun", 2))
+        burger.add_ingredient(sys.get_copy("tomato", 1))		
+        burger.add_ingredient(sys.get_copy("swiss_cheese", 1))			
+        burger.add_ingredient(sys.get_copy("beef_patty", 1))	
+        burger.add_ingredient(sys.get_copy("lettuce", 1))					
+        burger.add_ingredient(sys.get_copy("ians_special_sauce", 1))	
+        drink = sys.get_copy("small_orange_juice", 1)	
+        side = sys.get_copy("small_nuggets", 1)
+        order = Order()
+        order.add_item(burger)
+        order.add_item(drink)
+        order.add_item(side)
+        new_order = sys.new_order(order)	
+        assert sys._current_orders[0] == order
+
+    def test_order_drink(self, sys):	
+        burger = sys.get_copy("burger", 1)
+        burger.add_ingredient(sys.get_copy("sesame_bun", 2))
+        burger.add_ingredient(sys.get_copy("tomato", 1))		
+        burger.add_ingredient(sys.get_copy("swiss_cheese", 1))			
+        burger.add_ingredient(sys.get_copy("beef_patty", 1))	
+        burger.add_ingredient(sys.get_copy("lettuce", 1))					
+        burger.add_ingredient(sys.get_copy("ians_special_sauce", 1))	
+        drink = sys.get_copy("small_orange_juice", 1)	
+        order = Order()
+        order.add_item(burger)
+        order.add_item(drink)
+        new_order = sys.new_order(order)	
+        assert sys._current_orders[0] == order
 
     # check invalid orders
-    #def test_empty_main(self, sys):
+    def test_not_enough_ingredients(self, sys):
+        burger = sys.get_copy("burger", 1)
+        burger.add_ingredient(sys.get_copy("sesame_bun", 2))	
+        burger.add_ingredient(sys.get_copy("beef_patty", 1))	
+        burger.add_ingredient(sys.get_copy("lettuce", 10000))	
+        order = Order()				
+        order.add_item(burger)
+        sys.new_order(order)	
+        assert len(sys._current_orders) == 1
 
-
-    # inventory for an item is too low
-    #def low_inv_order(self, sys):
+    def test_not_enough_drink(self, sys): 
+        drink = sys.get_copy("small_orange_juice", 10000)	
+        order = Order()				
+        order.add_item(drink)
+        sys.new_order(order)	
+        assert len(sys._current_orders) == 1
+    
