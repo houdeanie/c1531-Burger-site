@@ -1,5 +1,3 @@
-from menuItem import Ingredient
-
 #class to represent a customer order
 class Order:
 	def __init__(self):
@@ -10,7 +8,7 @@ class Order:
 		
 	#classes to items in the order
 	def add_item(self, item):
-		self._items.insert(item)
+		self._items.insert(0, item)
 	
 	def remove_item(self, item):
 		pass
@@ -20,7 +18,8 @@ class Order:
 		total = 0.00
 		for x in self._items:
 			total = total + x.get_price()
-		return total
+		self._net_price = total
+		return
 		
 	#getter and setter methods	
 	def get_id(self):
@@ -34,6 +33,12 @@ class Order:
 		
 	def set_status(self, status):
 		self._status = status
+		
+	def get_items(self):
+		return self._items
+		
+	def get_net_price(self):
+		return self._net_price	
 	
 	#function to print items in the order
 	def show_items(self):
@@ -42,12 +47,13 @@ class Order:
 		else:
 			items = []
 			for x in self._items:
+				items.append(x.get_quantity())
 				items.append(x.get_name())
 		return items
 	
 	#modified print output
 	def __str__(self):
-		print("id: {0}, status: {1}, items: {2}, net_price: {3}".format(self._id, self._status, self.show_items(), self._net_price))		 
+		return("id: {0}, status: {1}, items: {2}, net_price: {3}".format(self._id, self._status, self.show_items(), self._net_price))		 
 
 		
 	

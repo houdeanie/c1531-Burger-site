@@ -42,7 +42,8 @@ class Main(MenuItem):
 		total = 0.00
 		for x in self._ingredients:
 			total = total + x.get_price()
-		return total
+		self._price = total
+		return 
 		
 	def get_ingredients(self):
 		return self._ingredients
@@ -58,7 +59,9 @@ class Main(MenuItem):
 		else:
 			ingredients = []
 			for x in self._ingredients:
+				ingredients.append(x.get_quantity())
 				ingredients.append(x.get_name())
+
 		return ingredients
 		
 	#modified print output	
@@ -92,21 +95,5 @@ class MeasuredItem(MenuItem):
 	def __str__(self):
 		return "name: {0}, price: {1}, quantity: {2}, type: {3}, serving_size: {4}".format(self._name, self._price, self._quantity, self._type, self._serving_size)
 		
-		
-tomato = Ingredient("tomato", 0.5, 1000, "ingredient")
-print(tomato)
-beef_patty = Ingredient("beef_patty", 2, 2000, "patty")
-tomato = Ingredient("tomato", 0.5, 1000, "ingredient")
-lettuce = Ingredient("lettuce", 0.5, 1000, "ingredient")
-cheese = Ingredient("cheese", 0.5, 1000, "ingredient")
 
-burger = Main("burger", 3.0, 1, "main")
-print(burger)	
-burger.add_ingredient(tomato)
-print(burger)	
-burger.add_ingredient(beef_patty)
-print(burger)	
-burger.add_ingredient(lettuce)
-print(burger)	
-	
 		

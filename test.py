@@ -1,20 +1,37 @@
-import menuItem
+from order import *
+from menu import *
+from menuItem import *
+from gourmetBurgerSystem import *
+#test US1 - Customer create main meal 
+#(name: String, price: Float, quantity: Int, type: String)
+system = GourmetBurgerSystem()
+order1 = Order()
+burger1 = system.get_copy("burger", 1)
+burger1.add_ingredient(system.get_copy("sesame_bun", 2))
+print(burger1)
+burger1.add_ingredient(system.get_copy("tomato", 1))
+burger1.add_ingredient(system.get_copy("swiss_cheese", 1))
+burger1.add_ingredient(system.get_copy("beef_patty", 1))
+burger1.add_ingredient(system.get_copy("lettuce", 1))
+burger1.add_ingredient(system.get_copy("ians_special_sauce", 1))
+print(burger1)
+burger1.calc_price()
+print(burger1.get_price())
 
-#testing menuItem	
-tomato = menuItem.Ingredient("tomato", 0.5, 1000, "ingredient")
-print(tomato)
-beef_patty = menuItem.Ingredient("beef_patty", 2, 2000, "patty")
-tomato = menuItem.Ingredient("tomato", 0.5, 1000, "ingredient")
-lettuce = menuItem.Ingredient("lettuce", 0.5, 1000, "ingredient")
-cheese = menuItem.Ingredient("cheese", 0.5, 1000, "ingredient")
+drink1 = system.get_copy("small_orange_juice", 1)
+print(drink1)
+side1 = system.get_copy("small_nuggets", 1)
+print(side1)
+
+order1.add_item(burger1)
+order1.add_item(drink1)
+order1.add_item(side1)
+print(order1)
+order1.calc_price()
+print(order1.get_net_price())
+
+system.new_order(order1)
+print(system.show_inventory())
 
 
-burger = menuItem.Main("burger", 3.0, 1, "main")
-print(burger)	
-burger.add_ingredient(tomato)
-print(burger)	
-burger.add_ingredient(beef_patty)
-print(burger)	
-burger.add_ingredient(lettuce)
-print(burger)	
-	
+
