@@ -2,7 +2,7 @@ from gourmetBurgerSystem import *
 from order import *
 from menu import *
 from menuItem import *
-# from errors import OrderError
+from errors import OrderError
 
 import pytest
 
@@ -29,8 +29,8 @@ class TestCreateOrder():
             new_order = sys.new_order(order)
         except OrderError as err:
             assert(err.msg == "Must have at least one item in the order")
-        assert len(sys._current_orders) == 0
-        assert sys._current_order == []
+        # assert len(sys._current_orders) == 0
+        # assert sys._current_order == []
 
     # check for valid order (mains, sides, drinks)
     def test_full_order(self, sys):
@@ -43,16 +43,27 @@ class TestCreateOrder():
         burger.add_ingredient(sys.get_copy("beef_patty", 1))
         burger.add_ingredient(sys.get_copy("lettuce", 1))
         burger.add_ingredient(sys.get_copy("ians_special_sauce", 1))
-
-        # create drinks
-
+        burger.calc_price()
+        # create drinks and sides
+        drink = sys.get_copy("small_orange_juice", 1)
+        side = sys.get_copy("small_nuggets", 1)
+        order. add_item(burger)
+        order.add_item(drink)
+        order.add_item(side)
+        order.calc_price()
         new_order = sys.new_order(order)
 
-        
-        assert sys._current_order[0] == order
+        assert len(sys._current_orders) == 1
+        assert sys._current_orders[0] == order
+        assert order.get_net_price() == 12.0
+        assert order.show_items == sys._current_orders[0].show_items
     # check for valid order (mains)
     def test_main_order(self, sys):
         order = Order()
+        burger = sys.get_copy("wrap", 1)
+        burger.calc_price()
+
+
     # check for valid order (sides)
     def test_sides_order(self, sys):
         order = Order()

@@ -11,12 +11,14 @@ def check_order_error(order):
     errors = {}
     
     # empty order
-    if len(order.items) == 0:
+    if order._items == []:
         errors['empty_order'] = "Must have at least one item in the order"
     
-    # invalid order due to inventory
-    
+    # an item in the order doesn't have any ingredients
 
+    # an item in the order doesn't have any quantity
+
+    # invalid order due to inventory
 
     if errors:
-        raise BookingError(errors)
+        raise OrderError(errors)

@@ -1,5 +1,6 @@
 from menu import *
 from order import Order
+from errors import *
 
 #class to represent the system
 class GourmetBurgerSystem:
@@ -13,6 +14,10 @@ class GourmetBurgerSystem:
 	
 	#function to place order and decrement inventory
 	def new_order(self, order):
+		try:
+			check_order_error(order)
+		except OrderError as err:
+			return err.errors 
 		order.set_id(self._last_order_id + 1)
 		self._last_order_id += 1
 		order.set_status("preparing") 
