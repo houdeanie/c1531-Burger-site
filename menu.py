@@ -86,7 +86,7 @@ class Menu:
 					self._unavailable.append(name)
 			#whatever menu items that is not a main or side or drink
 			else: 
-				previous_quantity = self._items[name]
+				previous_quantity = self._items[name].get_quantity()
 				order_quantity = item.get_quantity()
 				new_quantity = previous_quantity - order_quantity
 				self._item[name].set_quantity(new_quantity)
