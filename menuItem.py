@@ -95,5 +95,37 @@ class MeasuredItem(MenuItem):
 	def __str__(self):
 		return "name: {0}, price: {1}, quantity: {2}, type: {3}, serving_size: {4}".format(self._name, self._price, self._quantity, self._type, self._serving_size)
 		
+class Nugget(MeasuredItem):
+	_total_nuggets = 10000
+	def __init__(self, name, price, quantity, type, serving_size):
+		super().__init__(name, price, quantity, type, serving_size)
+		
+	def get_total_nuggets(self):
+		return self._total_nuggets
+		
+	def set_total_nuggets(self, total):
+		self._total_nuggets = total
+			
+class Fries(MeasuredItem):
+	_fries_grams = 10000
+	def __init__(self, name, price, quantity, type, serving_size):
+		super().__init__(name, price, quantity, type, serving_size)
+		
+	def get_total_fries(self):
+		return self._total_fries
+		
+	def set_total_fries(self, total):
+		self._total_fries = total
+		
+class OrangeJuice(MeasuredItem):
+	_total_orange_juice = 10000
+	def __init__(self, name, price, quantity, type, serving_size):
+		super().__init__(name, price, quantity, type, serving_size)
+		
+	def get_total_orange_juice(self):
+		return self._total_orange_juice
+		
+	def set_total_orange_juice(self, total):
+		self._total_orange_juice = total
 
 		

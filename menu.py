@@ -1,4 +1,4 @@
-from menuItem import*
+from menuItem import *
 import copy
 
 #class to represent the Menu and Inventory
@@ -21,15 +21,14 @@ class Menu:
 		"cheddar_cheese": Ingredient("cheddar_cheese", 0.5, 1000, "ingredient"), 
 		"tomato_sauce": Ingredient("tomato_sauce", 0.5, 1000, "ingredient"), 
 		"ians_special_sauce": Ingredient("ians_special_sauce", 3.0, 1000, "ingredient"), 
-		"small_nuggets": MeasuredItem("small_nuggets", 3.0, 1000, "side", 3), 
-		"medium_nuggets": MeasuredItem("medium_nuggets", 5.0, 1000, "side", 6), 
-		"small_fries": MeasuredItem("small_fries", 2.5, 1000, "side", 75), 
-		"medium_fries": MeasuredItem("medium_fries", 3.5, 1000, "side", 125), 
-		"large_fries": MeasuredItem("large_fries", 5, 1000, "side", 200), 
+		"small_nuggets": Nugget("small_nuggets", 3.0, 10000/3, "side", 3), 
+		"medium_nuggets": Nugget("medium_nuggets", 5.0, 10000/6, "side", 6), 
+		"small_fries": Fries("small_fries", 2.5, 10000/75, "side", 75), 
+		"medium_fries": Fries("medium_fries", 3.5, 10000/150, "side", 150), 
 		"water": MenuItem("water", 3.0, 1000, "drink"), 
-		"small_orange_juice": MeasuredItem("small_orange_juice", 2.0, 1000, "drink", 250), 
-		"medium_orange_juice": MeasuredItem("medium_orange_juice", 3.5, 1000, "drink", 450)}
-		self._unavailable = {}
+		"small_orange_juice": OrangeJuice("small_orange_juice", 2.0, 10000/250, "drink", 250), 
+		"medium_orange_juice": OrangeJuice("medium_orange_juice", 3.5, 10000/450, "drink", 450)}
+		self._unavailable = []
 		
 		
 	#return copy of item on menu to place in order	
@@ -44,14 +43,52 @@ class Menu:
 	#function to decrement inventory levels after an order is placed		
 	def dec_inventory(self, items):
 		for item in items:
+			name = item.get_name()
 			#decrement ingredients in a main item
-			if(item.get_type == "main"):
+			if(item.get_type() == "main"):
 				ingredients = item.get_ingredients()
 				for ingredient in ingredients:
-					self._items[ingredient.get_name()].set_quantity(self._items[ingredient.get_name()].get_quantity() - 1)
-			#decrement side and drink items
-			else:
-				self._items[item.get_name()].set_quantity(self._items[item.get_name()].get_quantity() - 1) 
+					previous_quantity = self._items[ingredient.get_name()].get_quantity()
+					order_quantity = ingredient.get_quantity()
+					new_quantity = previous_quantity - order_quantity
+					if(new_quantity < 0):
+						new_quantity = 0
+						self._unavailable.append(ingredient.get_name())
+					self._items[ingredient.get_name()].set_quantity(new_quantity)
+			#decrement side and drink (measured) items
+			elif(name == "small_nuggets" or name == "medium_nuggets" or name == "small_fries" or name == "medium_fries" or name == "small_orange_juice" or name == "medium_orange_juice"):
+				if(name == "small_nuggets" or name == "medium_nuggets"):
+					previous_quantity = item.get_total_nuggets()
+					order_quantity = item.get_quantity() * item.get_serving_size()
+					new_quantity = previous_quantity - order_quantity
+					item.set_total_nuggets(new_quantity)
+					self._items["small_nuggets"].set_quantity(new_quantity/3)
+					self._items["medium_nuggets"].set_quantity(new_quantity/6)
+					
+				elif(name == "small_fries" or name == "medium_fries"): 
+					previous_quantity = item.get_total_fries()
+					order_quantity = item.get_quantity() * item.get_serving_size()
+					new_quantity = previous_quantity - order_quantity
+					item.set_total_fries(new_quantity)
+					self._items["small_fries"].set_quantity(new_quantity/75)
+					self._items["medium_fries"].set_quantity(new_quantity/150)
+					
+				else: 
+					previous_quantity = item.get_total_orange_juice()
+					order_quantity = item.get_quantity() * item.get_serving_size()
+					new_quantity = previous_quantity - order_quantity
+					item.set_total_orange_juice(new_quantity)
+					self._items["small_orange_juice"].set_quantity(new_quantity/250)
+					self._items["medium_orange_juice"].set_quantity(new_quantity/450)
+					
+				if(new_quantity < 1):
+					new_quantity = 0
+					self._unavailable.append(name)
+			else: 
+				previous_quantity = self._items[name]
+				order_quantity = item.get_quantity()
+				new_quantity = previous_quantity - order_quantity
+				self._item[name].set_quantity(new_quantity)
 		return		 
 		
 	def add_unavailable():

@@ -32,6 +32,8 @@ print(order1.get_net_price())
 
 system.new_order(order1)
 print(system.show_inventory())
+system.new_order(order1)
 
+print(system.show_inventory())
 
 
