@@ -21,6 +21,7 @@ class GourmetBurgerSystem:
 			self._current_orders.insert(0, order)
 			self._current_orders_id.insert(0, order.get_id())
 			self._menu_inventory.dec_inventory(order.get_items())
+			return self._last_order_id
 		else:
 			print("Not enough of these items to fulfill order:") 
 			for item in insufficient:
@@ -31,17 +32,36 @@ class GourmetBurgerSystem:
 	def update_current_order(self, order_id):
 		if(self._current_orders_id.count(order_id) == 1):
 			index = self._current_orders_id.index(order_id)
-			order = self._current_orders.pop([index])
+			order = self._current_orders.pop()
 			order.set_status("pickup")	
 			self._ready_orders.append(order)
-			self._ready_orders_id.append(self._current_orders_id.pop([index]))
+			self._ready_orders_id.append(self._current_orders_id.pop(index))
 		else:
 			print("order does not exist") 
 		return
-	
+		
+	#function to get order status	
+	def check_order_status(self, order_id):
+		if(self._current_orders_id.count(order_id) == 1):
+			index = self._current_orders_id.index(order_id)
+			return self._current_orders[index].get_status()
+		elif(self._ready_orders_id.count(order_id) == 1):
+			index = self._ready_orders_id.index(order_id)
+			return self._ready_orders[index].get_status()
+		else:
+			return("Order is not being prepared. Please check order id and try again")
+		return
+		
+	def get_current_orders(self):
+		return self._current_orders	
+		
 	#function to update order from ready to picked up		
 	def update_ready_order(self, order_id):
-		pass
+		if(self._ready_orders_id.count(order_id) == 1):
+			index = self._ready_orders_id.index(order_id)
+			order = self._ready_orders.pop(index)
+			self._ready_orders_id.pop(index)	
+		return
 		
 	def get_menu(self):
 		return self._menu_inventory.show_menu()
@@ -53,17 +73,7 @@ class GourmetBurgerSystem:
 	def get_copy(self, name, quantity): 
 		return self._menu_inventory.get_copy(name, quantity)
 		
-	#function to get order status	
-	def check_order_status(self, order_id):
-		if(self._current_orders_id.count(order_id) == 1):
-			index = self._current_orders_id.index(order_id)
-			return self._current_orders[index].get_status()
-		elif(self._ready_orders_id.count(order_id) == 1):
-			index = self._ready_orders_id.index(order_id)
-			return self._ready_orders[index].get_status()
-		else:
-			print("order not current nor ready")
-		return
+
 		
 	def refill_inventory():
 		pass
