@@ -5,7 +5,6 @@ class Order:
 		self._status = "ordering"
 		self._items = []
 		self._net_price = float(-1)
-		
 	#classes to items in the order
 	def add_item(self, item):
 		self._items.insert(0, item)

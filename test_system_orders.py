@@ -93,7 +93,7 @@ class TestCreateOrder():
         order.calc_price()
         new_order = sys.new_order(order)
         assert len(sys._current_orders) == 1
-        assert sys._current_orders[0] == order
+        assert sys._current_order[0] == order
         assert order.get_net_price() == 6.5
     # check for valid order (drinks)
     def test_drinks_order(self, sys):
