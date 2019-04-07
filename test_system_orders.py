@@ -6,14 +6,6 @@ from errors import OrderError
 
 import pytest
 
-class IdGenerator():
-    def __init__(self):
-        self._id = 0
-
-    def next(self):
-        self._id += 1
-        return self._id
-
 @pytest.fixture
 def sys():
     system = GourmetBurgerSystem()
@@ -57,22 +49,62 @@ class TestCreateOrder():
         assert sys._current_orders[0] == order
         assert order.get_net_price() == 12.0
         assert order.show_items == sys._current_orders[0].show_items
-    # check for valid order (mains)
+    # check for valid order (mains) (multiple orders)
     def test_main_order(self, sys):
-        order = Order()
-        burger = sys.get_copy("wrap", 1)
+        order1 = Order()
+        order2 = Order()
+        wrap = sys.get_copy("wrap", 1)
+        wrap.add_ingredient(sys.get_copy("white_wrap", 1))
+        wrap.add_ingredient(sys.get_copy("tomato", 1))
+        wrap.add_ingredient(sys.get_copy("lettuce", 1))
+        wrap.add_ingredient(sys.get_copy("ians_special_sauce", 1))
+        wrap.add_ingredient(sys.get_copy("tuna_filling", 1))
+        wrap.calc_price()
+
+        burger = sys.get_copy("burger", 1)
+        burger.add_ingredient(sys.get_copy("muffin_bun", 2))
+        burger.add_ingredient(sys.get_copy("veg_patty", 1))
+        burger.add_ingredient(sys.get_copy("beef_patty", 1))
+        burger.add_ingredient(sys.get_copy("lettuce", 1))
+        burger.add_ingredient(sys.get_copy("cheddar_cheese", 1))
+        burger.add_ingredient(sys.get_copy("tomato_sauce", 2))
         burger.calc_price()
-
-
+        
+        order1.add_item(wrap)
+        order2.add_item(burger)
+        new_order1 = sys.new_order(order1)
+        new_order2 = sys.new_order(order2)
+        assert len(sys._current_orders) == 2
+        assert sys._current_orders[0] == order2
+        assert sys._current_orders[1] == order1
+        assert order1.get_net_price() == sys._current_orders[1].get_net_price()
+        assert order2.get_net_price() == sys._current_orders[0].get_net_price()
+        assert order2.show_items == sys._current_orders[0].show_items
+        assert order1.show_items == sys._current_orders[1].show_items
     # check for valid order (sides)
     def test_sides_order(self, sys):
         order = Order()
+        side1 = sys.get_copy("small_nuggets", 1)
+        side2 = sys.get_copy("medium_fries", 1)
+        order.add_item(side1)
+        order.add_item(side2)
+        new_order = sys.new_order(order)
+
     # check for valid order (drinks)
     def test_drinks_order(self,sys):
-         order = Order()
+        order = Order()
+        drink1 = sys.get_copy("small_orange_juice", 1)
+        drink2 = sys.get_copy("medium_orange_juice", 1)
+        drink3 = sys.get_copy("water", 1)
+        order.add_item(drink1)
+        order.add_item(drink2)
+        order.add_item(drink3)
+        new_order = sys.new_order(order)
+        
 
     # check invalid orders
+    #def test_empty_main(self, sys):
+
 
     # inventory for an item is too low
-
-    #
+    #def low_inv_order(self, sys):

@@ -15,10 +15,13 @@ def check_order_error(order):
         errors['empty_order'] = "Must have at least one item in the order"
     
     # an item in the order doesn't have any ingredients
-
-    # an item in the order doesn't have any quantity
-
-    # invalid order due to inventory
+    no_ingred = False
+    for item in order._items:
+        if item.get_type() == "main":
+            if item.get_ingredients() == []:
+                no_ingred = True
+    if no_ingred == True:
+        errors['ingredients'] = "Item must have at least one ingredient"
 
     if errors:
         raise OrderError(errors)

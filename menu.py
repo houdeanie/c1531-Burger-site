@@ -84,11 +84,12 @@ class Menu:
 				if(new_quantity < 1):
 					new_quantity = 0
 					self._unavailable.append(name)
+			# "water": MenuItem("water", 3.0, 1000, "drink")
 			else: 
-				previous_quantity = self._items[name]
+				previous_quantity = self._items["water"].get_quantity()
 				order_quantity = item.get_quantity()
 				new_quantity = previous_quantity - order_quantity
-				self._item[name].set_quantity(new_quantity)
+				self._items["water"].set_quantity(new_quantity)
 		return		 
 		
 	def add_unavailable():

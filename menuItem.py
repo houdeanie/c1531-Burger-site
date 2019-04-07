@@ -107,7 +107,7 @@ class Nugget(MeasuredItem):
 		self._total_nuggets = total
 			
 class Fries(MeasuredItem):
-	_fries_grams = 10000
+	_total_fries = 10000
 	def __init__(self, name, price, quantity, type, serving_size):
 		super().__init__(name, price, quantity, type, serving_size)
 		
