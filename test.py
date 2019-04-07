@@ -22,18 +22,23 @@ drink1 = system.get_copy("small_orange_juice", 1)
 print(drink1)
 side1 = system.get_copy("small_nuggets", 1)
 print(side1)
-
 order1.add_item(burger1)
 order1.add_item(drink1)
 order1.add_item(side1)
 print(order1)
 order1.calc_price()
 print(order1.get_net_price())
-
 system.new_order(order1)
 print(system.show_inventory())
 system.new_order(order1)
-
 print(system.show_inventory())
+
+order2 = Order()
+wrap1 = system.get_copy("wrap", 10000)
+wrap1.add_ingredient(system.get_copy("swiss_cheese", 1500))
+order2.add_item(wrap1)
+system.new_order(order2)
+print(system.show_inventory())
+
 
 

@@ -1,5 +1,5 @@
 from menu import *
-from order import Order
+from order import *
 
 #class to represent the system
 class GourmetBurgerSystem:
@@ -13,12 +13,17 @@ class GourmetBurgerSystem:
 	
 	#function to place order and decrement inventory
 	def new_order(self, order):
-		order.set_id(self._last_order_id + 1)
-		self._last_order_id += 1
-		order.set_status("preparing") 
-		self._current_orders.insert(0, order)
-		self._current_orders_id.insert(0, order.get_id())
-		self._menu_inventory.dec_inventory(order.get_items())	
+		not_enough = self._menu_inventory.check_enough_inventory(order.get_items())
+		if(len(not_enough) == 0):
+			order.set_id(self._last_order_id + 1)
+			self._last_order_id += 1
+			order.set_status("preparing") 
+			self._current_orders.insert(0, order)
+			self._current_orders_id.insert(0, order.get_id())
+			self._menu_inventory.dec_inventory(order.get_items())
+		else:
+			print("Not enough of these items to fulfill order: {0}".format(not_enough))
+		return	
 		
 	#function to update order from preparing to ready for pickup
 	def update_current_order(self, order_id):
