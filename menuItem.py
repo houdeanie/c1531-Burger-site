@@ -41,7 +41,7 @@ class Main(MenuItem):
 	def calc_price(self):
 		total = 0.00
 		for x in self._ingredients:
-			total = total + x.get_price()
+			total = total + x.get_price() * x.get_quantity()
 		self._price = total
 		return 
 		
@@ -51,6 +51,8 @@ class Main(MenuItem):
 	#function to add ingredients 	
 	def add_ingredient(self, ingredient):
 		self._ingredients.insert(0, ingredient)
+		self.calc_price()
+		return
 	
 	#function to show ingredients
 	def show_ingredients(self):

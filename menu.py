@@ -91,7 +91,23 @@ class Menu:
 				new_quantity = previous_quantity - order_quantity
 				self._items["water"].set_quantity(new_quantity)
 		return		 
-		
+	
+	#function to check whether we have enough stock to fulfil an order	
+	def check_enough_inventory(self, items):
+		not_enough = {}
+		for item in items:
+			if(item.get_type() == "main"):
+				ingredients = item.get_ingredients()
+				for ingredient in ingredients:
+					name = ingredient.get_name()
+					if(ingredient.get_quantity() > self._items[name].get_quantity()):
+						not_enough[name] = self._items[name].get_quantity()
+			else:
+				name = item.get_name()
+				if(item.get_quantity() > self._items[name].get_quantity()):
+					not_enough[name] = self._items[name].get_quantity()
+		return not_enough
+	
 	def add_unavailable():
 		pass
 	

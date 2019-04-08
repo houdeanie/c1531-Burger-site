@@ -47,7 +47,7 @@ class TestCreateOrder():
 
         assert len(sys._current_orders) == 1
         assert sys._current_orders[0] == order
-        assert order.get_net_price() == 12.0
+        assert order.get_net_price() == 13.0
         assert order.show_items == sys._current_orders[0].show_items
     # check for valid order (mains) (multiple orders)
     def test_main_order(self, sys):
@@ -80,7 +80,7 @@ class TestCreateOrder():
         assert sys._current_orders[0] == order2
         assert sys._current_orders[1] == order1
         assert order1.get_net_price() == 6.5
-        assert order2.get_net_price() == 5.5
+        assert order2.get_net_price() == 7.5
         assert order2.show_items == sys._current_orders[0].show_items
         assert order1.show_items == sys._current_orders[1].show_items
     # check for valid order (sides)
@@ -93,7 +93,7 @@ class TestCreateOrder():
         order.calc_price()
         new_order = sys.new_order(order)
         assert len(sys._current_orders) == 1
-        assert sys._current_order[0] == order
+        assert sys._current_orders[0] == order
         assert order.get_net_price() == 6.5
     # check for valid order (drinks)
     def test_drinks_order(self, sys):
@@ -151,12 +151,12 @@ class TestCreateOrder():
         order = Order()				
         order.add_item(burger)
         sys.new_order(order)	
-        assert len(sys._current_orders) == 1
+        assert len(sys._current_orders) == 0
 
     def test_not_enough_drink(self, sys): 
         drink = sys.get_copy("small_orange_juice", 10000)	
         order = Order()				
         order.add_item(drink)
         sys.new_order(order)	
-        assert len(sys._current_orders) == 1
+        assert len(sys._current_orders) == 0
     
