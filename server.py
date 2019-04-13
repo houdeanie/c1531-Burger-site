@@ -1,3 +1,4 @@
+# create the server 
 from flask import Flask
 from init import bootstrap_system
 
