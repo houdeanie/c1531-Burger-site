@@ -33,7 +33,8 @@ create mains
 '''
 @app.route('/mains', methods=["GET", "POST"])
 def mains():
-    return render_template('cars.html')
+
+    return render_template('mains.html')
 
 '''
 Sides page for Gourmet Burgers
@@ -41,15 +42,15 @@ create sides
 '''
 @app.route('/sides', methods=["GET", "POST"])
 def sides():
-    return render_template('cars.html')
+    return render_template('sides.html')
 
 '''
-Sides page for Gourmet Burgers
+Drinks page for Gourmet Burgers
 create drink
 '''
 @app.route('/drink', methods=["GET", "POST"])
 def drinks():
-    return render_template('cars.html')
+    return render_template('drinks.html')
 
 '''
 Order page for Gourmet Burgers
