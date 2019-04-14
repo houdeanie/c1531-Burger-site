@@ -1,8 +1,8 @@
-from gourmetBurgerSystem import *
-from order import *
-from menu import *
-from menuItem import *
-from errors import OrderError
+from src.gourmetBurgerSystem import *
+from src.order import *
+from src.menu import *
+from src.menuItem import *
+from src.errors import OrderError
 
 import pytest
 
