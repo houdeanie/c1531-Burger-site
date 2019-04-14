@@ -21,5 +21,11 @@ Meeting Sunday Week 6 (31/3)
 - Decided the next step was to start coding. Stephen to start implementing the class Menu and Dean to implement the class Order.
 - Decided that although a Dictionary data structure could be used for class MenuItems, we will stick to Lists as we are all more confident with Lists than Dictionary. 
 
+Meeting Saturday Week 8 (13/4)
+- Dean and Victor to start front end. Dean to start with customer related pages and Victor to start on staff related pages. Victor to help dean with customer related pages after staff related pages. All webpages to be implemented by Tuesday night 7PM except any content related to the back end. 
+
+- Stephen to write unit tests for backend program. Stephen to edit backend code so that they comform with OO design principles - cohesion, coupling, SRP etc. By Sunday night. 
+
+- Stephen to implement pickle.
 
 
