@@ -11,11 +11,12 @@ Dedicated page for "page not found"
 def page_not_found(e=None):
     return render_template('404.html'), 404
 
+################### USER SIDE ######################
 '''
 Home page for Gourmet Burgers
 '''
 @app.route('/', methods=["GET", "POST"])
-def home():
+def user_home():
     return
 
 '''
@@ -33,5 +34,8 @@ create sides
 @app.route('/sides', methods=["GET", "POST"])
 def sides():
     return
+
+
+################# STAFF SIDE ###################
 
 

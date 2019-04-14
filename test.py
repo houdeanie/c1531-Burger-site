@@ -1,4 +1,3 @@
-# test.py
-# file for testing the server 
+# test.py for testing things
 
 
