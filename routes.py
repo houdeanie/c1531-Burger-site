@@ -17,7 +17,15 @@ Home page for Gourmet Burgers
 '''
 @app.route('/', methods=["GET", "POST"])
 def user_home():
-    return
+    # create system
+    # create order
+    if 'mains' in request.form:
+        return redirect(url_for('mains'))
+    elif 'sides' in request.form:
+        return redirect(url_for('sides'))
+    elif 'drinks' in request.form:
+        return redirect(url_for('drinks'))
+    return render_template('user_home.html')
 
 '''
 Mains page for Gourmet Burgers
@@ -25,7 +33,7 @@ create mains
 '''
 @app.route('/mains', methods=["GET", "POST"])
 def mains():
-    return
+    return render_template('cars.html')
 
 '''
 Sides page for Gourmet Burgers
@@ -33,9 +41,31 @@ create sides
 '''
 @app.route('/sides', methods=["GET", "POST"])
 def sides():
-    return
+    return render_template('cars.html')
 
+'''
+Sides page for Gourmet Burgers
+create drink
+'''
+@app.route('/drink', methods=["GET", "POST"])
+def drinks():
+    return render_template('cars.html')
 
+'''
+Order page for Gourmet Burgers
+show customer current order
+'''
+@app.route('/order', methods=["GET", "POST"])
+def drinks():
+    return render_template('cars.html')
+
+'''
+Checkout page for Gourmet Burgers
+shows order and order id, status 
+'''
+@app.route('/checkout', methods=["GET", "POST"])
+def drinks():
+    return render_template('cars.html')
 ################# STAFF SIDE ###################
 
 
