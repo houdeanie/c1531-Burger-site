@@ -18,10 +18,9 @@ Here are some HTML tags you might find useful:
 <!--select bruger or wrap-->
 <!--pressing add to order at anytime exits page-->
 <p>Select</p>
-<form name="main_menu", method="POST">
+<ul>
     <li><a href="{{ url_for('main_burger') }}">Burger</a></li>
     <li><a href="{{ url_for('main_wrap') }}">Wrap</a></li>
-</form>
-
+</ul>
 
 {% endblock %}

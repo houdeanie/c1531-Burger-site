@@ -15,18 +15,12 @@ def page_not_found(e=None):
 '''
 Home page for Gourmet Burgers
 '''
-@app.route('/', methods=["GET"])
+@app.route('/home', methods=["GET"])
 def user_home():
     # create system
     # create order
-    '''
-    if 'mains' in request.form:
-        return redirect(url_for('mains'))
-    elif 'sides' in request.form:
-        return redirect(url_for('sides'))
-    elif 'drinks' in request.form:
-        return redirect(url_for('drinks'))
-    '''
+    # show order
+    # if no order print "There is currently nothing in your order"
     return render_template('user_home.html')
 
 '''
@@ -35,15 +29,22 @@ create mains
 '''
 @app.route('/mains', methods=["GET", "POST"])
 def mains():
-    
+    # takes in order
+    #return redirect(url_for('booking_confirm', rego=car.rego, booking=new_booking))
+    '''
+    if 'burger' in request.form:
+        return redirect(url_for('mains_burger'))
+    elif 'wrap' in request.form:
+        return redirect(url_for('mains_wrap'))
+    '''
     return render_template('mains.html')
 
-@app.route('/mains/burger', methods=["GET", "POST"])
+@app.route('/mains/Burger', methods=["GET", "POST"])
 def main_burger():
-    
+
     return render_template('mains_burger.html')
 
-@app.route('/mains/wrap', methods=["GET", "POST"])
+@app.route('/mains/Wrap', methods=["GET", "POST"])
 def main_wrap():
     
     return render_template('mains_wrap.html')
@@ -54,6 +55,7 @@ create sides
 '''
 @app.route('/sides', methods=["GET", "POST"])
 def sides():
+
     return render_template('sides.html')
 
 '''

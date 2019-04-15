@@ -14,41 +14,38 @@ Here are some HTML tags you might find useful:
 -->
 <h1>Mains</h1>
 
-<p>Burger</p>
+<h2>Burger</h2>
 <!--show default with option to customise-->
 <!-- if customise loop through mains items -->
 <!--pressing add to order at anytime exits page-->
-<form name="main_menu", method="POST">
+<form name="burger_menu", method="POST">
     <table>
         <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+        <tr>
+            <td>Burger1</td>
+            <td>$1.30</td>
             <td>
-                <p>Name</p>
-                <p>Quantity</p>
-                <p>Wrap</p>
-            </td>
-            <td>
-                <p>Quantity</p>
-                <p>
-                    <input type="text" list="quantity" />
-                    <datalist id="quantity">
-                        <option>0</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                    </datalist>
-                </p>
-                <p>
-                    <input type="text" list="quantity" />
-                    <datalist id="quantity">
-                        <option>0</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                    </datalist>
-                </p>
+                <input type="text" list="quantity" placeholder="0"/>
+                <datalist id="quantity">
+                    <option>0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                </datalist>
             </td>
         </tr>
     </table>
+    <button type='submit' name='order_button' value='order'>Add to Order</button>
 </form>
+<!-- if burger item
+	for ingredient in burger_ingredients
+        ingredient name
+        ingredient price
+        options
+        if error print errors-->
 
 {% endblock %}

@@ -1,8 +1,30 @@
 {% extends 'user_base.html' %}
 {% block body %}
 
-<h1>This is the sides page</h1>
+<h1>Sides</h1>
 
-
+<form name="sides_menu", method="POST">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+        <tr>
+            <td>Burger1</td>
+            <td>$1.30</td>
+            <td>
+                <input type="text" list="quantity" />
+                <datalist id="quantity">
+                    <option>0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                </datalist>
+            </td>
+        </tr>
+    </table>
+    <button type='submit' name='order_button' value='order'>Add to Order</button>
+</form>
 
 {% endblock %}
