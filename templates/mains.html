@@ -15,12 +15,31 @@ Here are some HTML tags you might find useful:
     <li><a href="{{ url_for('main_wrap') }}">Wrap</a></li>
 -->
 <h1>Mains</h1>
-<!--select bruger or wrap-->
-<!--pressing add to order at anytime exits page-->
-<p>Select</p>
-<ul>
-    <li><a href="{{ url_for('main_burger') }}">Burger</a></li>
-    <li><a href="{{ url_for('main_wrap') }}">Wrap</a></li>
-</ul>
+<!--select bruger or wrap to add to order, leads to -->
+
+<form name="mains_menu", method="POST">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+        <tr>
+            <td>Burger1</td>
+            <td>$1.30</td>
+            <td>
+                <button type='submit' name='burger_button' value='burger'>Add to Order</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Wrap1</td>
+            <td>$1.30</td>
+            <td>
+                <button type='submit' name='wrap_button' value='wrap'>Add to Order</button>
+            </td>
+        </tr>
+    </table>
+    
+</form>
 
 {% endblock %}
