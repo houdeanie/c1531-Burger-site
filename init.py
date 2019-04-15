@@ -5,6 +5,7 @@ from src.gourmetBurgerSystem import *
 def bootstrap_system():
 
     system = GourmetBurgerSystem()
+    return system
 '''
     rego = 0
     for name in ["Mazda", "Holden", "Ford"]:
@@ -19,7 +20,5 @@ def bootstrap_system():
     for name in ["Tesla", "Audi", "Mercedes"]:
         for model in ["model x", "A4", "S class"]:
             system.add_car(PremiumCar(name, model, str(rego)))
-            rego += 1
-
-    return system
+            rego += 1 
 '''

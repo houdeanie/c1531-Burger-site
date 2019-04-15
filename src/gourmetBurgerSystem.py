@@ -1,6 +1,6 @@
-from menu import *
-from order import Order
-from errors import *
+from src.menu import *
+from src.order import Order
+from src.errors import *
 
 #class to represent the system
 class GourmetBurgerSystem:

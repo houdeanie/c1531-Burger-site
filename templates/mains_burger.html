@@ -1,0 +1,54 @@
+{% extends 'user_base.html' %}
+{% block body %}
+<!--
+Here are some HTML tags you might find useful:
+
+  Form:               <form method="POST"></form>
+  Input field:        <input name="field_name" value="placeholder string"/>
+  Readonly field:     ??? (figure it out yourself)
+
+  Section:            <div></div>
+  Newline:            <br>
+  Red text:           <font size="3" color="red">ERROR MESSAGE</font> 
+  Submit button:      <button name="button_name" type="submit">Say Hi!</button>
+-->
+<h1>Mains</h1>
+
+<p>Burger</p>
+<!--show default with option to customise-->
+<!-- if customise loop through mains items -->
+<!--pressing add to order at anytime exits page-->
+<form name="main_menu", method="POST">
+    <table>
+        <tr>
+            <td>
+                <p>Name</p>
+                <p>Quantity</p>
+                <p>Wrap</p>
+            </td>
+            <td>
+                <p>Quantity</p>
+                <p>
+                    <input type="text" list="quantity" />
+                    <datalist id="quantity">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </datalist>
+                </p>
+                <p>
+                    <input type="text" list="quantity" />
+                    <datalist id="quantity">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </datalist>
+                </p>
+            </td>
+        </tr>
+    </table>
+</form>
+
+{% endblock %}

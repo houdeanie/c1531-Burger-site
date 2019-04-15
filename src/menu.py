@@ -1,4 +1,4 @@
-from menuItem import *
+from src.menuItem import *
 import copy
 
 #class to represent the Menu and Inventory

@@ -1,0 +1,27 @@
+{% extends 'user_base.html' %}
+{% block body %}
+<!--
+Here are some HTML tags you might find useful:
+
+  Form:               <form method="POST"></form>
+  Input field:        <input name="field_name" value="placeholder string"/>
+  Readonly field:     ??? (figure it out yourself)
+
+  Section:            <div></div>
+  Newline:            <br>
+  Red text:           <font size="3" color="red">ERROR MESSAGE</font> 
+  Submit button:      <button name="button_name" type="submit">Say Hi!</button>
+  <li><a href="{{ url_for('main_burger') }}">Burger</a></li>
+    <li><a href="{{ url_for('main_wrap') }}">Wrap</a></li>
+-->
+<h1>Mains</h1>
+<!--select bruger or wrap-->
+<!--pressing add to order at anytime exits page-->
+<p>Select</p>
+<form name="main_menu", method="POST">
+    <li><a href="{{ url_for('main_burger') }}">Burger</a></li>
+    <li><a href="{{ url_for('main_wrap') }}">Wrap</a></li>
+</form>
+
+
+{% endblock %}

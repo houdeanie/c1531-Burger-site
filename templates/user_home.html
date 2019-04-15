@@ -1,8 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'user_base.html' %}
 {% block body %}
 
 <h1>This is the home page</h1>
 
+<p>Select</p>
+<li><a href="{{ url_for('mains') }}">Mains</a></li>
+<li><a href="{{ url_for('sides') }}">Sides</a></li>
+<li><a href="{{ url_for('drinks') }}">Drinks</a></li>
 
 
 {% endblock %}
