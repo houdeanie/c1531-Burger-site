@@ -3,16 +3,43 @@
 
 <h1>Home</h1>
 
+{% if order %}
 <div>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Ingredients</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        {% for items in order %}
+            <tr>
+                <td>{{item.name}}</td>
+                <td>{{item.ingredients}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.price}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <p>Total price: {{order.calc_price}}</p>
     <p>Select</p>
     <ul>
         <li><a href="{{ url_for('mains') }}">Mains</a></li>
         <li><a href="{{ url_for('sides') }}">Sides</a></li>
         <li><a href="{{ url_for('drinks') }}">Drinks</a></li>
     </ul>
-    
 </div>
-
+{% else %}
+<div>
+    <p>Currently nothing in your order.</p>
+    <p>Select</p>
+    <ul>
+        <li><a href="{{ url_for('mains') }}">Mains</a></li>
+        <li><a href="{{ url_for('sides') }}">Sides</a></li>
+        <li><a href="{{ url_for('drinks') }}">Drinks</a></li>
+    </ul>
+</div>
+{% endif %}
 
 
 {% endblock %}

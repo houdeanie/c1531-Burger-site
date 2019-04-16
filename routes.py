@@ -18,12 +18,11 @@ Home page for Gourmet Burgers
 '''
 @app.route('/home', methods=["GET", "POST"])
 def user_home():
-    new_order = Order()
-    system.new_order(new_order)
-    if request.method == 'POST':
-        if 'checkout_button' in request.form:
-            print('checkout')
-    return render_template('user_home.html', order=new_order)
+    # if len(order.get_items) == 0:
+        # return render_template('user_home.html')
+    # else:
+        # return render_template('user_home.html', order = order)
+    return render_template('user_home.html')
 
 '''
 Mains page for Gourmet Burgers
@@ -32,17 +31,16 @@ create mains
 @app.route('/mains', methods=["GET", "POST"])
 def mains():
     # takes in order
-    
     if request.method == 'POST':
         if 'base_burger' in request.form:
             # add default burger
-            return redirect(url_for('main_burger'))
+            return redirect(url_for('user_home'))
         elif 'custom_burger' in request.form:
             # create burger
             return redirect(url_for('main_wrap'))
         elif 'base_wrap' in request.form:
             # add default wrap
-            return redirect(url_for('main_wrap'))
+            return redirect(url_for('user_home'))
         elif 'custom_wrap' in request.form:
             # create wrap
             return redirect(url_for('main_wrap'))
@@ -86,9 +84,7 @@ def sides():
             return redirect(url_for('user_home'))
     return render_template('sides.html')
 
-'''# for item in menu
-            # find how many items ordered
-            # if more than one, add item to order
+'''
 Drinks page for Gourmet Burgers
 create drink
 '''
@@ -122,7 +118,32 @@ def checkout():
 
     return render_template('checkout.html')
 
+'''
+Checkout Order page for Gourmet Burgers
+show customer current order when given their id
+'''
+@app.route('/order/<id>', methods=["GET", "POST"])
+def checkout_order(id):
+
+    return render_template('checkout.html')
+
 
 ################# STAFF SIDE ###################
+'''
+Staff home page
+shows current orders and allows staff to finish orders
+finishing an order causes the order to disappear and change order status
+'''
 
+'''
+Staff ingredients inventory page
+'''
+
+'''
+Staff sides inventory page
+'''
+
+'''
+Staff drinks inventory page
+'''
 
