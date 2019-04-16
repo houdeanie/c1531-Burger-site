@@ -16,10 +16,13 @@ def page_not_found(e=None):
 '''
 Home page for Gourmet Burgers
 '''
-@app.route('/home', methods=["GET"])
+@app.route('/home', methods=["GET", "POST"])
 def user_home():
     new_order = Order()
     system.new_order(new_order)
+    if request.method == 'POST':
+        if 'checkout_button' in request.form:
+            print('checkout')
     return render_template('user_home.html', order=new_order)
 
 '''
@@ -30,11 +33,18 @@ create mains
 def mains():
     # takes in order
     
-    #return redirect(url_for('booking_confirm', rego=car.rego, booking=new_booking))
     if request.method == 'POST':
-        if 'burger_button' in request.form:
+        if 'base_burger' in request.form:
+            # add default burger
             return redirect(url_for('main_burger'))
-        elif 'wrap_button' in request.form:
+        elif 'custom_burger' in request.form:
+            # create burger
+            return redirect(url_for('main_wrap'))
+        elif 'base_wrap' in request.form:
+            # add default wrap
+            return redirect(url_for('main_wrap'))
+        elif 'custom_wrap' in request.form:
+            # create wrap
             return redirect(url_for('main_wrap'))
     return render_template('mains.html')
 
@@ -43,6 +53,7 @@ def main_burger():
     if request.method == 'POST':
         # checks for errors
         # if valid
+        arr = [] # array size length of items in menu
         if 'order_button' in request.form:
             return redirect(url_for('user_home'))
     return render_template('mains_burger.html')
@@ -52,6 +63,7 @@ def main_wrap():
     if request.method == 'POST':
         # checks for errors
         # if valid
+        arr = [] # array size length of items in menu
         if 'order_button' in request.form:
             return redirect(url_for('user_home'))
     return render_template('mains_wrap.html')
@@ -65,11 +77,18 @@ def sides():
     if request.method == 'POST':
         # checks for errors
         # if valid
+        arr = [] # array size length of items in menu
         if 'order_button' in request.form:
+            # for item in menu
+            # find how many items ordered
+            # if more than one, add item to order
+
             return redirect(url_for('user_home'))
     return render_template('sides.html')
 
-'''
+'''# for item in menu
+            # find how many items ordered
+            # if more than one, add item to order
 Drinks page for Gourmet Burgers
 create drink
 '''
@@ -78,7 +97,11 @@ def drinks():
     if request.method == 'POST':
         # checks for errors
         # if valid
+        arr = [] # array size length of items in menu
         if 'order_button' in request.form:
+            # for item in menu
+            # find how many items ordered
+            # if more than one, add item to order
             return redirect(url_for('user_home'))
     return render_template('drinks.html')
 

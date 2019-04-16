@@ -1,8 +1,65 @@
-{% extends 'user_base.html' %}
-{% block body %}
+<!DOCTYPE html>
+<html lang="en">
 
-<h1>This is the checkout page</h1>
+<head>
+    <title>Gourmet Burgers</title>
+    <meta name="author" content="Duowei Sun (z5174073), Dean Hou (z5163159), Siyang Wang (z3254606)">
+    <meta name="description" content="Team Name: Trinity Force">
+    <style>
+    .topnav {
+        overflow: hidden;
+        background-color: #333;
+    }
+    .topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    } 
+    .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+    .topnav a.active {
+        background-color: #4CAF50;
+        color: white;
+    }
+</style>
+    </head>
+
+<body>
+
+<!-- Tab Menu -->
+<div class="topnav">
+    <a href="{{ url_for('checkout') }}">Home</a>
+</div>
+<br>
+<!-- Message -->
+<div>
+    <h1>Thanks for your order!</h1>
+    <h2>Order id: </h2>
+    <h2>Total Price: </h2>
+    <h2>Status: </h2>
+</div>
+<div>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Ingredients</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        <tr>
+            <td>Wrap1</td>
+            <td>stuff</td>
+            <td>1</td>
+            <td>$1.30</td>
+        </tr>
+    </table>
+</div>
 
 
-
-{% endblock %}
+</body>
+</html>
