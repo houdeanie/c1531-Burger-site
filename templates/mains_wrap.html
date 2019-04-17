@@ -1,16 +1,5 @@
 {% extends 'user_base.html' %}
 {% block body %}
-<!--
-Here are some HTML tags you might find useful:
-
-  Form:               <form method="POST"></form>
-  Input field:        <input name="field_name" value="placeholder string"/>
-  Readonly field:     ??? (figure it out yourself)
-  Section:            <div></div>
-  Newline:            <br>
-  Red text:           <font size="3" color="red">ERROR MESSAGE</font> 
-  Submit button:      <button name="button_name" type="submit">Say Hi!</button>
--->
 <h1>Mains</h1>
 
 <h2>Wrap</h2>
@@ -24,13 +13,13 @@ Here are some HTML tags you might find useful:
             <th>Price</th>
             <th>Quantity</th>
         </tr>
+        {% for item in ingredients %}
         <tr>
-            <td>Wrap1</td>
-            <td>$1.30</td>
-            <td>
-                <input name='q1' type="number" min="0"/>
-            </td>
+            <td> {{ item }} </td>
+            <td> Price </td>
+            <td><input name='{{ item }}' type="number" min="0"/></td>
         </tr>
+        {% endfor %}
     </table>
     <button type='submit' name='order_button' value='order'>Add to Order</button>
 </form>

@@ -117,7 +117,7 @@ class Menu:
 	def show_menu(self):
 		for key in self._items:
 			print(key)
-		return	
+		return self._items[key]
 		
 	def show_inventory(self):
 		for key in self._items:

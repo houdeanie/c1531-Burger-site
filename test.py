@@ -1,7 +1,8 @@
 # test.py for testing things
-
+from src.menu import *
 # storing some html code that could be useful for later
 # re: iterating through a menus items
+'''
 {% for item in _menu %}
     <tr>
         <td> {{ item.name}} </td>
@@ -34,3 +35,7 @@
 "water": MenuItem("water", 3.0, 1000, "drink"), 
 "small_orange_juice": OrangeJuice("small_orange_juice", 2.0, 10000/250, "drink", 250), 
 "medium_orange_juice": OrangeJuice("medium_orange_juice", 3.5, 10000/450, "drink", 450)
+'''
+
+new_menu = Menu()
+

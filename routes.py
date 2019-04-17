@@ -37,13 +37,15 @@ def mains():
             return redirect(url_for('user_home'))
         elif 'custom_burger' in request.form:
             # create burger
-            return redirect(url_for('main_wrap'))
+            burger1 = system.get_copy("burger", 1)
+            return redirect(url_for('main_burger', ingredients=system.get_menu()))
         elif 'base_wrap' in request.form:
             # add default wrap
             return redirect(url_for('user_home'))
         elif 'custom_wrap' in request.form:
             # create wrap
-            return redirect(url_for('main_wrap'))
+            wrap1 = system.get_copy("wrap", 1)
+            return redirect(url_for('main_wrap', ingredients = system.get_menu()))
     return render_template('mains.html')
 
 @app.route('/mains/Burger', methods=["GET", "POST"])
@@ -77,6 +79,9 @@ def sides():
         # if valid
         arr = [] # array size length of items in menu
         if 'order_button' in request.form:
+            quantity = request.form.get('q1')
+            print(quantity)
+            #sides = system.get_copy("", quantity)
             # for item in menu
             # find how many items ordered
             # if more than one, add item to order
