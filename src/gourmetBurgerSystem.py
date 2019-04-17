@@ -8,9 +8,13 @@ class GourmetBurgerSystem:
 		self._order_history = []
 		self._last_order_id = 0
 		self._menu_inventory = menu or Menu()
+		
+	def new_order(self):
+		order = Order()
+		return order	
 	
 	#function to place order and decrement inventory
-	def new_order(self, order):
+	def place_order(self, order):
 		insufficient = self._menu_inventory.check_enough_inventory(order.items)
 		try:
 			check_order_error(order)
@@ -42,8 +46,7 @@ class GourmetBurgerSystem:
 	def update_order_completed(self, order_id):
 		order = self._get_order(order_id)		
 		if order == None:
-			return None
-		
+			return None		
 		else: 
 			index = self._order_history.index(order)
 			order = self._order_history.pop(index)
@@ -54,7 +57,6 @@ class GourmetBurgerSystem:
 		order = self._get_order(order_id)
 		if order == None:
 			return("Order is not being prepared. Please check order id and try again")
-
 		else:
 			return order.status
 		return
@@ -89,7 +91,7 @@ class GourmetBurgerSystem:
 		
 
 		
-	def refill_inventory():
+	def refill_inventory(self):
 		pass
 		
 	def login():
