@@ -1,25 +1,26 @@
-from menuItem import MenuItem
+from item import Item
 
 #class to represent a customer order
 class Order:
 	def __init__(self):
 		self._id = -1
 		self._status = "ordering"
-		self._items = []
+		self._items = []	#list of strings + MainOrderItem
 		self._net_price = 0
 		
-	#classes to items in the order
+	#function to add items to the order. item is type String or MainOrderItem
 	def add_item(self, item, price):
 		self._items.append(item)
 		self._net_price += price
 		return
-	
+		
+	#function to remove items from the order. item is type String or MainOrderItem 
 	def remove_item(self, item, price):
 		if not item in self._items:
 			return False
 		index = self._items.index(item)
 		self._items.pop(index)
-		self._net_price -= price
+		self._net_price -= price		
 		return True
 		
 	#getter and setter methods	
