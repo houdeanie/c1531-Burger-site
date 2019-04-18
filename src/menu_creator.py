@@ -23,6 +23,8 @@ def create_menu():
 	menu.add_menu_item("cheddar cheese", 0.5, 1000, "ingredient") 
 	menu.add_menu_item("tomato sauce", 0.5, 1000, "ingredient")
 	menu.add_menu_item("ians special sauce", 2, 1000, "ingredient") 
+	
+	#set quantity of base burger and base wrap to the ingredient with the lowest quantity adjusted for multiple ingredients required
 	menu.set_main_quantity("base burger")
 	menu.set_main_quantity("base wrap")	
 	
@@ -31,12 +33,12 @@ def create_menu():
 	menu.add_measured_item("small nuggets", 3.0, -1, "side", 3, "nuggets") 
 	menu.add_measured_item("medium nuggets", 5.0, -1, "side", 6, "nuggets")
 	menu.add_measured_item("large nuggets", 7.0, -1, "side", 10, "nuggets") 
-	menu.set_quantity("nugget")
+
 	menu.add_base_item("fries", 0, 6000, "side", ["small fries", "medium fries", "large fries"])
 	menu.add_measured_item("small fries", 2.5, -1, "side", 75, "fries")
 	menu.add_measured_item("medium fries", 3.5, -1, "side", 150, "fries")
 	menu.add_measured_item("large fries", 4.5, -1, "side", 250, "fries")
-	menu.set_quantity("fries")
+
 			
 	#add drinks 
 	menu.add_menu_item("water", 3.0, 1000, "drink") 
@@ -44,8 +46,7 @@ def create_menu():
 	menu.add_measured_item("small orange juice", 2.5, -1, "drink", 250, "orange juice") 
 	menu.add_measured_item("medium orange juice", 3.5,  -1, "drink", 450, "orange juice")
 	menu.add_measured_item("large orange juice", 4.5, -1, "drink", 650, "orange juice")
-	menu.set_quantity("orange juice")
-	
+
 	#add sundaes
 	menu.add_base_item("sundae", 0, 10000, "dessert", ["small chocolate sundae", "medium chocolate sundae", "large chocolate sundae", "small strawberry sundae", "medium strawberry sundae", "large strawberry sundae"])
 	menu.add_measured_item("small chocolate sundae", 3.5, -1, "drink", 250, "sundae") 
@@ -54,6 +55,11 @@ def create_menu():
 	menu.add_measured_item("small strawberry sundae", 3.5, -1, "drink", 250, "sundae") 	
 	menu.add_measured_item("medium strawberry sundae", 4.5, -1, "drink", 450, "sundae")
 	menu.add_measured_item("large strawberry sundae", 5.5, -1, "drink", 650, "sundae") 	
+
+	#set quantity of sized items with a base item 
+	menu.set_quantity("nugget")	
+	menu.set_quantity("fries")		
+	menu.set_quantity("orange juice")
 	menu.set_quantity("sundae")
-									
+								
 	return menu
