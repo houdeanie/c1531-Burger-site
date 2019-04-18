@@ -69,6 +69,16 @@ class Menu:
 					insufficient[item] = self._items[item].stock_quantity
 		return insufficient
 
+	#function to set the quantity of base wrap and base burger based on the least available ingredient
+	def set_main_quantity(self, main_item):
+		ingredients = self.get_item(main_item).ingredients
+		quantity = self.get_stock_quantity(ingredients[0])
+		for ingredient in ingredients:
+			count = ingredients.count(ingredient)
+			if (self.get_stock_quantity(ingredient) / count) < quantity:
+				quantity = self.get_stock_quantity(ingredient) / count
+		self.set_stock_quantity(main_item, quantity)
+		return
 
 	def display(self):
 		return self._items.values()
@@ -82,3 +92,14 @@ class Menu:
     	
 	def get_items(self):
 		return self._items
+		
+	#function that returns the quantity of an item in string format
+	def get_stock_quantity(self, name):
+		quantity = self.get_item(name).stock_quantity
+		return quantity
+
+	#function that sets the quantity of an item in string format
+	def set_stock_quantity(self, name, quantity):
+		self.get_item(name).stock_quantity = quantity
+		return 
+		

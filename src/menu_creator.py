@@ -22,7 +22,9 @@ def create_menu():
 	menu.add_menu_item("swiss cheese", 0.5, 1000, "ingredient") 
 	menu.add_menu_item("cheddar cheese", 0.5, 1000, "ingredient") 
 	menu.add_menu_item("tomato sauce", 0.5, 1000, "ingredient")
-	menu.add_menu_item("ians pecial sauce", 2, 1000, "ingredient") 
+	menu.add_menu_item("ians special sauce", 2, 1000, "ingredient") 
+	menu.set_main_quantity("base burger")
+	menu.set_main_quantity("base wrap")	
 	
 	#add sides
 	menu.add_base_item("nugget", 0, 1000, "side", ["small nuggets", "medium nuggets", "large nuggets"])
