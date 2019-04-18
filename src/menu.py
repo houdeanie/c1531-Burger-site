@@ -118,3 +118,42 @@ class Menu:
 		self.set_quantity("sundae")
 		return
 		
+	#function to return a list of mains on the menu only
+	def get_mains(self):
+		mains = []
+		for item in self._items.keys():
+			if self.get_item(item).food_type == "main":
+				mains.append(self.get_item(item))
+		return mains
+	
+	#function to return a list of ingredients on the menu only
+	def get_ingredients(self):
+		ingredients = []
+		for item in self._item.keys():
+			if self.get_item(item).food_type == "ingredient":
+				ingredients.append(self.get_item(item))
+		return ingredients
+	
+	#function to return a list of sides on the menu only
+	def get_sides(self):
+		sides = []
+		for item in self._item.keys():
+			if self.get_item(item).food_type == "side" and not isinstance(self.get_item(item), BaseMenuItem):
+				sides.append(self.get_item(item))
+		return sides	
+	
+	#function to return a list of drinks on the menu only
+	def get_drinks(self):
+		drinks = []
+		for item in self._item.keys():
+			if self.get_item(item).food_type == "drink" and not isinstance(self.get_item(item), BaseMenuItem):
+				drinks.append(self.get_item(item))
+		return drinks	
+	
+	#function to return a list of sundaes on the menu only
+	def get_desserts(self):
+		desserts = []
+		for item in self._item.keys():
+			if self.get_item(item).food_type == "dessert" and not isinstance(self.get_item(item), BaseMenuItem):
+				desserts.append(self.get_item(item))
+		return desserts			
