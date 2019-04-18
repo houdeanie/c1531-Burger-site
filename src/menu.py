@@ -103,3 +103,18 @@ class Menu:
 		self.get_item(name).stock_quantity = quantity
 		return 
 		
+	#function to refill inventory to full
+	def refill_inventory(self):
+		for item in self._items.keys():
+			if self.get_item(item).food_type == "ingredient":
+				self.set_stock_quantity(item, 1000)
+			elif isinstance(self.get_item(item), BaseMenuItem):
+				self.set_stock_quantity(item, 10000)
+		self.set_main_quantity("baseburger")
+		self.set_main_quantity("base wrap")		
+		self.set_quantity("nugget")
+		self.set_quantity("fries")
+		self.set_quantity("orange juice")
+		self.set_quantity("sundae")
+		return
+		
