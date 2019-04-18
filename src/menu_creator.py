@@ -3,10 +3,10 @@ from menu import *
 def create_menu():
 	menu = Menu() 
 	#add mains to menu
-	menu.add_main("custom burger", 0, 500, "main", []) 
-	menu.add_main("base burger", 7, 500, "main", ["sesame bun", "sesame bun", "beef patty", "tomato", "lettuce", "swiss cheese", "ians special sauce"]) 
+	menu.add_main("custom burger", 1000, 500, "main", []) 
+	menu.add_main("base burger", 7, -1, "main", ["sesame bun", "sesame bun", "beef patty", "tomato", "lettuce", "swiss cheese", "ians special sauce"]) 
 	menu.add_main("custom wrap", 0, 1000, "main", []) 
-	menu.add_main("base wrap", 6, 1000, "main", ["white wrap", "veg filling", "tomato", "lettuce", "swiss cheese", "ians special sauce"]) 
+	menu.add_main("base wrap", 6, -1, "main", ["white wrap", "veg filling", "tomato", "lettuce", "swiss cheese", "ians special sauce"]) 
 		
 	#add ingredients to menu		
 	menu.add_menu_item("sesame bun", 1, 1000, "ingredient")
@@ -29,7 +29,7 @@ def create_menu():
 	menu.set_main_quantity("base wrap")	
 	
 	#add sides
-	menu.add_base_item("nugget", 0, 1000, "side", ["small nuggets", "medium nuggets", "large nuggets"])
+	menu.add_base_item("nugget", 0, 10000, "side", ["small nuggets", "medium nuggets", "large nuggets"])
 	menu.add_measured_item("small nuggets", 3.0, -1, "side", 3, "nuggets") 
 	menu.add_measured_item("medium nuggets", 5.0, -1, "side", 6, "nuggets")
 	menu.add_measured_item("large nuggets", 7.0, -1, "side", 10, "nuggets") 
