@@ -1,4 +1,4 @@
-from item import Item
+from src.item import Item
 
 #class to represent a customer order
 class Order:

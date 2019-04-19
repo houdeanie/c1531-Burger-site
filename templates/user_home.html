@@ -12,10 +12,14 @@
             <th>Quantity</th>
             <th>Price</th>
         </tr>
-        {% for items in order %}
+        {% for item in order.items %}
             <tr>
                 <td>{{item.name}}</td>
-                <td>{{item.ingredients}}</td>
+                {% if item.food_type == 'main' %}
+                    <td>{{item.ingredients}}</td>
+                {% else %}
+                    <td>{{item.name}}</td>
+                {% endif %}
                 <td>{{item.quantity}}</td>
                 <td>{{item.price}}</td>
             </tr>

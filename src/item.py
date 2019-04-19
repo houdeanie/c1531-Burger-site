@@ -121,7 +121,7 @@ class MeasuredMenuItem(MenuItem):
 		
 	#modified print output	
 	def __str__(self):
-		return "name: {0}, price: {1}, stock_quantity: {2}, food_type: {3}, serving_size: {4}, pile_quantity: {5}".format(self._name, self._price, self._stock_quantity, self._food_type, self._serving_size, self._pile_quantity)
+		return "name: {0}, price: {1}, stock_quantity: {2}, food_type: {3}, serving_size: {4}, stock_quantity: {5}".format(self._name, self._price, self._stock_quantity, self._food_type, self._serving_size, self._stock_quantity)
 		
 		
 #subclass for items that are used to keep track of measured items e.g. total nuggets

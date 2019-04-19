@@ -1,4 +1,4 @@
-from menu import *
+from src.menu import *
 
 def create_menu():
 	menu = Menu() 
@@ -46,12 +46,12 @@ def create_menu():
 	
 	#add sundaes
 	menu.add_base_item("sundae", 0, 10000, "dessert", ["small chocolate sundae", "medium chocolate sundae", "large chocolate sundae", "small strawberry sundae", "medium strawberry sundae", "large strawberry sundae"])
-	menu.add_measured_item("small chocolate sundae", 3.5, -1, "drink", 250, "sundae") 
-	menu.add_measured_item("medium chocolate sundae", 4.5, -1, "drink", 450, "sundae") 
-	menu.add_measured_item("large chocolate sundae", 5.5, -1, "drink", 650, "sundae") 	
-	menu.add_measured_item("small strawberry sundae", 3.5, -1, "drink", 250, "sundae") 	
-	menu.add_measured_item("medium strawberry sundae", 4.5, -1, "drink", 450, "sundae")
-	menu.add_measured_item("large strawberry sundae", 5.5, -1, "drink", 650, "sundae") 	
+	menu.add_measured_item("small chocolate sundae", 3.5, -1, "dessert", 250, "sundae") 
+	menu.add_measured_item("medium chocolate sundae", 4.5, -1, "dessert", 450, "sundae") 
+	menu.add_measured_item("large chocolate sundae", 5.5, -1, "dessert", 650, "sundae") 	
+	menu.add_measured_item("small strawberry sundae", 3.5, -1, "dessert", 250, "sundae") 	
+	menu.add_measured_item("medium strawberry sundae", 4.5, -1, "dessert", 450, "sundae")
+	menu.add_measured_item("large strawberry sundae", 5.5, -1, "dessert", 650, "sundae") 	
 	menu.set_quantity("sundae")
 									
 	return menu

@@ -1,6 +1,6 @@
-from menu import *
-from order import Order
-from errors import *
+from src.menu import *
+from src.order import Order
+from src.errors import *
 
 #class to represent the system
 class GourmetBurgerSystem:
@@ -78,6 +78,7 @@ class GourmetBurgerSystem:
 		return self._menu_inventory.get_items()
 	
 	#display menu	
+	@property
 	def display_inventory(self):
 		return self._menu_inventory
 
@@ -88,8 +89,6 @@ class GourmetBurgerSystem:
 		if not self._menu_inventory.get_item(name):
 			return "Item doesn't exist"
 		return self._menu_inventory.get_item(name)
-		
-
 		
 	def refill_inventory(self):
 		pass

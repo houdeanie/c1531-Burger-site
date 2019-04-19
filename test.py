@@ -1,5 +1,11 @@
 # test.py for testing things
 from src.menu import *
+from src.gourmetBurgerSystem import GourmetBurgerSystem
+from src.order import Order
+from src.menu_creator import *
+from src.menuItem import *
+from src.gourmetBurgerSystem import GourmetBurgerSystem
+from src.order import Order
 # storing some html code that could be useful for later
 # re: iterating through a menus items
 '''
@@ -37,5 +43,5 @@ from src.menu import *
 "medium_orange_juice": OrangeJuice("medium_orange_juice", 3.5, 10000/450, "drink", 450)
 '''
 
-new_menu = Menu()
+system = 
 

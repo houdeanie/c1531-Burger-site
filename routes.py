@@ -18,10 +18,12 @@ Home page for Gourmet Burgers
 '''
 @app.route('/home', methods=["GET", "POST"])
 def user_home():
-    # if len(order.get_items) == 0:
-        # return render_template('user_home.html')
-    # else:
-        # return render_template('user_home.html', order = order)
+    order = system.new_order()
+    if len(order.items) == 0:
+        return render_template('user_home.html')
+    else:
+        return render_template('user_home.html', order=order)
+
     return render_template('user_home.html')
 
 '''
@@ -37,15 +39,15 @@ def mains():
             return redirect(url_for('user_home'))
         elif 'custom_burger' in request.form:
             # create burger
-            burger1 = system.get_copy("burger", 1)
-            return redirect(url_for('main_burger', ingredients=system.get_menu()))
+            # burger1 = system.get_copy("burger", 1)
+            return redirect(url_for('main_burger', ingredients=system.display_inventory))
         elif 'base_wrap' in request.form:
             # add default wrap
             return redirect(url_for('user_home'))
         elif 'custom_wrap' in request.form:
             # create wrap
-            wrap1 = system.get_copy("wrap", 1)
-            return redirect(url_for('main_wrap', ingredients = system.get_menu()))
+            # wrap1 = system.get_copy("wrap", 1)
+            return redirect(url_for('main_wrap'))
     return render_template('mains.html')
 
 @app.route('/mains/Burger', methods=["GET", "POST"])
@@ -87,7 +89,7 @@ def sides():
             # if more than one, add item to order
 
             return redirect(url_for('user_home'))
-    return render_template('sides.html')
+    return render_template('sides.html', sides=system.display_inventory.get_sides())
 
 '''
 Drinks page for Gourmet Burgers
@@ -104,7 +106,8 @@ def drinks():
             # find how many items ordered
             # if more than one, add item to order
             return redirect(url_for('user_home'))
-    return render_template('drinks.html')
+    #print(system.display_inventory.get_drinks())
+    return render_template('drinks.html', drinks=system.display_inventory.get_drinks())
 
 '''
 Order page for Gourmet Burgers
@@ -112,7 +115,7 @@ show customer current order
 '''
 @app.route('/order', methods=["GET", "POST"])
 def user_order():
-    return render_template('user_order.html')
+    return redirect(url_for('user_home'))
 
 '''
 Checkout page for Gourmet Burgers
