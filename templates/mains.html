@@ -1,0 +1,64 @@
+{% extends 'user_base.html' %}
+{% block body %}
+<!--
+Here are some HTML tags you might find useful:
+
+  Form:               <form method="POST"></form>
+  Input field:        <input name="field_name" value="placeholder string"/>
+  Readonly field:     ??? (figure it out yourself)
+
+  Section:            <div></div>
+  Newline:            <br>
+  Red text:           <font size="3" color="red">ERROR MESSAGE</font> 
+  Submit button:      <button name="button_name" type="submit">Say Hi!</button>
+  <li><a href="{{ url_for('main_burger') }}">Burger</a></li>
+    <li><a href="{{ url_for('main_wrap') }}">Wrap</a></li>
+-->
+<h1>Mains</h1>
+<!--select bruger or wrap to add to order, leads to -->
+
+<form name="mains_menu", method="POST">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Ingredients</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+        <tr>
+            <td>Base Burger</td>
+            <td>Ingredients</td>
+            <td>$1.30</td>
+            <td>
+                <button type='submit' name='base_burger' value='burger'>Add to Order</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Customised Burger</td>
+            <td>Custom</td>
+            <td>$1.30</td>
+            <td>
+                <button type='submit' name='custom_burger' value='burger'>Add to Order</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Base Wrap</td>
+            <td>Ingredients</td>
+            <td>$1.30</td>
+            <td>
+                <button type='submit' name='base_wrap' value='wrap'>Add to Order</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Customised Wrap</td>
+            <td>Custom</td>
+            <td>$1.30</td>
+            <td>
+                <button type='submit' name='custom_wrap' value='wrap'>Add to Order</button>
+            </td>
+        </tr>
+    </table>
+    
+</form>
+
+{% endblock %}

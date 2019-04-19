@@ -1,0 +1,29 @@
+{% extends 'user_base.html' %}
+{% block body %}
+
+<h1>Sides</h1>
+
+<form name="sides_menu", method="POST">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+        <tr>
+            <td>Sides1</td>
+            <td>$1.30</td>
+            <td>
+                <input name='q1' type="number" min="0"/>
+            </td>
+        </tr>
+    </table>
+    <button type='submit' name='order_button' value='order'>Add to Order</button>
+</form>
+<!-- if burger item
+	for ingredient in burger_ingredients
+        ingredient name
+        ingredient price
+        options
+        if error print errors-->
+{% endblock %}
