@@ -8,10 +8,16 @@ class GourmetBurgerSystem:
 		self._order_history = []
 		self._last_order_id = 0
 		self._menu_inventory = menu or Menu()
-		
+	
+	#create new order	
 	def new_order(self):
 		order = Order()
 		return order	
+	
+	#create new Main Order Item	
+	def new_main_order_item(self, name):
+		main = MainOrderItem(name, 0, [])
+		return main	
 	
 	#function to place order and decrement inventory
 	def place_order(self, order):
@@ -92,7 +98,4 @@ class GourmetBurgerSystem:
 
 		
 	def refill_inventory(self):
-		pass
-		
-	def login():
-		pass
+		self._menu_inventory.refill_inventory()
