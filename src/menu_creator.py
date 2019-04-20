@@ -3,26 +3,26 @@ from src.menu import *
 def create_menu():
 	menu = Menu() 
 	#add mains to menu
-	menu.add_main("custom burger", 0, 500, "main", []) 
-	menu.add_main("base burger", 7, 500, "main", ["sesame bun", "sesame bun", "beef patty", "tomato", "lettuce", "swiss cheese", "ians special sauce"]) 
-	menu.add_main("custom wrap", 0, 1000, "main", []) 
-	menu.add_main("base wrap", 6, 1000, "main", ["white wrap", "veg filling", "tomato", "lettuce", "swiss cheese", "ians special sauce"]) 
+	menu.add_main("custom burger", 0, 500, "main", {}) 
+	menu.add_main("base burger", 7, 500, "main", {"sesame bun": 2, "beef patty": 1, "tomato": 1, "lettuce": 1, "swiss cheese": 1, "ians special sauce": 1}) 
+	menu.add_main("custom wrap", 0, 1000, "main", {}) 
+	menu.add_main("base wrap", 6, 1000, "main", {"white wrap": 1, "veg filling": 1, "tomato": 1, "lettuce": 1, "swiss cheese": 1, "ians special sauce": 1}) 
 		
 	#add ingredients to menu		
-	menu.add_menu_item("sesame bun", 1, 1000, "ingredient")
-	menu.add_menu_item("muffin bun", 1.50, 1000, "ingredient") 
-	menu.add_menu_item("beef patty", 1.5, 1000, "ingredient") 
-	menu.add_menu_item("veg patty", 1, 1000, "ingredient") 
-	menu.add_menu_item("white wrap", 1.00, 1000, "ingredient") 
-	menu.add_menu_item("wholemeal wrap", 1.00, 1000, "ingredient") 
-	menu.add_menu_item("tuna filling", 1.5, 1000, "ingredient") 
-	menu.add_menu_item("veg filling", 1.5, 1000, "ingredient") 
-	menu.add_menu_item("tomato", 0.5, 1000, "ingredient") 
-	menu.add_menu_item("lettuce", 0.5, 1000, "ingredient")
-	menu.add_menu_item("swiss cheese", 0.5, 1000, "ingredient") 
-	menu.add_menu_item("cheddar cheese", 0.5, 1000, "ingredient") 
-	menu.add_menu_item("tomato sauce", 0.5, 1000, "ingredient")
-	menu.add_menu_item("ians pecial sauce", 2, 1000, "ingredient") 
+	menu.add_menu_item("sesame bun", 1, 1000, "ingredient", "burger")
+	menu.add_menu_item("muffin bun", 1.50, 1000, "ingredient", "burger") 
+	menu.add_menu_item("beef patty", 1.5, 1000, "ingredient", "burger")
+	menu.add_menu_item("veg patty", 1, 1000, "ingredient", "burger") 
+	menu.add_menu_item("white wrap", 1.00, 1000, "ingredient", "wrap") 
+	menu.add_menu_item("wholemeal wrap", 1.00, 1000, "ingredient", "wrap") 
+	menu.add_menu_item("tuna filling", 1.5, 1000, "ingredient", "wrap") 
+	menu.add_menu_item("veg filling", 1.5, 1000, "ingredient", "wrap") 
+	menu.add_menu_item("tomato", 0.5, 1000, "ingredient", "burger, wrap") 
+	menu.add_menu_item("lettuce", 0.5, 1000, "ingredient", "burger, wrap")
+	menu.add_menu_item("swiss cheese", 0.5, 1000, "ingredient", "burger, wrap") 
+	menu.add_menu_item("cheddar cheese", 0.5, 1000, "ingredient", "burger, wrap") 
+	menu.add_menu_item("tomato sauce", 0.5, 1000, "ingredient", "burger, wrap")
+	menu.add_menu_item("ians pecial sauce", 2, 1000, "ingredient", "burger, wrap") 
 	
 	#add sides
 	menu.add_base_item("nugget", 0, 1000, "side", ["small nuggets", "medium nuggets", "large nuggets"])
@@ -37,7 +37,7 @@ def create_menu():
 	menu.set_quantity("fries")
 			
 	#add drinks 
-	menu.add_menu_item("water", 3.0, 1000, "drink") 
+	menu.add_menu_item("water", 3.0, 1000, "drink", "") 
 	menu.add_base_item("orange juice", 0, 10000, "drink", ["small orange juice", "medium orange juice",  "large orange juice"])
 	menu.add_measured_item("small orange juice", 2.5, -1, "drink", 250, "orange juice") 
 	menu.add_measured_item("medium orange juice", 3.5,  -1, "drink", 450, "orange juice")

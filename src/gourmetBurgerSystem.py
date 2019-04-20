@@ -8,10 +8,16 @@ class GourmetBurgerSystem:
 		self._order_history = []
 		self._last_order_id = 0
 		self._menu_inventory = menu or Menu()
-		
+	
+	# use system to create new order
 	def new_order(self):
 		order = Order()
 		return order	
+
+	#create new Main Order Item	
+	def new_main_order_item(self, name):
+		main = MainOrderItem(name, 0, [])
+		return main
 	
 	#function to place order and decrement inventory
 	def place_order(self, order):
@@ -67,7 +73,7 @@ class GourmetBurgerSystem:
 		return current_orders	
 				
 	#function to look for order_id in order history and returns the order			
-	def _get_order(self, order_id):
+	def get_order(self, order_id):
 		for order in self._order_history:
 			if order.id == order_id:
 				return order
@@ -89,9 +95,9 @@ class GourmetBurgerSystem:
 		if not self._menu_inventory.get_item(name):
 			return "Item doesn't exist"
 		return self._menu_inventory.get_item(name)
-		
+	
 	def refill_inventory(self):
-		pass
+		self._menu_inventory.refill_inventory()
 		
 	def login():
 		pass

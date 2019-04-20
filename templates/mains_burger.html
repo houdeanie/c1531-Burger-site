@@ -15,9 +15,9 @@
         </tr>
         {% for item in ingredients %}
         <tr>
-            <td> {{ item }} </td>
-            <td> Price </td>
-            <td><input name='{{ item }}' type="number" min="0"/></td>
+            <td> {{ item.name }} </td>
+            <td> ${{ '%0.2f'| format(item.price|float)}} </td>
+            <td><input name='{{ item.name }}' type="number" min="0" max="10"/></td>
         </tr>
         {% endfor %}
     </table>

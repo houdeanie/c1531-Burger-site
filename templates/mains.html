@@ -23,40 +23,28 @@ Here are some HTML tags you might find useful:
             <th>Name</th>
             <th>Ingredients</th>
             <th>Price</th>
-            <th>Quantity</th>
+            <th>Order</th>
         </tr>
+        {% for item in mains %}
         <tr>
-            <td>Base Burger</td>
-            <td>Ingredients</td>
-            <td>$1.30</td>
+            <td> {{ item.name }} </td>
+            {% if not item.ingredients %}
+                <td>Custom</td>
+                <td>Custom </td>
+            {% else %}
+                <td>
+                {% for key, value in item.ingredients.items() %}
+                    {{ key }} : {{ value }};
+                {% endfor %}
+                </td>
+                <td> ${{ '%0.2f'| format(item.price|float)}} </td>
+            {% endif %}
+            
             <td>
-                <button type='submit' name='base_burger' value='burger'>Add to Order</button>
+                <button type='submit' name='{{ item.name }}' value='{{ item.name }}'>Add to Order</button>
             </td>
         </tr>
-        <tr>
-            <td>Customised Burger</td>
-            <td>Custom</td>
-            <td>$1.30</td>
-            <td>
-                <button type='submit' name='custom_burger' value='burger'>Add to Order</button>
-            </td>
-        </tr>
-        <tr>
-            <td>Base Wrap</td>
-            <td>Ingredients</td>
-            <td>$1.30</td>
-            <td>
-                <button type='submit' name='base_wrap' value='wrap'>Add to Order</button>
-            </td>
-        </tr>
-        <tr>
-            <td>Customised Wrap</td>
-            <td>Custom</td>
-            <td>$1.30</td>
-            <td>
-                <button type='submit' name='custom_wrap' value='wrap'>Add to Order</button>
-            </td>
-        </tr>
+        {% endfor %}
     </table>
     
 </form>

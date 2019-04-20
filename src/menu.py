@@ -12,8 +12,8 @@ class Menu:
 	def add_measured_item(self, name, price, stock_quantity, food_type, serving_size, base_item):
 		self._items[name] = MeasuredMenuItem(name, price, stock_quantity, food_type, serving_size, base_item)	     
         
-	def add_menu_item(self, name, price, stock_quantity, food_type):
-		self._items[name] = MenuItem(name, price, stock_quantity, food_type)  
+	def add_menu_item(self, name, price, stock_quantity, food_type, main):
+		self._items[name] = MenuItem(name, price, stock_quantity, food_type, main)  
     
 	def add_base_item(self, name, price, stock_quantity, food_type, related_items):
 		self._items[name] = BaseMenuItem(name, price, stock_quantity, food_type, related_items)
@@ -127,33 +127,23 @@ class Menu:
 		return mains
 	
 	#function to return a list of ingredients on the menu only
-	def get_ingredients(self):
+	def get_ingredients(self, type):
 		ingredients = []
 		for item in self._items.keys():
-			if self.get_item(item).food_type == "ingredient":
+			if self.get_item(item).food_type == "ingredient" and self.get_item(item).main_type.find(type) != -1:
 				ingredients.append(self.get_item(item))
 		return ingredients
 	
-	#function to return a list of sides on the menu only
-	def get_sides(self):
-		sides = []
+	#function to return a list of the type measured items given in the input
+	def get_measured_item(self, measuredItem):
+		menu = []
 		for item in self._items.keys():
-			if self.get_item(item).food_type == "side" and not isinstance(self.get_item(item), BaseMenuItem):
-				sides.append(self.get_item(item))
-		return sides	
-	
-	#function to return a list of drinks on the menu only
-	def get_drinks(self):
-		drinks = []
+			if self.get_item(item).food_type == measuredItem and not isinstance(self.get_item(item), BaseMenuItem):
+				menu.append(self.get_item(item))
+		return menu
+
+	# returns the price of an item given an input string
+	def get_price(self, name):
 		for item in self._items.keys():
-			if self.get_item(item).food_type == "drink" and not isinstance(self.get_item(item), BaseMenuItem):
-				drinks.append(self.get_item(item))
-		return drinks	
-	
-	#function to return a list of sundaes on the menu only
-	def get_desserts(self):
-		desserts = []
-		for item in self._items.keys():
-			if self.get_item(item).food_type == "dessert" and not isinstance(self.get_item(item), BaseMenuItem):
-				desserts.append(self.get_item(item))
-		return desserts	
+			if self.get_item.name== "name":
+				return self.get_item.price

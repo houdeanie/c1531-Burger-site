@@ -3,7 +3,7 @@ from src.menu import *
 from src.gourmetBurgerSystem import GourmetBurgerSystem
 from src.order import Order
 from src.menu_creator import *
-from src.menuItem import *
+from src.item import *
 from src.gourmetBurgerSystem import GourmetBurgerSystem
 from src.order import Order
 # storing some html code that could be useful for later
@@ -43,5 +43,14 @@ from src.order import Order
 "medium_orange_juice": OrangeJuice("medium_orange_juice", 3.5, 10000/450, "drink", 450)
 '''
 
-system = 
+system = GourmetBurgerSystem(createMenu())
+
+order = Order()
+
+burger = system.new_main_order_item("Burger")
+
+burger.additem
+
+order.add_item()
+
 

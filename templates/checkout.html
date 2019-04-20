@@ -26,8 +26,8 @@
         background-color: #4CAF50;
         color: white;
     }
-</style>
-    </head>
+    </style>
+</head>
 
 <body>
 
@@ -38,10 +38,11 @@
 <br>
 <!-- Message -->
 <div>
+    
     <h1>Thanks for your order!</h1>
-    <h2>Order id: </h2>
-    <h2>Total Price: </h2>
-    <h2>Status: </h2>
+    <h2>Order id: {{order.id}}</h2>
+    <h2>Total Price: {{order.net_price}}</h2>
+    <h2>Status: {{order.status}}</h2>
 </div>
 <div>
     <table>
@@ -51,15 +52,16 @@
             <th>Quantity</th>
             <th>Price</th>
         </tr>
+        {% for item in order.items %}
         <tr>
-            <td>Wrap1</td>
-            <td>stuff</td>
-            <td>1</td>
-            <td>$1.30</td>
+            <td>item.name</td>
+            <td>item.ingredients</td>
+            <td>item.quantity</td>
+            <td>item.price</td>
         </tr>
+        {% endfor %}
     </table>
 </div>
-
 
 </body>
 </html>

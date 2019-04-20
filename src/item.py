@@ -48,10 +48,11 @@ class MainOrderItem(Item):
 
 #subclass for items on the menu/inventory
 class MenuItem(Item):
-	def __init__(self, name, price, stock_quantity, food_type):
+	def __init__(self, name, price, stock_quantity, food_type, main=None):
 		super().__init__(name, price)	
 		self._stock_quantity = stock_quantity
 		self._food_type = food_type
+		self._main = main
 
 	#getter and setter functions
 	@property		
@@ -69,6 +70,14 @@ class MenuItem(Item):
 	@food_type.setter		
 	def food_type(self, food_type):
 		self._food_type = food_type
+	
+	@property		
+	def main_type(self):
+		return self._main
+		
+	@food_type.setter		
+	def mian_type(self, food_type):
+		self._main = main
 		
 	#modified print output	
 	def __str__(self):
@@ -83,7 +92,7 @@ class MainMenuItem(MenuItem):
 	#getter functions
 	@property	
 	def ingredients(self):             
-		return self._ingredients[::]
+		return self._ingredients
 		 
 	#function to add ingredients 	
 	def add_ingredient(self, ingredient, price):

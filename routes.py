@@ -17,13 +17,13 @@ def page_not_found(e=None):
 Home page for Gourmet Burgers
 '''
 @app.route('/home', methods=["GET", "POST"])
-def user_home():
+def user_home(order_id = None):
     order = system.new_order()
     if len(order.items) == 0:
         return render_template('user_home.html')
     else:
-        return render_template('user_home.html', order=order)
 
+        return render_template('user_home.html', order=order)
     return render_template('user_home.html')
 
 '''
@@ -31,24 +31,26 @@ Mains page for Gourmet Burgers
 create mains
 '''
 @app.route('/mains', methods=["GET", "POST"])
-def mains():
+def mains(order_id = None):
     # takes in order
     if request.method == 'POST':
-        if 'base_burger' in request.form:
-            # add default burger
+    #BURGERS
+        if 'base burger' in request.form:
+            # add default burger to order
+            # burger = system.new_main_order_item("Burger", price)
+            # burger.add_item("Burger", system.display_inventory)
             return redirect(url_for('user_home'))
-        elif 'custom_burger' in request.form:
-            # create burger
-            # burger1 = system.get_copy("burger", 1)
-            return redirect(url_for('main_burger', ingredients=system.display_inventory))
-        elif 'base_wrap' in request.form:
-            # add default wrap
+        elif 'custom burger' in request.form:
+            return redirect(url_for('main_burger'))
+    # WRAPS    
+        elif 'base wrap' in request.form:
+            # add default wrap to order
+            #wrap = system.new_main_order_item("Wrap")
+            #order.add_item("Wrap", system.display_inventory)
             return redirect(url_for('user_home'))
-        elif 'custom_wrap' in request.form:
-            # create wrap
-            # wrap1 = system.get_copy("wrap", 1)
+        elif 'custom wrap' in request.form:
             return redirect(url_for('main_wrap'))
-    return render_template('mains.html')
+    return render_template('mains.html', mains=system.display_inventory.get_mains())
 
 @app.route('/mains/Burger', methods=["GET", "POST"])
 def main_burger():
@@ -57,8 +59,9 @@ def main_burger():
         # if valid
         arr = [] # array size length of items in menu
         if 'order_button' in request.form:
+            # burger = system.new_main_order_item("Burger")
             return redirect(url_for('user_home'))
-    return render_template('mains_burger.html')
+    return render_template('mains_burger.html', ingredients=system.display_inventory.get_ingredients("burger"))
 
 @app.route('/mains/Wrap', methods=["GET", "POST"])
 def main_wrap():
@@ -67,8 +70,9 @@ def main_wrap():
         # if valid
         arr = [] # array size length of items in menu
         if 'order_button' in request.form:
+            # wrap = system.new_main_order_item("Wrap")
             return redirect(url_for('user_home'))
-    return render_template('mains_wrap.html')
+    return render_template('mains_wrap.html', ingredients=system.display_inventory.get_ingredients("wrap"))
 
 '''
 Sides page for Gourmet Burgers
@@ -79,17 +83,19 @@ def sides():
     if request.method == 'POST':
         # checks for errors
         # if valid
-        arr = [] # array size length of items in menu
+        size = len(system.display_inventory.get_sides())
+        array = [] # array size length of items in menu
         if 'order_button' in request.form:
-            quantity = request.form.get('q1')
-            print(quantity)
-            #sides = system.get_copy("", quantity)
-            # for item in menu
-            # find how many items ordered
-            # if more than one, add item to order
-
+            # quantity = request.form.get('small nuggets')
+            # print(quantity)
+            # iterate through to get quantities into array
+            for item in system.display_inventory.get_sides():
+                array.append(int(request.form.get(item.name)))
+            for i in range(0,size):
+                print(array[i])
+            # for item in system.display
             return redirect(url_for('user_home'))
-    return render_template('sides.html', sides=system.display_inventory.get_sides())
+    return render_template('sides.html', sides=system.display_inventory.get_measured_item('side'))
 
 '''
 Drinks page for Gourmet Burgers
@@ -99,15 +105,16 @@ create drink
 def drinks():
     if request.method == 'POST':
         # checks for errors
-        # if valid
-        arr = [] # array size length of items in menu
+        size = len(system.display_inventory.get_drinks())
+        array = [] # array size length of items in menu
         if 'order_button' in request.form:
-            # for item in menu
-            # find how many items ordered
-            # if more than one, add item to order
+            # iterate through to get quantities into array
+            for item in system.display_inventory.get_drinks():
+                array.append(int(request.form.get(item.name)))
+            for i in range(0,size):
+                print(array[i])
             return redirect(url_for('user_home'))
-    #print(system.display_inventory.get_drinks())
-    return render_template('drinks.html', drinks=system.display_inventory.get_drinks())
+    return render_template('drinks.html', drinks=system.display_inventory.get_measured_item('drink'))
 
 '''
 Order page for Gourmet Burgers
@@ -115,6 +122,7 @@ show customer current order
 '''
 @app.route('/order', methods=["GET", "POST"])
 def user_order():
+
     return redirect(url_for('user_home'))
 
 '''
@@ -131,9 +139,9 @@ Checkout Order page for Gourmet Burgers
 show customer current order when given their id
 '''
 @app.route('/order/<id>', methods=["GET", "POST"])
-def checkout_order(id):
-
-    return render_template('checkout.html')
+def checkout_order(order_id):
+    order = system._get_order(order_id)
+    return render_template('checkout.html', order=order)
 
 
 ################# STAFF SIDE ###################
@@ -142,16 +150,31 @@ Staff home page
 shows current orders and allows staff to finish orders
 finishing an order causes the order to disappear and change order status
 '''
+@app.route('/staff', methods=["GET", "POST"])
+def staff_home():
+
+    return render_template('checkout.html')
 
 '''
 Staff ingredients inventory page
 '''
+@app.route('/staff/ingredients', methods=["GET", "POST"])
+def staff_ingredients():
+
+    return render_template('checkout.html')
 
 '''
 Staff sides inventory page
 '''
+@app.route('/staff/sides', methods=["GET", "POST"])
+def staff_sides():
+
+    return render_template('checkout.html')
 
 '''
 Staff drinks inventory page
 '''
+@app.route('/staff/drinks', methods=["GET", "POST"])
+def staff_drinks():
 
+    return render_template('checkout.html')
