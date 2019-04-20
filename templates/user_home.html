@@ -15,22 +15,28 @@
         {% for item in order.items %}
             <tr>
                 <td>{{item.name}}</td>
-                {% if item.food_type == 'main' %}
-                    <td>{{item.ingredients}}</td>
+                {% if item.ingredients %}
+                    <td>
+                    {% for key, value in item.ingredients.items() %}
+                        {{ key }} : {{ value }};
+                    {% endfor %}
+                    </td>
+                {% elif item.base_item %}
+                    <td>{{item.base_item}}</td>
                 {% else %}
-                    <td>{{item.name}}</td>
+                    <td></td>
                 {% endif %}
-                <td>{{item.quantity}}</td>
-                <td>{{item.price}}</td>
+                <td>1</td>
+                <td>${{'%0.2f'| format(item.price|float)}}</td>
             </tr>
         {% endfor %}
     </table>
-    <p>Total price: {{order.calc_price}}</p>
+    <p>Total price: ${{'%0.2f'| format(order.net_price|float)}}</p>
     <p>Select</p>
     <ul>
-        <li><a href="{{ url_for('mains') }}">Mains</a></li>
-        <li><a href="{{ url_for('sides') }}">Sides</a></li>
-        <li><a href="{{ url_for('drinks') }}">Drinks</a></li>
+        <li><a href="{{ url_for('mains', order_id = order.id) }}">Mains</a></li>
+        <li><a href="{{ url_for('sides', order_id = order.id) }}">Sides</a></li>
+        <li><a href="{{ url_for('drinks', order_id = order.id) }}">Drinks</a></li>
     </ul>
 </div>
 {% else %}

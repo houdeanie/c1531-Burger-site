@@ -145,5 +145,5 @@ class Menu:
 	# returns the price of an item given an input string
 	def get_price(self, name):
 		for item in self._items.keys():
-			if self.get_item.name== "name":
-				return self.get_item.price
+			if self.get_item(item).name == name:
+				return self.get_item(item).price

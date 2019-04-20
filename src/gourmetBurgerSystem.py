@@ -15,17 +15,17 @@ class GourmetBurgerSystem:
 		return order	
 
 	#create new Main Order Item	
-	def new_main_order_item(self, name):
-		main = MainOrderItem(name, 0, [])
+	def new_main_order(self, name):
+		main = MainOrderItem(name, 0, {})
 		return main
 	
 	#function to place order and decrement inventory
 	def place_order(self, order):
 		insufficient = self._menu_inventory.check_enough_inventory(order.items)
-		try:
-			check_order_error(order)
-		except OrderError as err:
-			return err.errors
+		#try:
+		#	check_order_error(order)
+		#except OrderError as err:
+		#	return err.errors
 		if(len(insufficient) == 0):
 			order.id = self._last_order_id + 1
 			self._last_order_id += 1
@@ -83,7 +83,7 @@ class GourmetBurgerSystem:
 	def get_menu_items(self):
 		return self._menu_inventory.get_items()
 	
-	#display menu	
+	# returns the menu class 	
 	@property
 	def display_inventory(self):
 		return self._menu_inventory
@@ -99,5 +99,3 @@ class GourmetBurgerSystem:
 	def refill_inventory(self):
 		self._menu_inventory.refill_inventory()
 		
-	def login():
-		pass

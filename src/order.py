@@ -50,7 +50,12 @@ class Order:
 	
 	#modified print output
 	def __str__(self):
-		return str("id: {0}, status: {1}, items: {2}, net_price: ${3}".format(self._id, self._status, self._items, self._net_price))		 
+		output = ''
+		output += f'Order ID: {self._id}\n'
+		output += f'Status: {self._status}\n'
+		output += f'Items: {self._items}\n'
+		output += f'Price: ${self._net_price:.2f}'
+		return output		 
 
-		
+	__repr__ = __str__
 	

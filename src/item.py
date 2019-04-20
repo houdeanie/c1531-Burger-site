@@ -25,6 +25,8 @@ class Item:
 	def __str__(self):
 		return "name: {0}, price: ${1}".format(self._name, self._price)
 
+	__repr__ = __str__
+
 #sub class for main items in order		
 class MainOrderItem(Item):
 	def __init__(self, name, price, ingredients):
@@ -34,11 +36,11 @@ class MainOrderItem(Item):
 	#getter functions
 	@property	
 	def ingredients(self):
-		return self._ingredients[::]
+		return self._ingredients
 		 
 	#function to add ingredients 	
-	def add_ingredient(self, ingredient, price):
-		self._ingredients.append(ingredient)
+	def add_ingredient(self, name, quantity, price):
+		self._ingredients[name] = quantity
 		self._price += price
 		return
 		
@@ -46,44 +48,45 @@ class MainOrderItem(Item):
 	def __str__(self):
 		return "name: {0}, price: ${1}, ingredients: {2}".format(self._name, self._price, self._ingredients)
 
+	__repr__ = __str__
+
 #subclass for items on the menu/inventory
 class MenuItem(Item):
-	def __init__(self, name, price, stock_quantity, food_type, main=None):
+	def __init__(self, name, price, stock_quantity, food_type, main_type = None):
 		super().__init__(name, price)	
 		self._stock_quantity = stock_quantity
 		self._food_type = food_type
-		self._main = main
+		self._main_type = main_type
 
 	#getter and setter functions
 	@property		
 	def stock_quantity(self):
 		return self._stock_quantity
-
 	@stock_quantity.setter		
 	def stock_quantity(self, stock_quantity):
 		self._stock_quantity = stock_quantity
-
+	
 	@property		
 	def food_type(self):
 		return self._food_type
-		
 	@food_type.setter		
 	def food_type(self, food_type):
 		self._food_type = food_type
-	
+
 	@property		
 	def main_type(self):
-		return self._main
-		
-	@food_type.setter		
-	def mian_type(self, food_type):
-		self._main = main
+		return self._main_type
+	@main_type.setter		
+	def main_type(self, main_type):
+		self._main_type = main_type
 		
 	#modified print output	
 	def __str__(self):
 		return "name: {0}, price: ${1}, stock_quantity: {2}, food_type: {3}".format(self._name, self._price, self._stock_quantity, self._food_type)
+	
+	__repr__ = __str__
 		
-#subclass for all mains 
+#subclass for all mains (base) 
 class MainMenuItem(MenuItem):
 	def __init__(self, name, price, stock_quantity, food_type, ingredients):
 		super().__init__(name, price, stock_quantity, food_type)
@@ -95,8 +98,8 @@ class MainMenuItem(MenuItem):
 		return self._ingredients
 		 
 	#function to add ingredients 	
-	def add_ingredient(self, ingredient, price):
-		self._ingredients.append(ingredient)
+	def add_ingredient(self, ingredient, quantity, price):
+		self._ingredients[ingredient] = quantity
 		self._price += price
 		return
 		
@@ -104,6 +107,8 @@ class MainMenuItem(MenuItem):
 	def __str__(self):
 		return "name: {0}, price: ${1}, stock_quantity: {2}, food_type: {3}, ingredients: {4}".format(self._name, self._price, self._stock_quantity, self._food_type, self._ingredients)
 		
+	__repr__ = __str__
+
 #subclass for items that come in quantities != 1 and have different sizes e.g. (fries, nuggets, orange juice etc)
 class MeasuredMenuItem(MenuItem):
 	def __init__(self, name, price, stock_quantity, food_type, serving_size, base_item):
@@ -130,9 +135,10 @@ class MeasuredMenuItem(MenuItem):
 		
 	#modified print output	
 	def __str__(self):
-		return "name: {0}, price: {1}, stock_quantity: {2}, food_type: {3}, serving_size: {4}, stock_quantity: {5}".format(self._name, self._price, self._stock_quantity, self._food_type, self._serving_size, self._stock_quantity)
+		return "name: {0}, price: {1}, stock_quantity: {2}, food_type: {3}, serving_size: {4}, pile_quantity: {5}".format(self._name, self._price, self._stock_quantity, self._food_type, self._serving_size, self._stock_quantity)
 		
-		
+	__repr__ = __str__
+
 #subclass for items that are used to keep track of measured items e.g. total nuggets
 class BaseMenuItem(MenuItem):
 	def __init__(self, name, price, stock_quantity, food_type, related_items):

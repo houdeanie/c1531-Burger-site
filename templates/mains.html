@@ -30,7 +30,7 @@ Here are some HTML tags you might find useful:
             <td> {{ item.name }} </td>
             {% if not item.ingredients %}
                 <td>Custom</td>
-                <td>Custom </td>
+                <td>-- --</td>
             {% else %}
                 <td>
                 {% for key, value in item.ingredients.items() %}

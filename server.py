@@ -6,4 +6,4 @@ app = Flask(__name__)
 app.secret_key = 'very-secret-123'  # Used to add entropy
 
 system = bootstrap_system()
-# order = bootstrap_order()
+new_order = bootstrap_order()
