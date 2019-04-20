@@ -23,8 +23,8 @@
                     </td>
                 {% elif item.base_item %}
                     <td>{{item.base_item}}</td>
-                {% else %}
-                    <td></td>
+                {% elif item.name == 'water' %}
+                    <td>H2O</td>
                 {% endif %}
                 <td>1</td>
                 <td>${{'%0.2f'| format(item.price|float)}}</td>
@@ -34,9 +34,10 @@
     <p>Total price: ${{'%0.2f'| format(order.net_price|float)}}</p>
     <p>Select</p>
     <ul>
-        <li><a href="{{ url_for('mains', order_id = order.id) }}">Mains</a></li>
-        <li><a href="{{ url_for('sides', order_id = order.id) }}">Sides</a></li>
-        <li><a href="{{ url_for('drinks', order_id = order.id) }}">Drinks</a></li>
+        <li><a href="{{ url_for('mains') }}">Mains</a></li>
+        <li><a href="{{ url_for('sides') }}">Sides</a></li>
+        <li><a href="{{ url_for('drinks') }}">Drinks</a></li>
+        <li><a href="{{ url_for('desserts') }}">Desserts</a></li>
     </ul>
 </div>
 {% else %}
@@ -47,6 +48,7 @@
         <li><a href="{{ url_for('mains') }}">Mains</a></li>
         <li><a href="{{ url_for('sides') }}">Sides</a></li>
         <li><a href="{{ url_for('drinks') }}">Drinks</a></li>
+        <li><a href="{{ url_for('desserts') }}">Desserts</a></li>
     </ul>
 </div>
 {% endif %}

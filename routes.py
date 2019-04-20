@@ -57,39 +57,44 @@ def mains():
 
 @app.route('/mains/Burger', methods=["GET", "POST"])
 def main_burger():
-
     if request.method == 'POST':
         # checks for errors
         # if valid
         quantities = {} # create empty dictionary to store quantities
         if 'order_button' in request.form:
-            burger = system.new_main_order("Burger")
+            burger = system.new_main_order('Custom Burger')
             # iterate through to get quantities into array
-            for item in system.display_inventory.get_ingredients("burger"):
-                quantities[item.name] = int(request.form.get(item.name))
+            for item in system.display_inventory.get_ingredients('burger'):
+                if request.form.get(item.name) == '':
+                    quantities[item.name] = 0
+                else:
+                    quantities[item.name] = int(request.form.get(item.name))
             for key, value in quantities.items():
-                print(key, value)
+                if value != 0:
+                    burger.add_ingredient(key, value, float(value*system.display_inventory.get_price(key)))
+            # print(burger)
+            new_order.add_item(burger, burger.price)
             return redirect(url_for('user_home'))
     return render_template('mains_burger.html', ingredients=system.display_inventory.get_ingredients("burger"))
 
 @app.route('/mains/Wrap', methods=["GET", "POST"])
-def main_wrap(order_id = None):
-    if order_id:
-        order = system.get_order(order_id)
-        if order == None:
-            order = system.new_order()
-    else:
-        order = system.new_order()
-
+def main_wrap():
     if request.method == 'POST':
         # checks for errors
         # if valid
         quantities = {} # create empty dictionary
         if 'order_button' in request.form:
-            for item in system.display_inventory.get_ingredients("wrap"):
-                quantities[item.name] = int(request.form.get(item.name))
+            wrap = system.new_main_order('Custom Wrap')
+            for item in system.display_inventory.get_ingredients('wrap'):
+                if request.form.get(item.name) == '':
+                    quantities[item.name] = 0
+                else:
+                    quantities[item.name] = int(request.form.get(item.name))
             for key, value in quantities.items():
-                print(key, value)
+                if value != 0:
+                    wrap.add_ingredient(key, value, float(value*system.display_inventory.get_price(key)))
+            # print(burger)
+            new_order.add_item(wrap, wrap.price)
             return redirect(url_for('user_home'))
     return render_template('mains_wrap.html', ingredients=system.display_inventory.get_ingredients("wrap"))
 
@@ -104,13 +109,17 @@ def sides():
         # if valid
         quantities = {} # create empty dictionary
         if 'order_button' in request.form:
-            # iterate through to get quantities into array
             for item in system.display_inventory.get_measured_item('side'):
-                quantities[item.name] = request.form.get(item.name)
-            # add items into order
+                if request.form.get(item.name) == '':
+                    quantities[item.name] = 0
+                else:
+                    quantities[item.name] = int(request.form.get(item.name))
             for key, value in quantities.items():
-                print(key, value)
-
+                # print(key, value)
+                if value != 0:
+                    side = system.display_item(key)
+                    for i in range(0, value):
+                        new_order.add_item(side, side.price)
             return redirect(url_for('user_home'))
     return render_template('sides.html', sides=system.display_inventory.get_measured_item('side'))
 
@@ -122,16 +131,45 @@ create drink
 def drinks():
     if request.method == 'POST':
         # checks for errors
-        # size = len(system.display_inventory.get_drinks())
         quantities = {} # array size length of items in menu
         if 'order_button' in request.form:
-            # iterate through to get quantities into array
+            # drinks = 
             for item in system.display_inventory.get_measured_item('drink'):
-                quantities[item.name] = request.form.get(item.name)
+                if request.form.get(item.name) == '':
+                    quantities[item.name] = 0
+                else:
+                    quantities[item.name] = int(request.form.get(item.name))
             for key, value in quantities.items():
-                print(key, value)
+                if value != 0:
+                    drink = system.display_item(key)
+                    for i in range(0, value):
+                        new_order.add_item(drink, drink.price)
             return redirect(url_for('user_home'))
     return render_template('drinks.html', drinks=system.display_inventory.get_measured_item('drink'))
+
+'''
+Dessert page for Gourmet Burgers
+create drink
+'''
+@app.route('/desserts', methods=["GET", "POST"])
+def desserts():
+    if request.method == 'POST':
+        # checks for errors
+        quantities = {} # array size length of items in menu
+        if 'order_button' in request.form:
+            # drinks = 
+            for item in system.display_inventory.get_measured_item('dessert'):
+                if request.form.get(item.name) == '':
+                    quantities[item.name] = 0
+                else:
+                    quantities[item.name] = int(request.form.get(item.name))
+            for key, value in quantities.items():
+                if value != 0:
+                    dessert = system.display_item(key)
+                    for i in range(0, value):
+                        new_order.add_item(dessert, dessert.price)
+            return redirect(url_for('user_home'))
+    return render_template('desserts.html', desserts=system.display_inventory.get_measured_item('dessert'))
 
 '''
 Order page for Gourmet Burgers
@@ -148,8 +186,8 @@ shows order and order id, status. order items, fee
 '''
 @app.route('/checkout', methods=["GET", "POST"])
 def checkout():
-
-    return render_template('checkout.html')
+    order = system.place_order(new_order)
+    return render_template('checkout.html', order = order)
 
 '''
 Checkout Order page for Gourmet Burgers
@@ -170,7 +208,7 @@ finishing an order causes the order to disappear and change order status
 @app.route('/staff', methods=["GET", "POST"])
 def staff_home():
 
-    return render_template('checkout.html')
+    return render_template('staff_home.html')
 
 '''
 Staff ingredients inventory page
@@ -178,7 +216,7 @@ Staff ingredients inventory page
 @app.route('/staff/ingredients', methods=["GET", "POST"])
 def staff_ingredients():
 
-    return render_template('checkout.html')
+    return render_template('staff_ingredients.html')
 
 '''
 Staff sides inventory page
@@ -186,7 +224,7 @@ Staff sides inventory page
 @app.route('/staff/sides', methods=["GET", "POST"])
 def staff_sides():
 
-    return render_template('checkout.html')
+    return render_template('staff_sides.html')
 
 '''
 Staff drinks inventory page
@@ -194,4 +232,12 @@ Staff drinks inventory page
 @app.route('/staff/drinks', methods=["GET", "POST"])
 def staff_drinks():
 
-    return render_template('checkout.html')
+    return render_template('staff_drinks.html')
+
+'''
+Staff desserts inventory page
+'''
+@app.route('/staff/desserts', methods=["GET", "POST"])
+def staff_desserts():
+
+    return render_template('staff_desserts.html')

@@ -1,0 +1,24 @@
+{% extends 'user_base.html' %}
+{% block body %}
+
+<h1>Desserts</h1>
+
+<form name="desserts_menu", method="POST">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+        {% for item in desserts %}
+        <tr>
+            <td> {{ item.name }} </td>
+            <td> ${{ '%0.2f'| format(item.price|float)}} </td>
+            <td><input name='{{ item.name }}' type="number" min="0" max="10"/></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <button type='submit' name='order_button' value='order'>Add to Order</button>
+</form>
+
+{% endblock %}

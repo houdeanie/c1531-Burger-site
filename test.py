@@ -30,7 +30,7 @@ print(system.display_inventory)
 order = system.new_order()
 
 
-burger = system.new_main_order_item("Burger")
+burger = system.new_main_order("Burger")
 burger.add_ingredient("sesame bun", system.display_inventory.get_price("sesame bun"))
 
 order.add_item(burger, system.display_inventory.get_price("sesame bun"))
