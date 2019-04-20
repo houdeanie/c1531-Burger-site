@@ -1,0 +1,29 @@
+{% extends 'staff_base.html' %}
+{% block body %}
+
+<h1>Sides</h1>
+
+<form name="sides_menu", method="POST">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+        {% for item in sides %}
+        <tr>
+            <td> {{ item.name }} </td>
+            <td> ${{ '%0.2f'| format(item.price|float)}} </td>
+            <td><input name='{{ item.name }}' type="number" min="0" max="10"/></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <button type='submit' name='order_button' value='order'>Add to Order</button>
+</form>
+<!-- if burger item
+	for ingredient in burger_ingredients
+        ingredient name
+        ingredient price
+        options
+        if error print errors-->
+{% endblock %}

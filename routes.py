@@ -207,7 +207,7 @@ finishing an order causes the order to disappear and change order status
 '''
 @app.route('/staff', methods=["GET", "POST"])
 def staff_home():
-
+    
     return render_template('staff_home.html')
 
 '''

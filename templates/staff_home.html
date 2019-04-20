@@ -1,0 +1,57 @@
+{% extends 'staff_base.html' %}
+{% block body %}
+
+<h1>Home</h1>
+
+{% if order %}
+<div>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Ingredients</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        {% for item in order.items %}
+            <tr>
+                <td>{{item.name}}</td>
+                {% if item.ingredients %}
+                    <td>
+                    {% for key, value in item.ingredients.items() %}
+                        {{ key }} : {{ value }};
+                    {% endfor %}
+                    </td>
+                {% elif item.base_item %}
+                    <td>{{item.base_item}}</td>
+                {% elif item.name == 'water' %}
+                    <td>H2O</td>
+                {% endif %}
+                <td>1</td>
+                <td>${{'%0.2f'| format(item.price|float)}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <p>Total price: ${{'%0.2f'| format(order.net_price|float)}}</p>
+    <p>Select</p>
+    <ul>
+        <li><a href="{{ url_for('mains') }}">Mains</a></li>
+        <li><a href="{{ url_for('sides') }}">Sides</a></li>
+        <li><a href="{{ url_for('drinks') }}">Drinks</a></li>
+        <li><a href="{{ url_for('desserts') }}">Desserts</a></li>
+    </ul>
+</div>
+{% else %}
+<div>
+    <p>Currently nothing in your order.</p>
+    <p>Select</p>
+    <ul>
+        <li><a href="{{ url_for('mains') }}">Mains</a></li>
+        <li><a href="{{ url_for('sides') }}">Sides</a></li>
+        <li><a href="{{ url_for('drinks') }}">Drinks</a></li>
+        <li><a href="{{ url_for('desserts') }}">Desserts</a></li>
+    </ul>
+</div>
+{% endif %}
+
+
+{% endblock %}
