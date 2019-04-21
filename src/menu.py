@@ -132,8 +132,11 @@ class Menu:
 	def get_ingredients(self, type=None):
 		ingredients = []
 		for item in self._items.keys():
-			if self.get_item(item).food_type == "ingredient" and self.get_item(item).main_type.find(type) != -1:
-				ingredients.append(self.get_item(item))
+			if self.get_item(item).food_type == "ingredient":
+				if type == None:
+					ingredients.append(self.get_item(item))
+				elif self.get_item(item).main_type.find(type) != -1:
+					ingredients.append(self.get_item(item))
 		return ingredients
 	
 	#function to return a list of the type measured items given in the input

@@ -51,7 +51,7 @@ class GourmetBurgerSystem:
 		
 	#function to update order from preparing to ready for pickup
 	def update_order_pickup(self, order_id):
-		order = self._get_order(order_id)
+		order = self.get_order(order_id)
 		if order == None:
 			return None
 		else:
@@ -60,7 +60,7 @@ class GourmetBurgerSystem:
 		
 	#function to update order from ready to picked up		
 	def update_order_completed(self, order_id):
-		order = self._get_order(order_id)		
+		order = self.get_order(order_id)		
 		if order == None:
 			return None		
 		else: 
@@ -70,7 +70,7 @@ class GourmetBurgerSystem:
 		
 	#function to get order status	
 	def check_order_status(self, order_id):
-		order = self._get_order(order_id)
+		order = self.get_order(order_id)
 		if order == None:
 			return("Order is not being prepared. Please check order id and try again")
 		else:
@@ -108,4 +108,5 @@ class GourmetBurgerSystem:
 	
 	def refill_inventory(self):
 		self._menu_inventory.refill_inventory()
+
 		

@@ -25,11 +25,11 @@ def create_menu():
 	menu.add_menu_item("ians special sauce", 2, 1000, "ingredient", "burger, wrap") 
 	
 	#add sides
-	menu.add_base_item("nugget", 0, 1000, "side", ["small nuggets", "medium nuggets", "large nuggets"])
+	menu.add_base_item("nuggets", 0, 1000, "side", ["small nuggets", "medium nuggets", "large nuggets"])
 	menu.add_measured_item("small nuggets", 3.0, -1, "side", 3, "nuggets") 
 	menu.add_measured_item("medium nuggets", 5.0, -1, "side", 6, "nuggets")
 	menu.add_measured_item("large nuggets", 7.0, -1, "side", 10, "nuggets") 
-	menu.set_quantity("nugget")
+	menu.set_quantity("nuggets")
 	menu.add_base_item("fries", 0, 6000, "side", ["small fries", "medium fries", "large fries"])
 	menu.add_measured_item("small fries", 2.5, -1, "side", 75, "fries")
 	menu.add_measured_item("medium fries", 3.5, -1, "side", 150, "fries")
@@ -37,7 +37,7 @@ def create_menu():
 	menu.set_quantity("fries")
 			
 	#add drinks 
-	menu.add_menu_item("water", 3.0, 1000, "drink", "") 
+	menu.add_menu_item("water", 3.0, 1000, "drink", "")
 	menu.add_base_item("orange juice", 0, 10000, "drink", ["small orange juice", "medium orange juice",  "large orange juice"])
 	menu.add_measured_item("small orange juice", 2.5, -1, "drink", 250, "orange juice") 
 	menu.add_measured_item("medium orange juice", 3.5,  -1, "drink", 450, "orange juice")

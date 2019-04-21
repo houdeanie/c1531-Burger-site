@@ -3,11 +3,11 @@
 
 <h1>My order</h1>
 
-<form name="mains_menu", method="POST">
-        <input name='customer_name' value='{{ form.customer_name }}' readonly/> Customer Name <br>
-
-
-
+<form name="user_order", method="POST">
+    Input your Order ID: <input name='order_id'/> <br>
+    <button type='submit' name='find_button'>Find Order</button>
 </form>
-
+{% if error %}
+    <font size="3" color="red">{{ error }}</font> <br>
+{% endif %}
 {% endblock %}

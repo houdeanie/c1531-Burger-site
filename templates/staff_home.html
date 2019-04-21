@@ -2,38 +2,43 @@
 {% block body %}
 
 {% if current_orders %}
-{% for order in current_orders %}
-<div>
-    <h2>Order Id: {{order.id}}</h2>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Ingredients</th>
-            <th>Quantity</th>
-            <th>Price</th>
-        </tr>
-        {% for item in order.items %}
-            <tr>
-                <td>{{item.name}}</td>
-                {% if item.ingredients %}
-                    <td>
-                    {% for key, value in item.ingredients.items() %}
-                        {{ key }} : {{ value }};
+    {% for order in current_orders %}
+        {% if order.status != 'ready' %}
+            <div>
+                
+                <h2>Order Id: {{order.id}}</h2>
+                <form name="{{order.id}}", method="POST">
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Ingredients</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                    {% for item in order.items %}
+                        <tr>
+                            <td>{{item.name}}</td>
+                            {% if item.ingredients %}
+                                <td>
+                                {% for key, value in item.ingredients.items() %}
+                                    {{ key }} : {{ value }};
+                                {% endfor %}
+                                </td>
+                            {% elif item.base_item %}
+                                <td>{{item.base_item}}</td>
+                            {% elif item.name == 'water' %}
+                                <td>H2O</td>
+                            {% endif %}
+                            <td>1</td>
+                            <td>${{'%0.2f'| format(item.price|float)}}</td>
+                        </tr>
                     {% endfor %}
-                    </td>
-                {% elif item.base_item %}
-                    <td>{{item.base_item}}</td>
-                {% elif item.name == 'water' %}
-                    <td>H2O</td>
-                {% endif %}
-                <td>1</td>
-                <td>${{'%0.2f'| format(item.price|float)}}</td>
-            </tr>
-        {% endfor %}
-    </table>
-    <button type='submit' name='{{order.id}}' value='finish'>Complete Order</button>
-</div>
-{% endfor %}
+                </table>
+                <button type='submit' name='{{order.id}}' value='finish'>Complete Order</button>
+                </form>
+            </div>
+        {% endif %}
+    {% endfor %}
 {% endif %}
 
 

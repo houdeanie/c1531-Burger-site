@@ -39,7 +39,7 @@ def mains():
                 burger2.add_ingredient(key, value, float(value*system.display_inventory.get_price(key)))
             new_order.add_item(burger2, burger2.price)
             return redirect(url_for('user_home'))
-        # create customer burger
+        # create custom burger
         elif 'custom burger' in request.form:
             return redirect(url_for('main_burger'))
     # WRAPS
@@ -51,6 +51,7 @@ def mains():
                 wrap2.add_ingredient(key, value, float(value*system.display_inventory.get_price(key)))
             new_order.add_item(wrap2, wrap2.price)
             return redirect(url_for('user_home'))
+        # create custom wrap
         elif 'custom wrap' in request.form:
             return redirect(url_for('main_wrap'))
     return render_template('mains.html', mains=system.display_inventory.get_mains())
@@ -69,6 +70,7 @@ def main_burger():
                     quantities[item.name] = 0
                 else:
                     quantities[item.name] = int(request.form.get(item.name))
+            # put quantities of ingredients into burger
             for key, value in quantities.items():
                 if value != 0:
                     burger.add_ingredient(key, value, float(value*system.display_inventory.get_price(key)))
@@ -82,18 +84,19 @@ def main_wrap():
     if request.method == 'POST':
         # checks for errors
         # if valid
-        quantities = {} # create empty dictionary
+        quantities = {} # create empty dictionary to store quantities
         if 'order_button' in request.form:
             wrap = system.new_main_order('Custom Wrap')
+            # iterate through to get quantities into array
             for item in system.display_inventory.get_ingredients('wrap'):
                 if request.form.get(item.name) == '':
                     quantities[item.name] = 0
                 else:
                     quantities[item.name] = int(request.form.get(item.name))
+            # put quantities of ingredients into wrap
             for key, value in quantities.items():
                 if value != 0:
                     wrap.add_ingredient(key, value, float(value*system.display_inventory.get_price(key)))
-            # print(burger)
             new_order.add_item(wrap, wrap.price)
             return redirect(url_for('user_home'))
     return render_template('mains_wrap.html', ingredients=system.display_inventory.get_ingredients("wrap"))
@@ -109,13 +112,14 @@ def sides():
         # if valid
         quantities = {} # create empty dictionary
         if 'order_button' in request.form:
+            # iterate through to get quantities into array
             for item in system.display_inventory.get_measured_item('side'):
                 if request.form.get(item.name) == '':
                     quantities[item.name] = 0
                 else:
                     quantities[item.name] = int(request.form.get(item.name))
+            # put quantities of ingredients into order
             for key, value in quantities.items():
-                # print(key, value)
                 if value != 0:
                     side = system.display_item(key)
                     for i in range(0, value):
@@ -133,12 +137,13 @@ def drinks():
         # checks for errors
         quantities = {} # array size length of items in menu
         if 'order_button' in request.form:
-            # drinks = 
+            # iterate through to get quantities into array
             for item in system.display_inventory.get_measured_item('drink'):
                 if request.form.get(item.name) == '':
                     quantities[item.name] = 0
                 else:
                     quantities[item.name] = int(request.form.get(item.name))
+            # put quantities of ingredients into order
             for key, value in quantities.items():
                 if value != 0:
                     drink = system.display_item(key)
@@ -157,12 +162,13 @@ def desserts():
         # checks for errors
         quantities = {} # array size length of items in menu
         if 'order_button' in request.form:
-            # drinks = 
+            # iterate through to get quantities into array
             for item in system.display_inventory.get_measured_item('dessert'):
                 if request.form.get(item.name) == '':
                     quantities[item.name] = 0
                 else:
                     quantities[item.name] = int(request.form.get(item.name))
+            # put quantities of ingredients into order
             for key, value in quantities.items():
                 if value != 0:
                     dessert = system.display_item(key)
@@ -177,7 +183,20 @@ show customer current order
 '''
 @app.route('/order', methods=["GET", "POST"])
 def user_order():
-    return redirect(url_for('user_home'))
+    if request.method == 'POST':
+        value = request.form.get('order_id')
+        try:
+            order_id = int(value)
+            order = system.get_order(order_id)
+            if order != None:
+                return redirect(url_for('checkout_order', order_id = order_id))
+            else:
+                error = 'Order Id not valid'
+                return render_template('user_order.html', error=error)
+        except ValueError:
+            error = 'Order Id not valid'
+            return render_template('user_order.html', error=error)
+    return render_template('user_order.html')
 
 '''
 Checkout page for Gourmet Burgers
@@ -202,10 +221,7 @@ show customer current order when given their id
 @app.route('/order/<order_id>', methods=["GET", "POST"])
 def checkout_order(order_id):
     order = system.get_order(order_id)
-    if order != None:
-        return render_template('checkout.html', order=order)
-    else:
-        return redirect(url_for('page_not_found', e='Order not found'))
+    return render_template('checkout.html', order=order)
 
 
 ################# STAFF SIDE ###################
@@ -217,7 +233,10 @@ finishing an order causes the order to disappear and change order status
 @app.route('/staff', methods=["GET", "POST"])
 def staff_home():
     current_orders = system.get_current_orders()
-
+    if request.method == 'POST':
+        for order in current_orders:
+            if str(order.id) in request.form:
+                system.update_order_pickup(order.id)
     return render_template('staff_home.html', current_orders=current_orders)
 '''
 Staff ingredients inventory page
@@ -225,6 +244,19 @@ Staff ingredients inventory page
 @app.route('/staff/ingredients', methods=["GET", "POST"])
 def staff_ingredients():
     ingredients = system.display_inventory.get_ingredients()
+    quantities = {} # dictionary
+    if request.method == 'POST':
+        if 'refill_button' in request.form:
+            for item in ingredients:
+                if request.form.get(item.name) == '':
+                    quantities[item.name] = 0
+                else:
+                    quantities[item.name] = int(request.form.get(item.name))
+            for key, value in quantities.items():
+                ingredient = system.display_item(key)
+                ingredient.stock_quantity += value
+        quantities.clear()
+        return redirect(url_for('staff_ingredients', ingredients=ingredients))
     return render_template('staff_ingredients.html', ingredients=ingredients)
 
 '''
@@ -232,8 +264,30 @@ Staff sides inventory page
 '''
 @app.route('/staff/sides', methods=["GET", "POST"])
 def staff_sides():
+    # get sides bases
     sides = system.display_inventory.get_measured_item('side')
-    return render_template('staff_sides.html', sides=sides)
+    base_items = []
+    for item in sides:
+        base_name = item.base_item
+        if system.display_item(base_name) not in base_items:
+            base_items.append(system.display_item(base_name))
+    # refill quantities
+    quantities = {} # dictionary
+    if request.method == 'POST':
+        # check for errors
+        if 'refill_button' in request.form:
+            # get refill quantities
+            for item in base_items:
+                if request.form.get(item.name) == '':
+                    quantities[item.name] = 0
+                else:
+                    quantities[item.name] = int(request.form.get(item.name))
+            for key, value in quantities.items():
+                base_side = system.display_item(key)
+                base_side.stock_quantity += value
+        quantities.clear()
+        return redirect(url_for('staff_sides', sides=base_items))
+    return render_template('staff_sides.html', sides=base_items)
 
 '''
 Staff drinks inventory page
@@ -241,7 +295,31 @@ Staff drinks inventory page
 @app.route('/staff/drinks', methods=["GET", "POST"])
 def staff_drinks():
     drinks = system.display_inventory.get_measured_item('drink')
-    return render_template('staff_drinks.html', drinks=drinks)
+    base_items = []
+    for item in drinks:
+        if item.name != 'water':
+            base_name = item.base_item
+            if system.display_item(base_name) not in base_items:
+                base_items.append(system.display_item(base_name))
+        else:
+            base_items.append(item)
+    # refill quantities
+    quantities = {}
+    if request.method == 'POST':
+        # check for errors
+        if 'refill_button' in request.form:
+            # get refill quantities
+            for item in base_items:
+                if request.form.get(item.name) == '':
+                    quantities[item.name] = 0
+                else:
+                    quantities[item.name] = int(request.form.get(item.name))
+            for key, value in quantities.items():
+                base_drink = system.display_item(key)
+                base_drink.stock_quantity += value
+        quantities.clear()
+        return redirect(url_for('staff_drinks', drinks=base_items))
+    return render_template('staff_drinks.html', drinks=base_items)
 
 '''
 Staff desserts inventory page
@@ -249,4 +327,24 @@ Staff desserts inventory page
 @app.route('/staff/desserts', methods=["GET", "POST"])
 def staff_desserts():
     desserts = system.display_inventory.get_measured_item('dessert')
-    return render_template('staff_desserts.html', desserts=desserts)
+    base_items = []
+    for item in desserts:
+        base_name = item.base_item
+        if system.display_item(base_name) not in base_items:
+            base_items.append(system.display_item(base_name))
+    quantities = {} # dictionary
+    if request.method == 'POST':
+        # check for errors
+        if 'refill_button' in request.form:
+            # get refill quantities
+            for item in base_items:
+                if request.form.get(item.name) == '':
+                    quantities[item.name] = 0
+                else:
+                    quantities[item.name] = int(request.form.get(item.name))
+            for key, value in quantities.items():
+                base_dessert = system.display_item(key)
+                base_dessert.stock_quantity += value
+        quantities.clear()
+        return redirect(url_for('staff_desserts', desserts=base_items))
+    return render_template('staff_desserts.html', desserts=base_items)
