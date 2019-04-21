@@ -19,6 +19,11 @@ class GourmetBurgerSystem:
 		main = MainOrderItem(name, 0, {})
 		return main
 	
+	#create new Main Order Item	
+	def new_main_order_item(self, name):
+		main = MainOrderItem(name, 0, [])
+		return main	
+	
 	#function to place order and decrement inventory
 	def place_order(self, items):
 		#insufficient = self._menu_inventory.check_enough_inventory(order.items)
