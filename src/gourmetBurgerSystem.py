@@ -29,7 +29,7 @@ class GourmetBurgerSystem:
 		new_order = Order()
 		for item in items:
 			new_order.add_item(item, item.price)
-		print(new_order)
+		# print(new_order)
 		#if(len(insufficient) == 0):
 		new_order.id = self._last_order_id + 1
 		self._last_order_id += 1
@@ -37,7 +37,7 @@ class GourmetBurgerSystem:
 		self._order_history.append(new_order)
 		self._menu_inventory.dec_inventory(new_order.items)
 		# print(self.get_order(new_order.id))
-		return self.get_order(new_order.id)
+		return new_order
 		#else:
 		#	print("Not enough of these items to fulfill order:") 
 		#	for item in insufficient:
@@ -71,11 +71,11 @@ class GourmetBurgerSystem:
 		else:
 			return order.status
 		return
-		
+
 	#function to get current orders	
 	def get_current_orders(self):
-		current_orders = [expression for orders in self._orders_history if orders.status == "preparing"]
-		return current_orders	
+		current_orders = [order for order in self._order_history if order.status == "preparing"]
+		return current_orders
 				
 	#function to look for order_id in order history and returns the order			
 	def get_order(self, order_id):

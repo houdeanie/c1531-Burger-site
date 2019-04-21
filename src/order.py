@@ -18,10 +18,16 @@ class Order:
 	def remove_item(self, item, price):
 		if not item in self._items:
 			return False
-		index = self._items.index(item)
-		self._items.pop(index)
+		self._items.remove(item)
 		self._net_price -= price		
 		return True
+
+	# function that removes all items in order
+	@property
+	def remove_all_items(self):
+		self._items.clear()
+		self._net_price = 0
+		return
 		
 	#getter and setter methods	
 	@property
