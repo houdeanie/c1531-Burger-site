@@ -186,6 +186,7 @@ shows order and order id, status. order items, fee
 @app.route('/checkout', methods=["GET", "POST"])
 def checkout():
     if len(new_order.items) == 0:
+        print('Need more than one item')
         return redirect(url_for('user_home'))
     else:
         # place order 
@@ -215,37 +216,38 @@ finishing an order causes the order to disappear and change order status
 '''
 @app.route('/staff', methods=["GET", "POST"])
 def staff_home():
-
+    current_orders = system.get_current_orders()
+    if current_orders:
+        return render_template('staff_home.html', current_orders=current_orders)
     return render_template('staff_home.html')
-
 '''
 Staff ingredients inventory page
 '''
 @app.route('/staff/ingredients', methods=["GET", "POST"])
 def staff_ingredients():
-
-    return render_template('staff_ingredients.html')
+    ingredients = system.display_inventory.get_ingredients()
+    return render_template('staff_ingredients.html', ingredients=ingredients)
 
 '''
 Staff sides inventory page
 '''
 @app.route('/staff/sides', methods=["GET", "POST"])
 def staff_sides():
-
-    return render_template('staff_sides.html')
+    sides = system.display_inventory.get_measured_item('side')
+    return render_template('staff_sides.html', sides=sides)
 
 '''
 Staff drinks inventory page
 '''
 @app.route('/staff/drinks', methods=["GET", "POST"])
 def staff_drinks():
-
-    return render_template('staff_drinks.html')
+    drinks = system.display_inventory.get_measured_item('drink')
+    return render_template('staff_drinks.html', drinks=drinks)
 
 '''
 Staff desserts inventory page
 '''
 @app.route('/staff/desserts', methods=["GET", "POST"])
 def staff_desserts():
-
-    return render_template('staff_desserts.html')
+    desserts = system.display_inventory.get_measured_item('dessert')
+    return render_template('staff_desserts.html', desserts=desserts)

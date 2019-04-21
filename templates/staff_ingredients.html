@@ -1,27 +1,23 @@
 {% extends 'staff_base.html' %}
 {% block body %}
 
-<h1>Sides</h1>
+<h1>Ingredients</h1>
 
-<form name="sides_menu", method="POST">
+<form name="ingredients_inv", method="POST">
     <table>
         <tr>
             <th>Name</th>
             <th>Quantity</th>
+            <th>Refill</th>
         </tr>
-        {% for item in sides %}
+        {% for item in ingredients %}
         <tr>
             <td> {{ item.name }} </td>
-            <td><input name='{{ item.name }}' type="number" min="0" max="10"/></td>
+            <td> {{ item.stock_quantity }} </td>
+            <td><input name='{{ item.name }}' type="number" min="0"/></td>
         </tr>
         {% endfor %}
     </table>
-    <button type='submit' name='order_button' value='order'>Refill</button>
+    <button type='submit' name='refill_button' value='refill'>Refill</button>
 </form>
-<!-- if burger item
-	for ingredient in burger_ingredients
-        ingredient name
-        ingredient price
-        options
-        if error print errors-->
 {% endblock %}
