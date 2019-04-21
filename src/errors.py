@@ -25,3 +25,9 @@ def check_order_error(order):
 
     if errors:
         raise OrderError(errors)
+
+def check_burger_error(burger):
+    return
+
+def check_quantity_error(item):
+    return
