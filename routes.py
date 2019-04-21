@@ -217,9 +217,8 @@ finishing an order causes the order to disappear and change order status
 @app.route('/staff', methods=["GET", "POST"])
 def staff_home():
     current_orders = system.get_current_orders()
-    if current_orders:
-        return render_template('staff_home.html', current_orders=current_orders)
-    return render_template('staff_home.html')
+
+    return render_template('staff_home.html', current_orders=current_orders)
 '''
 Staff ingredients inventory page
 '''
