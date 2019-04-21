@@ -42,14 +42,15 @@ class Menu:
 		for item in items:
 			if isinstance(item, MainOrderItem):
 				ingredients = item.ingredients
-				for ingredient in ingredients:
-					self._items[ingredient].stock_quantity -= 1
+				for key, value in ingredients.items():
+					count = value
+					self._items[key].stock_quantity -= count
 			elif isinstance(item, MenuItem):
-				self._items[item].stock_quantity -= 1
+				self._items[item.name].stock_quantity -= 1
 			elif isinstance(item, MeasuredMenuItem):
-				base_item = self._items[item].base_item
-				serving_size = self._items[item].serving_size
-				self._items[base_item].stock_quantity -= serving_size
+				base_item = self._items[item.name].base_item
+				serving_size = self._items[item.name].serving_size
+				self._items[base_item.name].stock_quantity -= serving_size
 				set_quantity(base_item)
 		return	
 
@@ -60,13 +61,14 @@ class Menu:
 			#if main item, we check its ingredients against stock levels
 			if isinstance(item, MainOrderItem):
 				ingredients = item.ingredients
-				for ingredient in ingredients:
-					count = ingredients.count(ingredient) 
-					if count > self._items[ingredient].stock_quantity:
-						insufficient[ingredient] = self._items[ingredient].stock_quantity
+				for key, value in ingredients.items():
+					count = value
+					if count > self._items[key].stock_quantity:
+						insufficient[key] = self._items[key].stock_quantity
 			else:
-				if items.count(item) > self._items[item].stock_quantity:
-					insufficient[item] = self._items[item].stock_quantity
+				if items.count(item) > self._items[item.name].stock_quantity:
+					insufficient[item] = self._items[item.name].stock_quantity
+					# print(items.count(item))
 		return insufficient
 
 	#function to set the quantity of base wrap and base burger based on the least available ingredient

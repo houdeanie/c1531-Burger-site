@@ -41,8 +41,8 @@
     
     <h1>Thanks for your order!</h1>
     <h2>Order id: {{order.id}}</h2>
-    <h2>Total Price: {{order.net_price}}</h2>
-    <h2>Status: {{order.status}}</h2>
+    <o>Total price: ${{'%0.2f'| format(order.net_price|float)}}</p>
+    <p>Status: {{order.status}}</p>
 </div>
 <div>
     <table>
@@ -53,12 +53,22 @@
             <th>Price</th>
         </tr>
         {% for item in order.items %}
-        <tr>
-            <td>item.name</td>
-            <td>item.ingredients</td>
-            <td>item.quantity</td>
-            <td>item.price</td>
-        </tr>
+            <tr>
+                <td>{{item.name}}</td>
+                {% if item.ingredients %}
+                    <td>
+                    {% for key, value in item.ingredients.items() %}
+                        {{ key }} : {{ value }};
+                    {% endfor %}
+                    </td>
+                {% elif item.base_item %}
+                    <td>{{item.base_item}}</td>
+                {% elif item.name == 'water' %}
+                    <td>H2O</td>
+                {% endif %}
+                <td>1</td>
+                <td>${{'%0.2f'| format(item.price|float)}}</td>
+            </tr>
         {% endfor %}
     </table>
 </div>

@@ -20,24 +20,29 @@ class GourmetBurgerSystem:
 		return main
 	
 	#function to place order and decrement inventory
-	def place_order(self, order):
-		insufficient = self._menu_inventory.check_enough_inventory(order.items)
+	def place_order(self, items):
+		#insufficient = self._menu_inventory.check_enough_inventory(order.items)
 		#try:
 		#	check_order_error(order)
 		#except OrderError as err:
 		#	return err.errors
-		if(len(insufficient) == 0):
-			order.id = self._last_order_id + 1
-			self._last_order_id += 1
-			order.status = "preparing"
-			self._order_history.append(order)
-			self._menu_inventory.dec_inventory(order.items)
-			return self._last_order_id
-		else:
-			print("Not enough of these items to fulfill order:") 
-			for item in insufficient:
-				print("{0} {1}".format(item, insufficient[item]))
-		return	
+		new_order = Order()
+		for item in items:
+			new_order.add_item(item, item.price)
+		print(new_order)
+		#if(len(insufficient) == 0):
+		new_order.id = self._last_order_id + 1
+		self._last_order_id += 1
+		new_order.status = "preparing"
+		self._order_history.append(new_order)
+		self._menu_inventory.dec_inventory(new_order.items)
+		# print(self.get_order(new_order.id))
+		return self.get_order(new_order.id)
+		#else:
+		#	print("Not enough of these items to fulfill order:") 
+		#	for item in insufficient:
+		#		print("{0} {1}".format(item, insufficient[item]))
+		#return None
 		
 	#function to update order from preparing to ready for pickup
 	def update_order_pickup(self, order_id):

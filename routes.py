@@ -177,7 +177,6 @@ show customer current order
 '''
 @app.route('/order', methods=["GET", "POST"])
 def user_order():
-
     return redirect(url_for('user_home'))
 
 '''
@@ -186,8 +185,17 @@ shows order and order id, status. order items, fee
 '''
 @app.route('/checkout', methods=["GET", "POST"])
 def checkout():
-    order = system.place_order(new_order)
-    return render_template('checkout.html', order = order)
+    if len(new_order.items) == 0:
+        return redirect(url_for('user_home'))
+    else:
+        # place order 
+        print(new_order)
+        order = system.place_order(new_order.items)
+        print(order)
+        #empty new_order item
+        for item in new_order.items:
+            new_order.remove_item(item, item.price)
+        return render_template('checkout.html', order=order)
 
 '''
 Checkout Order page for Gourmet Burgers
@@ -196,7 +204,10 @@ show customer current order when given their id
 @app.route('/order/<id>', methods=["GET", "POST"])
 def checkout_order(order_id):
     order = system._get_order(order_id)
-    return render_template('checkout.html', order=order)
+    if order != None:
+        return render_template('checkout.html', order=order)
+    else:
+        return redirect(url_for('page_not_found'))
 
 
 ################# STAFF SIDE ###################
@@ -207,7 +218,7 @@ finishing an order causes the order to disappear and change order status
 '''
 @app.route('/staff', methods=["GET", "POST"])
 def staff_home():
-    
+
     return render_template('staff_home.html')
 
 '''

@@ -1,10 +1,10 @@
 {% extends 'staff_base.html' %}
 {% block body %}
 
-<h1>Home</h1>
-
-{% if order %}
+{% if current_order %}
+{% for order in current_order %}
 <div>
+    <h2>Order Id: {{order.id}}</h2>
     <table>
         <tr>
             <th>Name</th>
@@ -31,26 +31,8 @@
             </tr>
         {% endfor %}
     </table>
-    <p>Total price: ${{'%0.2f'| format(order.net_price|float)}}</p>
-    <p>Select</p>
-    <ul>
-        <li><a href="{{ url_for('mains') }}">Mains</a></li>
-        <li><a href="{{ url_for('sides') }}">Sides</a></li>
-        <li><a href="{{ url_for('drinks') }}">Drinks</a></li>
-        <li><a href="{{ url_for('desserts') }}">Desserts</a></li>
-    </ul>
 </div>
-{% else %}
-<div>
-    <p>Currently nothing in your order.</p>
-    <p>Select</p>
-    <ul>
-        <li><a href="{{ url_for('mains') }}">Mains</a></li>
-        <li><a href="{{ url_for('sides') }}">Sides</a></li>
-        <li><a href="{{ url_for('drinks') }}">Drinks</a></li>
-        <li><a href="{{ url_for('desserts') }}">Desserts</a></li>
-    </ul>
-</div>
+{% endfor %}
 {% endif %}
 
 
