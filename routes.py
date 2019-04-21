@@ -189,12 +189,9 @@ def checkout():
         return redirect(url_for('user_home'))
     else:
         # place order 
-        print(new_order)
         order = system.place_order(new_order.items)
         #empty new_order object
         new_order.remove_all_items
-        print(new_order)
-        print(system.get_current_orders())
         return render_template('checkout.html', order=order)
 
 '''
@@ -203,9 +200,7 @@ show customer current order when given their id
 '''
 @app.route('/order/<order_id>', methods=["GET", "POST"])
 def checkout_order(order_id):
-    print(order_id)
     order = system.get_order(order_id)
-    print(order)
     if order != None:
         return render_template('checkout.html', order=order)
     else:

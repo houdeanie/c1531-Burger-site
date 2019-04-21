@@ -80,7 +80,7 @@ class GourmetBurgerSystem:
 	#function to look for order_id in order history and returns the order			
 	def get_order(self, order_id):
 		for order in self._order_history:
-			if order.id == order_id:
+			if int(order.id) == int(order_id):
 				return order
 		return None
 	
