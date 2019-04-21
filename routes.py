@@ -205,7 +205,7 @@ def checkout_order(order_id):
     if order != None:
         return render_template('checkout.html', order=order)
     else:
-        return redirect(url_for('page_not_found'))
+        return redirect(url_for('page_not_found', e='Order not found'))
 
 
 ################# STAFF SIDE ###################
