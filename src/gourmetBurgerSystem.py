@@ -37,6 +37,8 @@ class GourmetBurgerSystem:
 				self.check_burger(item)
 			new_order.add_item(item, item.price)
 		# print(new_order)
+		if(len(insufficient) > 0):
+			raise OrderException("we don't have enough inventory to fulfil this order")
 		if(len(insufficient) == 0):
 			new_order.id = self._last_order_id + 1
 			self._last_order_id += 1

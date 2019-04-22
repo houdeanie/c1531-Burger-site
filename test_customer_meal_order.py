@@ -86,31 +86,22 @@ class TestCreateMain():
             assert(err.message == "burger can have maximum 3 patties")
         else:
             assert(False)
-		
-#	def test_not_enough_burger_ingredients(self):
-#		pass
-		
-#	def test_not_enough_wrap_ingredients(self):
-#		pass
-		
-#	def test_multiple_burgers(self):
-#		pass
-		
-#	def test_multiple_wraps(self):
-#		pass
-		
-#	def test_multiple_same_ingredient(self):
-#		pass
-		
-#	def test_remove_ingredient(self):
-#		pass
-		
-#	def test_remove_all_ingredients(self):
-#		pass
-		
-#	def test_add_non_ingredient(self):
-#		pass
-		
-#	def test_no_bun_no_patty_burger(self):
-#		pass
-		
+
+    def test_not_enough_ingredient(self):
+        burger = self.system.new_main_order("custom burger")
+        burger.add_ingredient("sesame bun", 2, 2)  
+        burger.add_ingredient("beef patty", 1, 1.5)     
+        burger.add_ingredient("tomato", 5000, 0.5)         
+        try:
+            self.system.place_order([burger])
+        except OrderException as err:
+            assert(err.message == "we don't have enough inventory to fulfil this order")
+        else: 
+            assert(False)
+
+    def test_order_drink(self):
+    	self.system.place_order([burger])
+        except OrderException as err:
+            assert(err.message == "we don't have enough inventory to fulfil this order")
+        else: 
+            assert(False)
