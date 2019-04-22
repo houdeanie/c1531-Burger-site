@@ -44,7 +44,7 @@ def create_menu():
 			menu.set_quantity("fries")
 			
 			#add drinks 
-			menu.add_menu_item("water", 3.0, 1000, "drink", "")
+			menu.add_menu_item("water", 3.0, 1000, "drink", None, None)
 			menu.add_base_item("orange juice", 0, 10000, "drink", ["small orange juice", "medium orange juice",  "large orange juice"])
 			menu.add_measured_item("small orange juice", 2.5, -1, "drink", 250, "orange juice") 
 			menu.add_measured_item("medium orange juice", 3.5,  -1, "drink", 450, "orange juice")
