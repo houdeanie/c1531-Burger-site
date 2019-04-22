@@ -46,13 +46,15 @@ class Menu:
 				for key, value in ingredients.items():
 					count = value
 					self._items[key].stock_quantity -= count
-			elif isinstance(item, MenuItem):
-				self._items[item.name].stock_quantity -= 1
 			elif isinstance(item, MeasuredMenuItem):
-				base_item = self._items[item.name].base_item
+				base_item_name = self._items[item.name].base_item
+				base_item = self._items[base_item_name]
 				serving_size = self._items[item.name].serving_size
 				self._items[base_item.name].stock_quantity -= serving_size
 				self.set_quantity(base_item)
+			elif isinstance(item, MenuItem):
+				self._items[item.name].stock_quantity -= 1
+
 		self.save_inventory()		
 		return	
 
