@@ -17,11 +17,14 @@ def page_not_found(e=None):
 Home page for Gourmet Burgers
 '''
 @app.route('/home', methods=["GET", "POST"])
-def user_home():
+def user_home(error=None):
+    if request.method == 'POST':
+        if 'reset_order' in request.form:
+            new_order.remove_all_items
+            return render_template('user_home.html')
     if len(new_order.items) == 0:
         return render_template('user_home.html')
-    else:
-        return render_template('user_home.html', order=new_order)
+    return render_template('user_home.html', order=new_order)
 
 '''
 Mains page for Gourmet Burgers
@@ -30,6 +33,7 @@ create mains
 @app.route('/mains', methods=["GET", "POST"])
 def mains():
     if request.method == 'POST':
+        errors = []
     #BURGERS
         # add default burger to order, put in all default ingredients and quantities
         if 'base burger' in request.form:
@@ -37,8 +41,25 @@ def mains():
             burger2 = system.new_main_order('Base Burger')
             for key, value in burger1.ingredients.items():
                 burger2.add_ingredient(key, value, float(value*system.display_inventory.get_price(key)))
-            new_order.add_item(burger2, burger2.price)
-            return redirect(url_for('user_home'))
+            items = [burger2]
+            # first check if this item can be created with current stock
+            insufficient = system.check_item_sufficient(items)
+            if len(insufficient) == 0:
+                for item in new_order.items:
+                    items.append(item)
+                #print(items)
+                # second check to see if this item can be added to the current order
+                insufficient = system.check_item_sufficient(items)
+                if len(insufficient) == 0:
+                    new_order.add_item(burger2, burger2.price)
+                    return redirect(url_for('user_home'))
+                errors.append('There are insufficent ingredients in stock to include this item to your current order')
+                return render_template('mains.html', mains=system.display_inventory.get_mains(), errors=errors)
+            else:
+                for key, value in insufficient.items():
+                    insufficient_ing_error= str(value) + ' ' + key + 's left'
+                    errors.append(insufficient_ing_error)
+                return render_template('mains.html', mains=system.display_inventory.get_mains(), errors=errors)
         # create custom burger
         elif 'custom burger' in request.form:
             return redirect(url_for('main_burger'))
@@ -49,8 +70,16 @@ def mains():
             wrap2 = system.new_main_order('Base Wrap')
             for key, value in wrap1.ingredients.items():
                 wrap2.add_ingredient(key, value, float(value*system.display_inventory.get_price(key)))
-            new_order.add_item(wrap2, wrap2.price)
-            return redirect(url_for('user_home'))
+            items = [wrap2]
+            insufficient = system.check_item_sufficient(items)
+            if len(insufficient) == 0:
+                new_order.add_item(wrap2, wrap2.price)
+                return redirect(url_for('user_home'))
+            else:
+                for key, value in insufficient.items():
+                    insufficient_ing_error= str(value) + ' ' + key + 's left'
+                    errors.append(insufficient_ing_error)
+                return render_template('mains.html', mains=system.display_inventory.get_mains(), errors=errors)
         # create custom wrap
         elif 'custom wrap' in request.form:
             return redirect(url_for('main_wrap'))
@@ -61,7 +90,6 @@ def main_burger():
     if request.method == 'POST':
         errors = []
         # checks for errors
-        # if valid
         quantities = {} # create empty dictionary to store quantities
         if 'order_button' in request.form:
             burger = system.new_main_order('Custom Burger')
@@ -75,7 +103,12 @@ def main_burger():
             for key, value in quantities.items():
                 if value != 0:
                     burger.add_ingredient(key, value, float(value*system.display_inventory.get_price(key)))
-            # check if burger can be created
+            # check if burger is valid
+            if main_check(burger, 'burger') != None:
+                for msg in main_check(burger, 'burger'):
+                    errors.append(msg)
+                return render_template('mains_burger.html', ingredients=system.display_inventory.get_ingredients("burger"), errors=errors)
+            # check if burger can be added to order
             items = [burger]
             insufficient = system.check_item_sufficient(items)
             if len(insufficient) == 0:
@@ -83,14 +116,15 @@ def main_burger():
                 return redirect(url_for('user_home'))
             else:
                 for key, value in insufficient.items():
-                    insufficient_ing_error= 'Only ' + str(value) + ' ' + key + 's left'
+                    insufficient_ing_error= str(value) + ' ' + key + 's left'
                     errors.append(insufficient_ing_error)
-                    print(errors)
+                return render_template('mains_burger.html', ingredients=system.display_inventory.get_ingredients("burger"), errors=errors)
     return render_template('mains_burger.html', ingredients=system.display_inventory.get_ingredients("burger"))
 
 @app.route('/mains/Wrap', methods=["GET", "POST"])
 def main_wrap():
     if request.method == 'POST':
+        errors = []
         # checks for errors
         # if valid
         quantities = {} # create empty dictionary to store quantities
@@ -101,13 +135,27 @@ def main_wrap():
                 if request.form.get(item.name) == '':
                     quantities[item.name] = 0
                 else:
-                    quantities[item.name] = int(request.form.get(item.name))
+                    quantities[item.name] = int(request.form.get(item.name))    
             # put quantities of ingredients into wrap
             for key, value in quantities.items():
                 if value != 0:
                     wrap.add_ingredient(key, value, float(value*system.display_inventory.get_price(key)))
-            new_order.add_item(wrap, wrap.price)
-            return redirect(url_for('user_home'))
+            # check if wrap is valid
+            if main_check(wrap, 'wrap') != None:
+                for msg in main_check(wrap, 'wrap'):
+                    errors.append(msg)
+                return render_template('mains_wrap.html', ingredients=system.display_inventory.get_ingredients("wrap"), errors=errors)
+            # check if wrap can be created
+            items = [wrap]
+            insufficient = system.check_item_sufficient(items)
+            if len(insufficient) == 0:
+                new_order.add_item(wrap, wrap.price)
+                return redirect(url_for('user_home'))
+            else:
+                for key, value in insufficient.items():
+                    insufficient_ing_error= str(value) + ' ' + key + 's left'
+                    errors.append(insufficient_ing_error)
+                return render_template('mains_wrap.html', ingredients=system.display_inventory.get_ingredients("wrap"), errors=errors)
     return render_template('mains_wrap.html', ingredients=system.display_inventory.get_ingredients("wrap"))
 
 '''
@@ -118,6 +166,7 @@ create sides
 def sides():
     if request.method == 'POST':
         # checks for errors
+        errors = []
         # if valid
         quantities = {} # create empty dictionary
         if 'order_button' in request.form:
@@ -126,17 +175,24 @@ def sides():
                 if request.form.get(item.name) == '':
                     quantities[item.name] = 0
                 else:
-
                     quantities[item.name] = int(request.form.get(item.name))
-
-            
-            # put quantities of ingredients into order
+            # put quantities of ingredients into order, check if quantity can be ordered
             for key, value in quantities.items():
                 if value != 0:
                     side = system.display_item(key)
-                    for i in range(0, value):
-                        new_order.add_item(side, side.price)
-            return redirect(url_for('user_home'))
+                    items = []
+                    for i in range(0, value):   
+                        items.append(side)
+                    insufficient = system.check_item_sufficient(items)
+                    if len(insufficient) != 0:
+                        for key, value in insufficient.items():
+                            insufficient_ing_error= str(value) + ' ' + key + ' left'
+                            errors.append(insufficient_ing_error)
+                        return render_template('sides.html', sides=system.display_inventory.get_measured_item('side'), errors=errors)
+                    else:
+                        for i in range(0, value):
+                            new_order.add_item(side, side.price)
+                    return redirect(url_for('user_home'))
     return render_template('sides.html', sides=system.display_inventory.get_measured_item('side'))
 
 '''
@@ -147,6 +203,7 @@ create drink
 def drinks():
     if request.method == 'POST':
         # checks for errors
+        errors = []
         quantities = {} # array size length of items in menu
         if 'order_button' in request.form:
             # iterate through to get quantities into array
@@ -159,9 +216,19 @@ def drinks():
             for key, value in quantities.items():
                 if value != 0:
                     drink = system.display_item(key)
-                    for i in range(0, value):
-                        new_order.add_item(drink, drink.price)
-            return redirect(url_for('user_home'))
+                    items = []
+                    for i in range(0, value):   
+                        items.append(drink)
+                    insufficient = system.check_item_sufficient(items)
+                    if len(insufficient) != 0:
+                        for key, value in insufficient.items():
+                            insufficient_ing_error= str(value) + ' ' + key + ' left'
+                            errors.append(insufficient_ing_error)
+                        return render_template('drinks.html', sides=system.display_inventory.get_measured_item('drink'), errors=errors)
+                    else:
+                        for i in range(0, value):
+                            new_order.add_item(drink, drink.price)
+                    return redirect(url_for('user_home'))
     return render_template('drinks.html', drinks=system.display_inventory.get_measured_item('drink'))
 
 '''
@@ -172,6 +239,7 @@ create drink
 def desserts():
     if request.method == 'POST':
         # checks for errors
+        errors = []
         quantities = {} # array size length of items in menu
         if 'order_button' in request.form:
             # iterate through to get quantities into array
@@ -203,11 +271,11 @@ def user_order():
             if order != None:
                 return redirect(url_for('checkout_order', order_id = order_id))
             else:
-                error = 'Order Id not valid'
-                return render_template('user_order.html', error=error)
+                errors = 'Order with this Order ID does not exist'
+                return render_template('user_order.html', errors=errors)
         except ValueError:
-            error = 'Order Id not valid'
-            return render_template('user_order.html', error=error)
+            errors = 'Order Id not valid'
+            return render_template('user_order.html', errors=errors)
     return render_template('user_order.html')
 
 '''
@@ -217,14 +285,18 @@ shows order and order id, status. order items, fee
 @app.route('/checkout', methods=["GET", "POST"])
 def checkout():
     if len(new_order.items) == 0:
-        print('Need more than one item')
-        return redirect(url_for('user_home'))
+        errors = ['Need more than one item to order']
+        return redirect(url_for('user_home', errors = errors))
     else:
         # place order 
         order = system.place_order(new_order.items)
         #empty new_order object
-        new_order.remove_all_items
-        return render_template('checkout.html', order=order)
+        if order != None:
+            new_order.remove_all_items
+            return render_template('checkout.html', order=order)
+        else:
+            errors = ['There is a problem with your order, insufficient items in stock to place order']
+            return redirect(url_for('user_home', errors = errors))
 
 '''
 Checkout Order page for Gourmet Burgers
@@ -360,3 +432,37 @@ def staff_desserts():
         quantities.clear()
         return redirect(url_for('staff_desserts', desserts=base_items))
     return render_template('staff_desserts.html', desserts=base_items)
+
+
+# checks if burger or wrap is valid given preconditions
+def main_check(item, type):
+    errors = []
+    # burger must have 2 - 3 buns, one less patty to number of buns
+    if type == 'burger':
+        total = {'bun': 0, 'patty': 0}
+        for key, value in item.ingredients.items():
+            ing = system.display_item(key)
+            if ing.ing_type == 'bun':
+                total['bun']  += value
+            if ing.ing_type == 'patty':
+                total['patty'] += value
+        if total['bun'] < 2 or total['bun'] > 4:
+            errors.append('Total buns must be more than or equal to 2 and less than or equal to 4')
+        if total['patty'] > 3:
+            errors.append('Total patties ust be less than or equal to 3')
+        print(total)
+        print(errors)
+        if len(errors) != 0:
+            return errors
+    elif type == 'wrap':
+        ing = item.ingredients
+        total = {'wrap': 0}
+        for key, value in item.ingredients.items():
+            ing = system.display_item(key)
+            if ing.ing_type == 'wrap':
+                total['wrap']  += value
+        if total['wrap'] != 1:
+            errors.append('Total wraps must be 1')
+        if len(errors) != 0:
+            return errors
+    return None

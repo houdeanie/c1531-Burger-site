@@ -2,6 +2,11 @@
 {% block body %}
 
 <h1>Home</h1>
+{% if errors %}
+    {% for item in errors %}
+        <font size="3" color="red">{{ item }}</font> <br>
+    {% endfor %}
+{% endif %}
 
 {% if order %}
 <div>
@@ -52,6 +57,10 @@
     </ul>
 </div>
 {% endif %}
+
+<form name="sides_menu", method="POST">
+        <button type='submit' name='reset_order' value='order'>Reset Order</button>
+</form>
 
 
 {% endblock %}

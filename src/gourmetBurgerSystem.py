@@ -42,12 +42,8 @@ class GourmetBurgerSystem:
 			self._order_history.append(new_order)
 			self._menu_inventory.dec_inventory(new_order.items)
 		# print(self.get_order(new_order.id))
-		return new_order
-		#else:
-		#	print("Not enough of these items to fulfill order:") 
-		#	for item in insufficient:
-		#		print("{0} {1}".format(item, insufficient[item]))
-		#return None
+			return new_order
+		return None
 		
 	#function to update order from preparing to ready for pickup
 	def update_order_pickup(self, order_id):

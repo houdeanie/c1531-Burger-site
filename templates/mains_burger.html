@@ -5,15 +5,22 @@
 <h2>Burger</h2>
 
 <form name="burger_menu", method="POST">
+    {% if errors %}
+        {% for item in errors %}
+            <font size="3" color="red">{{ item }}</font> <br>
+        {% endfor %}
+    {% endif %}
     <table>
         <tr>
             <th>Name</th>
-            <th>Price</th>
+            <th>Type</th>
+            <th>Price</th>         
             <th>Quantity</th>
         </tr>
         {% for item in ingredients %}
         <tr>
             <td> {{ item.name }} </td>
+            <td> {{ item.ing_type }} </td>
             <td> ${{ '%0.2f'| format(item.price|float)}} </td>
             <td><input name='{{ item.name }}' type="number" min="0" max="10"/></td>
         </tr>

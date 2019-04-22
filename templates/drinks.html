@@ -4,6 +4,11 @@
 <h1>Drink</h1>
 
 <form name="drinks_menu", method="POST">
+    {% if errors %}
+        {% for item in errors %}
+            <font size="3" color="red">{{ item }}</font> <br>
+        {% endfor %}
+    {% endif %}
     <table>
         <tr>
             <th>Name</th>

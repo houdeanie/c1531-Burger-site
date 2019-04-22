@@ -1,5 +1,4 @@
 from src.item import MenuItem, MainMenuItem, MeasuredMenuItem, BaseMenuItem, MainOrderItem
-import pickle
 
 #class to represent the Menu and Inventory
 class Menu:
@@ -55,14 +54,28 @@ class Menu:
 			elif isinstance(item, MenuItem):
 				self._items[item.name].stock_quantity -= 1
 
-		self.save_inventory()		
+		#self.save_inventory()		
 		return	
 
 	#function to check whether we have enough stock to fulfil an order. items is a list of MeasuredItems and MainOrderItems
 	def check_enough_inventory(self, items):
 		insufficient = {}
+		'''
+		total = {}
 		for item in items:
-			#if main item, we check its ingredients against stock levels
+			if isinstance(item, MainOrderItem):
+				ingredients = item.ingredients
+				for key, value in ingredients.items():
+					count = value
+					if key not in total:
+						total[key] += count
+			else:
+				if item.name not in total:
+					total[item.name] = items.count(item)
+		'''
+		# for key, value in total:
+		for item in items:
+			# if main item, we check its ingredients against stock levels
 			if isinstance(item, MainOrderItem):
 				ingredients = item.ingredients
 				for key, value in ingredients.items():
@@ -158,8 +171,4 @@ class Menu:
 			if self.get_item(item).name == name:
 				return self.get_item(item).price
 	
-	#function to write current inventory out			
-	def save_inventory(self):
-		f = open("inventory.pickle", "wb")
-		pickle.dump(self, f)
-		return
+

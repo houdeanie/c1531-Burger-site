@@ -41,8 +41,11 @@
     
     <h1>Thanks for your order!</h1>
     <h2>Order id: {{order.id}}</h2>
-    <o>Total price: ${{'%0.2f'| format(order.net_price|float)}}</p>
+    <p>Total price: ${{'%0.2f'| format(order.net_price|float)}}</p>
     <p>Status: {{order.status}}</p>
+    {% if order.status == 'ready'%}
+        <p>Your order is ready to be picked up!</p>
+    {% endif %}
 </div>
 <div>
     <table>
