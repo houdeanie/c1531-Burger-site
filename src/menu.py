@@ -1,12 +1,6 @@
 from src.item import MenuItem, MainMenuItem, MeasuredMenuItem, BaseMenuItem, MainOrderItem
 import pickle
-
-class OrderException(Exception):
-    def __init__(self, message):
-        self.message = message
-
-    def __str__(self):
-        return self.message
+from src.item import OrderException
 
 #class to represent the Menu and Inventory
 class Menu:

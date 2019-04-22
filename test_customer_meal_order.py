@@ -42,9 +42,18 @@ class TestCreateMain():
             assert(err.message == "tommmato is not a valid ingredient")
         else:
             assert(False)
-#    def test_ingredient_negative_price(self):
-               
-		
+
+    def test_ingredient_negative_price(self):
+        burger = self.system.new_main_order("custom burger")
+        burger.add_ingredient("sesame bun", 2, 2)
+        burger.add_ingredient("beef patty", 1, 1.5)
+        try:
+        	burger.add_ingredient("tomato", 1, -0.5)               
+        except OrderException as err:
+            assert(err.message == "tomato cannot be free")
+        else:
+            assert(False)		
+
 #    def test_less_than_two_buns(self):
 #        pass	
 		
