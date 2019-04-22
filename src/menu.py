@@ -1,6 +1,13 @@
 from src.item import MenuItem, MainMenuItem, MeasuredMenuItem, BaseMenuItem, MainOrderItem
 import pickle
 
+class OrderException(Exception):
+    def __init__(self, message):
+        self.message = message
+
+    def __str__(self):
+        return self.message
+
 #class to represent the Menu and Inventory
 class Menu:
 	def __init__(self):
@@ -67,6 +74,8 @@ class Menu:
 				ingredients = item.ingredients
 				for key, value in ingredients.items():
 					count = value
+					if not key in self._items:
+					    raise OrderException("{0} is not a valid ingredient".format(key))
 					if count > self._items[key].stock_quantity:
 						insufficient[key] = self._items[key].stock_quantity
 			else:
