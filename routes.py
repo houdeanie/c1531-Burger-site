@@ -304,7 +304,7 @@ shows order and order id, status. order items, fee
 def checkout():
     if len(new_order.items) == 0:
         errors = ['Need more than one item to order']
-        return redirect(url_for('user_home', errors = errors))
+        return redirect(url_for('user_home', errors=errors))
     else:
         # place order 
         order = system.place_order(new_order.items)

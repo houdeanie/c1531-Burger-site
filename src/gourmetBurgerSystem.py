@@ -26,11 +26,11 @@ class GourmetBurgerSystem:
 	
 	#function to place order and decrement inventory
 	def place_order(self, items):
+		try:
+			check_order_error(order)
+		except OrderError as err:
+			return err.errors
 		insufficient = self._menu_inventory.check_enough_inventory(items)
-		#try:
-		#	check_order_error(order)
-		#except OrderError as err:
-		#	return err.errors
 		new_order = Order()
 		for item in items:
 			if isinstance(item, MainOrderItem) and item.name.endswith("burger"):

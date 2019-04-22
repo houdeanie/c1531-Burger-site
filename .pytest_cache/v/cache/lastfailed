@@ -1,3 +1,4 @@
 {
+  "test_customer_meal_order.py": true,
   "test_menuItem.py": true
 }

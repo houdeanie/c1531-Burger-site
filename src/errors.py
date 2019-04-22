@@ -12,7 +12,7 @@ def check_order_error(order):
     errors = {}
     
     # empty order
-    if order._items == []:
+    if order.items == []:
         errors['empty_order'] = "Must have at least one item in the order"
     
     # an item in the order doesn't have any ingredients
@@ -27,9 +27,3 @@ def check_order_error(order):
     if errors:
         raise OrderError(errors)
 
-
-def check_main_item_error(item):
-    return None
-
-def check_quantity_error(item):
-    return
