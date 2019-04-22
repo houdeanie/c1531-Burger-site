@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for, abort
 from server import app, system, new_order
 from src.gourmetBurgerSystem import GourmetBurgerSystem
 from src.order import Order
-# from src.error import OrderError, check_order_error
+from src.error import *
 
 '''
 Dedicated page for "page not found"
@@ -104,8 +104,8 @@ def main_burger():
                 if value != 0:
                     burger.add_ingredient(key, value, float(value*system.display_inventory.get_price(key)))
             # check if burger is valid
-            if main_check(burger, 'burger') != None:
-                for msg in main_check(burger, 'burger'):
+            if check_main_error(burger, 'burger') != None:
+                for msg in check_main_error(burger, 'burger'):
                     errors.append(msg)
                 return render_template('mains_burger.html', ingredients=system.display_inventory.get_ingredients("burger"), errors=errors)
             # check if burger can be added to order
@@ -141,8 +141,8 @@ def main_wrap():
                 if value != 0:
                     wrap.add_ingredient(key, value, float(value*system.display_inventory.get_price(key)))
             # check if wrap is valid
-            if main_check(wrap, 'wrap') != None:
-                for msg in main_check(wrap, 'wrap'):
+            if check_main_error(wrap, 'wrap') != None:
+                for msg in check_main_error(wrap, 'wrap'):
                     errors.append(msg)
                 return render_template('mains_wrap.html', ingredients=system.display_inventory.get_ingredients("wrap"), errors=errors)
             # check if wrap can be created
@@ -432,37 +432,3 @@ def staff_desserts():
         quantities.clear()
         return redirect(url_for('staff_desserts', desserts=base_items))
     return render_template('staff_desserts.html', desserts=base_items)
-
-
-# checks if burger or wrap is valid given preconditions
-def main_check(item, type):
-    errors = []
-    # burger must have 2 - 3 buns
-    # burger must have no more than 3 patties
-    # wrap must have at least 1 wrap
-    if type == 'burger':
-        total = {'bun': 0, 'patty': 0}
-        for key, value in item.ingredients.items():
-            ing = system.display_item(key)
-            if ing.ing_type == 'bun':
-                total['bun']  += value
-            if ing.ing_type == 'patty':
-                total['patty'] += value
-        if total['bun'] < 2 or total['bun'] > 4:
-            errors.append('Total buns must be more than or equal to 2 and less than or equal to 4')
-        if total['patty'] > 3:
-            errors.append('Total patties ust be less than or equal to 3')
-        if len(errors) != 0:
-            return errors
-    elif type == 'wrap':
-        ing = item.ingredients
-        total = {'wrap': 0}
-        for key, value in item.ingredients.items():
-            ing = system.display_item(key)
-            if ing.ing_type == 'wrap':
-                total['wrap']  += value
-        if total['wrap'] != 1:
-            errors.append('Total wraps must be 1')
-        if len(errors) != 0:
-            return errors
-    return None
