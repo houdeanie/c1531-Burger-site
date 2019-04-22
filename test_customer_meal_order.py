@@ -20,7 +20,7 @@ class TestCreateMain():
 
 
     def test_successful_wrap_order(self):
-        wrap = self.system.new_main_order("custom burger")
+        wrap = self.system.new_main_order("custom wrap")
         wrap.add_ingredient("white wrap", 1, 1)
         wrap.add_ingredient("tuna filling", 1, 1.5)
         wrap.add_ingredient("tomato", 1, 0.5)   
@@ -75,12 +75,17 @@ class TestCreateMain():
             assert(err.message == "burger can have maximum 4 buns")
         else:
             assert(False)
-	
-#	def test_zero_or_less_patties(self):
-#		pass
-		
-#	def test_too_many_patties(self):
-#		pass	
+
+    def test_too_many_patties(self):
+        burger = self.system.new_main_order("custom burger")
+        burger.add_ingredient("sesame bun", 2, 2)  
+        burger.add_ingredient("beef patty", 4, 1.5)      
+        try:
+        	self.system.place_order([burger])   
+        except OrderException as err:
+            assert(err.message == "burger can have maximum 3 patties")
+        else:
+            assert(False)
 		
 #	def test_not_enough_burger_ingredients(self):
 #		pass
