@@ -16,7 +16,7 @@ def create_menu():
 			menu.add_main("base wrap", 6, 1000, "main", {"white wrap": 1, "veg filling": 1, "tomato": 1, "lettuce": 1, "swiss cheese": 1, "ians special sauce": 1}) 
 
 			#add ingredients to menu		
-			menu.add_menu_item("sesame bun", 1, 3, "ingredient", "burger", "bun")
+			menu.add_menu_item("sesame bun", 1, 1000, "ingredient", "burger", "bun")
 			menu.add_menu_item("muffin bun", 1.50, 1000, "ingredient", "burger", "bun") 
 			menu.add_menu_item("beef patty", 1.5, 1000, "ingredient", "burger", "patty")
 			menu.add_menu_item("veg patty", 1, 1000, "ingredient", "burger", "patty") 

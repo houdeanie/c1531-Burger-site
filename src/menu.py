@@ -64,7 +64,6 @@ class Menu:
 	# [item.name] = stock levels
 	def check_enough_inventory(self, items):
 		insufficient = {}
-
 		total = {}
 		for item in items:
 			if isinstance(item, MainOrderItem):
@@ -77,7 +76,7 @@ class Menu:
 			else:
 				if item.name not in total.keys():
 					total[item.name] = items.count(item)
-		print(total)
+		# print(total)
 		for key, value in total.items():
 			if not key in self._items:
 				raise OrderException("{0} is not a valid ingredient".format(key))
@@ -168,4 +167,9 @@ class Menu:
 			if self.get_item(item).name == name:
 				return self.get_item(item).price
 	
+	#function to write current inventory out			
+	def save_inventory(self):
+		f = open("inventory.pickle", "wb")
+		pickle.dump(self, f)
+		return
 

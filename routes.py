@@ -17,7 +17,7 @@ def page_not_found(e=None):
 Home page for Gourmet Burgers
 '''
 @app.route('/home', methods=["GET", "POST"])
-def user_home(error=None):
+def user_home():
     if request.method == 'POST':
         if 'reset_order' in request.form:
             new_order.remove_all_items
@@ -196,7 +196,7 @@ def sides():
                     else:
                         for i in range(0, value):
                             new_order.add_item(side, side.price)
-                    return redirect(url_for('user_home'))
+            return redirect(url_for('user_home'))
     return render_template('sides.html', sides=system.display_inventory.get_measured_item('side'))
 
 '''
@@ -234,7 +234,7 @@ def drinks():
                     else:
                         for i in range(0, value):
                             new_order.add_item(drink, drink.price)
-                    return redirect(url_for('user_home'))
+            return redirect(url_for('user_home'))
     return render_template('drinks.html', drinks=system.display_inventory.get_measured_item('drink'))
 
 '''
@@ -271,8 +271,8 @@ def desserts():
                         return render_template('desserts.html', sides=system.display_inventory.get_measured_item('dessert'), errors=errors)
                     else:
                         for i in range(0, value):
-                            new_order.add_item(side, side.price)
-                    return redirect(url_for('user_home'))
+                            new_order.add_item(dessert, dessert.price)
+            return redirect(url_for('user_home'))
     return render_template('desserts.html', desserts=system.display_inventory.get_measured_item('dessert'))
 
 '''
