@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for, abort
 from server import app, system, new_order
 from src.gourmetBurgerSystem import GourmetBurgerSystem
 from src.order import Order
-from src.error import *
+from src.errors import *
 
 '''
 Dedicated page for "page not found"
@@ -435,7 +435,7 @@ def staff_desserts():
 
 
 
-def main_check(item, type):
+def check_main_error(item, type):
     errors = []
     # burger must have 2 - 3 buns
     # burger must have no more than 3 patties

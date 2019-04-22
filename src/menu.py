@@ -62,7 +62,7 @@ class Menu:
 	#function to check whether we have enough stock to fulfil an order. items is a list of MeasuredItems and MainOrderItems
 	def check_enough_inventory(self, items):
 		insufficient = {}
-		'''
+
 		total = {}
 		for item in items:
 			if isinstance(item, MainOrderItem):
@@ -74,7 +74,7 @@ class Menu:
 			else:
 				if item.name not in total:
 					total[item.name] = items.count(item)
-		'''
+
 		# for key, value in total:
 		for item in items:
 			# if main item, we check its ingredients against stock levels
