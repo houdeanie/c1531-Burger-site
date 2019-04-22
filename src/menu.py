@@ -60,6 +60,8 @@ class Menu:
 		return	
 
 	#function to check whether we have enough stock to fulfil an order. items is a list of MeasuredItems and MainOrderItems
+	# returns a dictionary of items that are insufficient to complete order
+	# [item.name] = stock levels
 	def check_enough_inventory(self, items):
 		insufficient = {}
 
@@ -68,28 +70,19 @@ class Menu:
 			if isinstance(item, MainOrderItem):
 				ingredients = item.ingredients
 				for key, value in ingredients.items():
-					count = value
-					if key not in total:
-						total[key] += count
+					if key not in total.keys():
+						total[key] = value
+					else:
+						total[key] += value
 			else:
-				if item.name not in total:
+				if item.name not in total.keys():
 					total[item.name] = items.count(item)
-
-		# for key, value in total:
-		for item in items:
-			# if main item, we check its ingredients against stock levels
-			if isinstance(item, MainOrderItem):
-				ingredients = item.ingredients
-				for key, value in ingredients.items():
-					count = value
-					if not key in self._items:
-					    raise OrderException("{0} is not a valid ingredient".format(key))
-					if count > self._items[key].stock_quantity:
-						insufficient[key] = self._items[key].stock_quantity
-			else:
-				if items.count(item) > self._items[item.name].stock_quantity:
-					insufficient[item.name] = self._items[item.name].stock_quantity
-					# print(items.count(item))
+		print(total)
+		for key, value in total.items():
+			if not key in self._items:
+				raise OrderException("{0} is not a valid ingredient".format(key))
+			if value > self._items[key].stock_quantity:
+				insufficient[key] = self._items[key].stock_quantity
 		return insufficient
 
 	#function to set the quantity of base wrap and base burger based on the least available ingredient

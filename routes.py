@@ -42,23 +42,18 @@ def mains():
             for key, value in burger1.ingredients.items():
                 burger2.add_ingredient(key, value, float(value*system.display_inventory.get_price(key)))
             items = [burger2]
-            # first check if this item can be created with current stock
+            for item in new_order.items:
+                items.append(item)
+            # check if item can be added to order
             insufficient = system.check_item_sufficient(items)
             if len(insufficient) == 0:
-                for item in new_order.items:
-                    items.append(item)
-                #print(items)
-                # second check to see if this item can be added to the current order
-                insufficient = system.check_item_sufficient(items)
-                if len(insufficient) == 0:
-                    new_order.add_item(burger2, burger2.price)
-                    return redirect(url_for('user_home'))
-                errors.append('There are insufficent ingredients in stock to include this item to your current order')
-                return render_template('mains.html', mains=system.display_inventory.get_mains(), errors=errors)
-            else:
+                new_order.add_item(burger2, burger2.price)
+                return redirect(url_for('user_home'))
+            else: 
                 for key, value in insufficient.items():
                     insufficient_ing_error= str(value) + ' ' + key + 's left'
                     errors.append(insufficient_ing_error)
+                errors.append('There are insufficent ingredients in stock to include this item to your current order')
                 return render_template('mains.html', mains=system.display_inventory.get_mains(), errors=errors)
         # create custom burger
         elif 'custom burger' in request.form:
@@ -71,6 +66,8 @@ def mains():
             for key, value in wrap1.ingredients.items():
                 wrap2.add_ingredient(key, value, float(value*system.display_inventory.get_price(key)))
             items = [wrap2]
+            for item in new_order.items:
+                items.append(item)
             insufficient = system.check_item_sufficient(items)
             if len(insufficient) == 0:
                 new_order.add_item(wrap2, wrap2.price)
@@ -79,6 +76,7 @@ def mains():
                 for key, value in insufficient.items():
                     insufficient_ing_error= str(value) + ' ' + key + 's left'
                     errors.append(insufficient_ing_error)
+                errors.append('There are insufficent ingredients in stock to include this item to your current order')
                 return render_template('mains.html', mains=system.display_inventory.get_mains(), errors=errors)
         # create custom wrap
         elif 'custom wrap' in request.form:
@@ -110,6 +108,8 @@ def main_burger():
                 return render_template('mains_burger.html', ingredients=system.display_inventory.get_ingredients("burger"), errors=errors)
             # check if burger can be added to order
             items = [burger]
+            for item in new_order.items:
+                items.append(item)
             insufficient = system.check_item_sufficient(items)
             if len(insufficient) == 0:
                 new_order.add_item(burger, burger.price)
@@ -147,6 +147,8 @@ def main_wrap():
                 return render_template('mains_wrap.html', ingredients=system.display_inventory.get_ingredients("wrap"), errors=errors)
             # check if wrap can be created
             items = [wrap]
+            for item in new_order.items:
+                items.append(item)
             insufficient = system.check_item_sufficient(items)
             if len(insufficient) == 0:
                 new_order.add_item(wrap, wrap.price)
@@ -183,6 +185,8 @@ def sides():
                     items = []
                     for i in range(0, value):   
                         items.append(side)
+                    for item in new_order.items:
+                        items.append(item)
                     insufficient = system.check_item_sufficient(items)
                     if len(insufficient) != 0:
                         for key, value in insufficient.items():
@@ -219,12 +223,14 @@ def drinks():
                     items = []
                     for i in range(0, value):   
                         items.append(drink)
+                    for item in new_order.items:
+                        items.append(item)
                     insufficient = system.check_item_sufficient(items)
                     if len(insufficient) != 0:
                         for key, value in insufficient.items():
                             insufficient_ing_error= str(value) + ' ' + key + ' left'
                             errors.append(insufficient_ing_error)
-                        return render_template('drinks.html', sides=system.display_inventory.get_measured_item('drink'), errors=errors)
+                        return render_template('drinks.html', sides=system.display_inventory.get_measured_item('drinks'), errors=errors)
                     else:
                         for i in range(0, value):
                             new_order.add_item(drink, drink.price)
@@ -252,9 +258,21 @@ def desserts():
             for key, value in quantities.items():
                 if value != 0:
                     dessert = system.display_item(key)
-                    for i in range(0, value):
-                        new_order.add_item(dessert, dessert.price)
-            return redirect(url_for('user_home'))
+                    items = []
+                    for i in range(0, value):   
+                        items.append(dessert)
+                    for item in new_order.items:
+                        items.append(item)
+                    insufficient = system.check_item_sufficient(items)
+                    if len(insufficient) != 0:
+                        for key, value in insufficient.items():
+                            insufficient_ing_error= str(value) + ' ' + key + ' left'
+                            errors.append(insufficient_ing_error)
+                        return render_template('desserts.html', sides=system.display_inventory.get_measured_item('dessert'), errors=errors)
+                    else:
+                        for i in range(0, value):
+                            new_order.add_item(side, side.price)
+                    return redirect(url_for('user_home'))
     return render_template('desserts.html', desserts=system.display_inventory.get_measured_item('dessert'))
 
 '''
@@ -433,8 +451,9 @@ def staff_desserts():
         return redirect(url_for('staff_desserts', desserts=base_items))
     return render_template('staff_desserts.html', desserts=base_items)
 
-
-
+'''
+chek main item is valid
+'''
 def check_main_error(item, type):
     errors = []
     # burger must have 2 - 3 buns
@@ -461,8 +480,8 @@ def check_main_error(item, type):
             ing = system.display_item(key)
             if ing.ing_type == 'wrap':
                 total['wrap']  += value
-        if total['wrap'] != 1:
-            errors.append('Total wraps must be 1')
+        if total['wrap'] > 3:
+            errors.append('Total wraps must be less that 3')
         if len(errors) != 0:
             return errors
     return None
