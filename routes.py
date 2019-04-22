@@ -208,7 +208,12 @@ def checkout_order(order_id):
         return redirect(url_for('page_not_found', e='Order not found'))
 
 
+
 ################# STAFF SIDE ###################
+'''
+redirect to staff page
+'''
+
 '''
 Staff home page
 shows current orders and allows staff to finish orders
