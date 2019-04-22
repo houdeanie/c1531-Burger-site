@@ -53,7 +53,7 @@ class GourmetBurgerSystem:
 	def update_order_pickup(self, order_id):
 		order = self.get_order(order_id)
 		if order == None:
-			return None
+			raise OrderException("order does not exist. Please check order id and try again")
 		else:
 			order.status = "ready"	
 		return
@@ -62,7 +62,7 @@ class GourmetBurgerSystem:
 	def update_order_completed(self, order_id):
 		order = self.get_order(order_id)		
 		if order == None:
-			return None		
+			raise OrderException("order does not exist. Please check order id and try again")
 		else: 
 			index = self._order_history.index(order)
 			order = self._order_history.pop(index)
@@ -72,7 +72,7 @@ class GourmetBurgerSystem:
 	def check_order_status(self, order_id):
 		order = self.get_order(order_id)
 		if order == None:
-			return("Order is not being prepared. Please check order id and try again")
+			raise OrderException("order does not exist. Please check order id and try again")
 		else:
 			return order.status
 		return
