@@ -6,7 +6,7 @@
         {% if order.status != 'ready' %}
             <div>
                 
-                <h2>Order Id: {{order.id}}</h2>
+                <h2>Customer Order Id: {{order.id}}</h2>
                 <form name="{{order.id}}", method="POST">
                 <table>
                     <tr>
@@ -35,6 +35,7 @@
                     {% endfor %}
                 </table>
                 <button type='submit' name='{{order.id}}' value='finish'>Complete Order</button>
+                <button type='submit' name='{{order.cancel}}' value='finish'>Cancel Order</button>
                 </form>
             </div>
         {% endif %}
