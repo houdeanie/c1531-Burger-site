@@ -33,6 +33,8 @@ class GourmetBurgerSystem:
 		#	return err.errors
 		new_order = Order()
 		for item in items:
+			if isinstance(item, MainOrderItem):
+				self.check_burger(item)
 			new_order.add_item(item, item.price)
 		# print(new_order)
 		if(len(insufficient) == 0):
@@ -112,6 +114,18 @@ class GourmetBurgerSystem:
 	# takes in and item and returns dict of insufficent quantities
 	def check_item_sufficient(self, item):
 		return self._menu_inventory.check_enough_inventory(item)
+
+    # checks if burger is valid. returns True if valid, false if invalid
+	def check_burger(self, item):
+		ingredients = item.ingredients
+		for key, value in ingredients.items():
+			if key.endswith("bun"):
+				if value < 2:
+					raise OrderException("burger must have at least two buns")
+				if value > 4:
+					raise OrderException("burger can have maximum 4 buns")
+		return
+
 
 
 

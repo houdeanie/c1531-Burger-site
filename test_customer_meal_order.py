@@ -54,11 +54,27 @@ class TestCreateMain():
         else:
             assert(False)		
 
-#    def test_less_than_two_buns(self):
-#        pass	
+    def test_less_than_two_buns(self):
+        burger = self.system.new_main_order("custom burger")
+        burger.add_ingredient("sesame bun", 1, 2)    
+        burger.add_ingredient("beef patty", 1, 1.5)    
+        try:
+        	self.system.place_order([burger])   
+        except OrderException as err:
+            assert(err.message == "burger must have at least two buns")
+        else:
+            assert(False)
 		
-#    def test_greater_than_four_buns(self):
-#        pass
+    def test_greater_than_four_buns(self):
+        burger = self.system.new_main_order("custom burger")
+        burger.add_ingredient("sesame bun", 5, 2)    
+        burger.add_ingredient("beef patty", 1, 1.5)    
+        try:
+        	self.system.place_order([burger])   
+        except OrderException as err:
+            assert(err.message == "burger can have maximum 4 buns")
+        else:
+            assert(False)
 	
 #	def test_zero_or_less_patties(self):
 #		pass
