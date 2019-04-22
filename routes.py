@@ -59,6 +59,7 @@ def mains():
 @app.route('/mains/Burger', methods=["GET", "POST"])
 def main_burger():
     if request.method == 'POST':
+        errors = []
         # checks for errors
         # if valid
         quantities = {} # create empty dictionary to store quantities
@@ -74,9 +75,17 @@ def main_burger():
             for key, value in quantities.items():
                 if value != 0:
                     burger.add_ingredient(key, value, float(value*system.display_inventory.get_price(key)))
-            # print(burger)
-            new_order.add_item(burger, burger.price)
-            return redirect(url_for('user_home'))
+            # check if burger can be created
+            items = [burger]
+            insufficient = system.check_item_sufficient(items)
+            if len(insufficient) == 0:
+                new_order.add_item(burger, burger.price)
+                return redirect(url_for('user_home'))
+            else:
+                for key, value in insufficient.items():
+                    insufficient_ing_error= 'Only ' + str(value) + ' ' + key + 's left'
+                    errors.append(insufficient_ing_error)
+                    print(errors)
     return render_template('mains_burger.html', ingredients=system.display_inventory.get_ingredients("burger"))
 
 @app.route('/mains/Wrap', methods=["GET", "POST"])
@@ -117,7 +126,10 @@ def sides():
                 if request.form.get(item.name) == '':
                     quantities[item.name] = 0
                 else:
+
                     quantities[item.name] = int(request.form.get(item.name))
+
+            
             # put quantities of ingredients into order
             for key, value in quantities.items():
                 if value != 0:

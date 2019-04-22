@@ -25,7 +25,7 @@
                                 {% endfor %}
                                 </td>
                             {% elif item.base_item %}
-                                <td>{{item.base_item}}</td>
+                                <td>{{item.serving_size}} {{item.base_item}}</td>
                             {% elif item.name == 'water' %}
                                 <td>H2O</td>
                             {% endif %}

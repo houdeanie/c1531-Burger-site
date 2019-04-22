@@ -26,7 +26,7 @@ class GourmetBurgerSystem:
 	
 	#function to place order and decrement inventory
 	def place_order(self, items):
-		#insufficient = self._menu_inventory.check_enough_inventory(order.items)
+		insufficient = self._menu_inventory.check_enough_inventory(items)
 		#try:
 		#	check_order_error(order)
 		#except OrderError as err:
@@ -35,12 +35,12 @@ class GourmetBurgerSystem:
 		for item in items:
 			new_order.add_item(item, item.price)
 		# print(new_order)
-		#if(len(insufficient) == 0):
-		new_order.id = self._last_order_id + 1
-		self._last_order_id += 1
-		new_order.status = "preparing"
-		self._order_history.append(new_order)
-		self._menu_inventory.dec_inventory(new_order.items)
+		if(len(insufficient) == 0):
+			new_order.id = self._last_order_id + 1
+			self._last_order_id += 1
+			new_order.status = "preparing"
+			self._order_history.append(new_order)
+			self._menu_inventory.dec_inventory(new_order.items)
 		# print(self.get_order(new_order.id))
 		return new_order
 		#else:
@@ -108,5 +108,11 @@ class GourmetBurgerSystem:
 	
 	def refill_inventory(self):
 		self._menu_inventory.refill_inventory()
+	
+	# takes in and item and returns dict of insufficent quantities
+	def check_item_sufficient(self, item):
+		return self._menu_inventory.check_enough_inventory(item)
+
+
 
 		

@@ -1,4 +1,5 @@
 from src.item import MenuItem, MainMenuItem, MeasuredMenuItem, BaseMenuItem, MainOrderItem
+import pickle
 
 #class to represent the Menu and Inventory
 class Menu:
@@ -12,8 +13,8 @@ class Menu:
 	def add_measured_item(self, name, price, stock_quantity, food_type, serving_size, base_item):
 		self._items[name] = MeasuredMenuItem(name, price, stock_quantity, food_type, serving_size, base_item)	     
         
-	def add_menu_item(self, name, price, stock_quantity, food_type, main):
-		self._items[name] = MenuItem(name, price, stock_quantity, food_type, main)  
+	def add_menu_item(self, name, price, stock_quantity, food_type, main, ing_type):
+		self._items[name] = MenuItem(name, price, stock_quantity, food_type, main, ing_type)  
     
 	def add_base_item(self, name, price, stock_quantity, food_type, related_items):
 		self._items[name] = BaseMenuItem(name, price, stock_quantity, food_type, related_items)
@@ -51,10 +52,11 @@ class Menu:
 				base_item = self._items[item.name].base_item
 				serving_size = self._items[item.name].serving_size
 				self._items[base_item.name].stock_quantity -= serving_size
-				set_quantity(base_item)
+				self.set_quantity(base_item)
+		self.save_inventory()		
 		return	
 
-	#function to check whether we have enough stock to fulfil an order. items is a list of strings and MainOrderItems
+	#function to check whether we have enough stock to fulfil an order. items is a list of MeasuredItems and MainOrderItems
 	def check_enough_inventory(self, items):
 		insufficient = {}
 		for item in items:
@@ -67,7 +69,7 @@ class Menu:
 						insufficient[key] = self._items[key].stock_quantity
 			else:
 				if items.count(item) > self._items[item.name].stock_quantity:
-					insufficient[item] = self._items[item.name].stock_quantity
+					insufficient[item.name] = self._items[item.name].stock_quantity
 					# print(items.count(item))
 		return insufficient
 
@@ -118,6 +120,7 @@ class Menu:
 		self.set_quantity("fries")
 		self.set_quantity("orange juice")
 		self.set_quantity("sundae")
+		self.save_inventory()
 		return
 		
 	#function to return a list of mains on the menu only
@@ -152,3 +155,9 @@ class Menu:
 		for item in self._items.keys():
 			if self.get_item(item).name == name:
 				return self.get_item(item).price
+	
+	#function to write current inventory out			
+	def save_inventory(self):
+		f = open("inventory.pickle", "wb")
+		pickle.dump(self, f)
+		return
