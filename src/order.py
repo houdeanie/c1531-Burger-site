@@ -1,4 +1,6 @@
 from src.item import Item
+from src.item import OrderException
+
 
 #class to represent a customer order
 class Order:

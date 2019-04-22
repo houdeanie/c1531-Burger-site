@@ -1,3 +1,10 @@
+class OrderException(Exception):
+    def __init__(self, message):
+        self.message = message
+
+    def __str__(self):
+        return self.message
+
 #parent class for items
 class Item: 
 	def __init__(self, name, price):
@@ -40,6 +47,8 @@ class MainOrderItem(Item):
 		 
 	#function to add ingredients 	
 	def add_ingredient(self, name, quantity, price):
+		if(price <= 0):
+			raise OrderException("{0} cannot be free".format(name))
 		self._ingredients[name] = quantity
 		self._price += price
 		return
