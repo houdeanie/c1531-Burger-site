@@ -1,4 +1,6 @@
 {
+  "test_current_orders.py::TestCurrentOrders::()::test_non_empty_current_orders": true,
+  "test_current_orders.py::TestCurrentOrders::()::test_successful_update_orders": true,
   "test_customer_meal_order.py": true,
   "test_menuItem.py": true
 }

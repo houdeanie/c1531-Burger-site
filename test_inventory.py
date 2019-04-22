@@ -9,6 +9,7 @@ class TestCurrentOrders():
 
 	# testing order refill functions
 	def test_refill_inventory(self):
+		menu = self.system.dsiplay_inventory
 		
 
 	# test for seeing the inventory

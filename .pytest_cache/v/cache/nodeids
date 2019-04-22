@@ -4,7 +4,5 @@
   "test_current_orders.py::TestCurrentOrders::()::test_successful_update_orders",
   "test_current_orders.py::TestCurrentOrders::()::test_check_non_existent_order_id",
   "test_current_orders.py::TestCurrentOrders::()::test_complete_non_existent_order_id",
-  "test_current_orders.py::TestCurrentOrders::()::test_update_non_existent_order_id",
-  "test_inventory.py::TestCurrentOrders::()::test_refill_inventory",
-  "test_inventory.py::TestCurrentOrders::()::test_view_inventory"
+  "test_current_orders.py::TestCurrentOrders::()::test_update_non_existent_order_id"
 ]
