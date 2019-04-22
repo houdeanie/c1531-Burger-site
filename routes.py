@@ -432,3 +432,37 @@ def staff_desserts():
         quantities.clear()
         return redirect(url_for('staff_desserts', desserts=base_items))
     return render_template('staff_desserts.html', desserts=base_items)
+
+
+
+def main_check(item, type):
+    errors = []
+    # burger must have 2 - 3 buns
+    # burger must have no more than 3 patties
+    # wrap must have at least 1 wrap
+    if type == 'burger':
+        total = {'bun': 0, 'patty': 0}
+        for key, value in item.ingredients.items():
+            ing = system.display_item(key)
+            if ing.ing_type == 'bun':
+                total['bun']  += value
+            if ing.ing_type == 'patty':
+                total['patty'] += value
+        if total['bun'] < 2 or total['bun'] > 4:
+            errors.append('Total buns must be more than or equal to 2 and less than or equal to 4')
+        if total['patty'] > 3:
+            errors.append('Total patties ust be less than or equal to 3')
+        if len(errors) != 0:
+            return errors
+    elif type == 'wrap':
+        ing = item.ingredients
+        total = {'wrap': 0}
+        for key, value in item.ingredients.items():
+            ing = system.display_item(key)
+            if ing.ing_type == 'wrap':
+                total['wrap']  += value
+        if total['wrap'] != 1:
+            errors.append('Total wraps must be 1')
+        if len(errors) != 0:
+            return errors
+    return None
