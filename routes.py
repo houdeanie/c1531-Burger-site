@@ -307,7 +307,7 @@ def checkout():
         return redirect(url_for('user_home', errors=errors))
     else:
         # place order 
-        order = system.place_order(new_order.items)
+        order = system.place_order(new_order, new_order.items)
         #empty new_order object
         if order != None:
             new_order.remove_all_items
